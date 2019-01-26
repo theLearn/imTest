@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">imTest</string>
+    <string name="my_message">我的消息</string>
+    <string name="home">首页</string>
+    <string name="my_shopping">我的商城</string>
+    <string name="my_search">查找</string>
+    <string name="my_apps">我的应用</string>
+    <string name="my_setting">设置</string>
+</resources>

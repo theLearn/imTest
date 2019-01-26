@@ -1,0 +1,28 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <item name="colorPrimary">@color/colorBase</item>
+        <item name="colorPrimaryDark">@color/colorBase</item>
+        <item name="colorAccent">@color/colorBase</item>
+        <item name="actionMenuTextColor">@color/colorWhite</item>
+        <item name="android:textColorPrimary">@color/colorBlack</item>
+        <item name="android:windowBackground">@color/default_background</item>
+        <!--<item name="android:fitsSystemWindows">true</item>-->
+        <!--<item name="android:windowLightStatusBar" tools:targetApi="m">true</item>-->
+    </style>
+
+    <style name="AppFullTheme" parent="AppTheme">
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTabTextStyle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textSize">@dimen/normal_text_size</item>
+    </style>
+
+</resources>
