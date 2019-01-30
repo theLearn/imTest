@@ -284,8 +284,8 @@
     <color name="bg_gray_f5">#f5f5f5</color>
     <color name="bg_gray_f7">#f7f7f7</color>
 
-    <color name="colorBase">#00B4E6</color>
-    <color name="colorDefaultPressed">#5DCCFF</color>
+    <color name="colorBase">#ff4bc769</color>
+    <color name="colorDefaultPressed">#884bc769</color>
     <color name="colorTranslucent">#00000000</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#000000</color>

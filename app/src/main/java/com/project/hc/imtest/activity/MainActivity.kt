@@ -31,8 +31,6 @@ class MainActivity : BasicActivity() {
     override fun initView() {
         setSupportActionBar(tb_main)
         actionBar = supportActionBar
-//        actionBar?.setHomeAsUpIndicator(R.mipmap.ic_menu)
-//        actionBar?.setDisplayHomeAsUpEnabled(true)
         ScreenUtils.setWindowStatusBarColor(this, resources.getColor(R.color.colorBase))
 
         setAbTitle(R.string.home)

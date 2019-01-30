@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical"
+              tools:context="com.project.hc.imtest.activity.LoginActivity">
+
+    <ImageView
+            android:id="@+id/iv_register_cancel"
+            android:layout_width="@dimen/public_space_value_45"
+            android:layout_height="@dimen/public_space_value_45"
+            android:padding="@dimen/public_space_value_15"
+            android:scaleType="fitXY"
+            android:src="@mipmap/icon_cancel"/>
+
+    <ImageView
+            android:layout_width="@dimen/img_xlarge"
+            android:layout_height="@dimen/img_xlarge"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/public_space_value_10"
+            android:src="@mipmap/icon_app"
+            android:scaleType="fitXY"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/public_space_value_50"
+            android:layout_marginLeft="@dimen/public_space_value_25"
+            android:layout_marginRight="@dimen/public_space_value_25"
+            android:orientation="vertical">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/public_space_value_10"
+                android:paddingBottom="@dimen/public_space_value_10"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+            <ImageView
+                    android:layout_width="@dimen/img_small"
+                    android:layout_height="@dimen/img_small"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/icon_phone"/>
+            <EditText
+                    android:id="@+id/et_register_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/big_text_size"
+                    android:hint="@string/please_input_phone_hint"
+                    android:layout_marginLeft="@dimen/public_space_value_15"
+                    android:textColor="@color/text_default"
+                    android:singleLine="true"
+                    android:maxLength="20"
+                    android:inputType="phone"
+                    android:background="@null"/>
+        </LinearLayout>
+
+        <include layout="@layout/line_horizontal"/>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/public_space_value_10"
+                android:paddingBottom="@dimen/public_space_value_10"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+            <ImageView
+                    android:layout_width="@dimen/img_small"
+                    android:layout_height="@dimen/img_small"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/icon_pw"/>
+            <EditText
+                    android:id="@+id/et_register_pw"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/big_text_size"
+                    android:textColor="@color/text_default"
+                    android:hint="@string/please_input_pw_hint"
+                    android:singleLine="true"
+                    android:inputType="textPassword"
+                    android:maxLength="20"
+                    android:layout_marginLeft="@dimen/public_space_value_15"
+                    android:background="@null"/>
+        </LinearLayout>
+
+        <include layout="@layout/line_horizontal"/>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/public_space_value_10"
+                android:paddingBottom="@dimen/public_space_value_10"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+            <ImageView
+                    android:layout_width="@dimen/img_small"
+                    android:layout_height="@dimen/img_small"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/icon_pw"/>
+            <EditText
+                    android:id="@+id/et_register_confirm_pw"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/big_text_size"
+                    android:textColor="@color/text_default"
+                    android:hint="@string/please_input_confirm_pw_hint"
+                    android:singleLine="true"
+                    android:inputType="textPassword"
+                    android:maxLength="20"
+                    android:layout_marginLeft="@dimen/public_space_value_15"
+                    android:background="@null"/>
+        </LinearLayout>
+
+        <include layout="@layout/line_horizontal"/>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/public_space_value_10"
+                android:paddingBottom="@dimen/public_space_value_10"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+            <ImageView
+                    android:layout_width="@dimen/img_small"
+                    android:layout_height="@dimen/img_small"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/icon_nick"/>
+            <EditText
+                    android:id="@+id/et_register_nick"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/big_text_size"
+                    android:hint="@string/please_input_nick_hint"
+                    android:layout_marginLeft="@dimen/public_space_value_15"
+                    android:textColor="@color/text_default"
+                    android:maxLength="16"
+                    android:singleLine="true"
+                    android:inputType="text"
+                    android:background="@null"/>
+        </LinearLayout>
+
+        <include layout="@layout/line_horizontal"/>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/public_space_value_10"
+                android:paddingBottom="@dimen/public_space_value_10"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+            <ImageView
+                    android:layout_width="@dimen/img_small"
+                    android:layout_height="@dimen/img_small"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/icon_sms_code"/>
+            <EditText
+                    android:id="@+id/et_register_sms_code"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/big_text_size"
+                    android:hint="@string/please_input_sms_code_hint"
+                    android:layout_marginLeft="@dimen/public_space_value_15"
+                    android:textColor="@color/text_default"
+                    android:singleLine="true"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:background="@null"/>
+
+            <TextView
+                    android:id="@+id/tv_register_sms_code_tip"
+                    android:layout_width="@dimen/public_space_value_100"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/public_space_value_10"
+                    android:paddingRight="@dimen/public_space_value_10"
+                    android:paddingTop="@dimen/public_space_value_5"
+                    android:paddingBottom="@dimen/public_space_value_5"
+                    android:textSize="@dimen/big_text_size"
+                    android:gravity="center"
+                    android:background="@drawable/bg_enable_round"
+                    android:text="@string/get_sms_code"
+                    android:textColor="@color/white"/>
+        </LinearLayout>
+
+        <include layout="@layout/line_horizontal"/>
+    </LinearLayout>
+
+    <Button
+            android:id="@+id/bt_register"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/public_space_value_40"
+            android:layout_marginLeft="@dimen/public_space_value_20"
+            android:layout_marginRight="@dimen/public_space_value_20"
+            android:layout_marginTop="@dimen/public_space_value_40"
+            android:background="@drawable/bg_bt_bottom"
+            android:textSize="@dimen/large_text_size"
+            android:text="@string/register"
+            android:textColor="@color/white"/>
+</LinearLayout>

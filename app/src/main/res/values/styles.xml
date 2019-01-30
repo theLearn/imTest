@@ -1,15 +1,15 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
-        <item name="colorPrimary">@color/colorBase</item>
-        <item name="colorPrimaryDark">@color/colorBase</item>
+        <item name="colorPrimary">@color/colorWhite</item>
+        <item name="colorPrimaryDark">@color/colorWhite</item>
         <item name="colorAccent">@color/colorBase</item>
         <item name="actionMenuTextColor">@color/colorWhite</item>
         <item name="android:textColorPrimary">@color/colorBlack</item>
         <item name="android:windowBackground">@color/default_background</item>
-        <!--<item name="android:fitsSystemWindows">true</item>-->
-        <!--<item name="android:windowLightStatusBar" tools:targetApi="m">true</item>-->
+        <item name="android:fitsSystemWindows">true</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
     </style>
 
     <style name="AppFullTheme" parent="AppTheme">
