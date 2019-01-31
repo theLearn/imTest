@@ -1,11 +1,9 @@
 <resources>
     <string name="app_name">imTest</string>
-    <string name="my_message">我的消息</string>
-    <string name="home">首页</string>
-    <string name="my_shopping">我的商城</string>
-    <string name="my_search">查找</string>
-    <string name="my_apps">我的应用</string>
-    <string name="my_setting">设置</string>
+    <string name="home">大厅</string>
+    <string name="message">消息</string>
+    <string name="service">服务</string>
+    <string name="person">我</string>
     <string name="phone_login">手机号登录</string>
     <string name="login">登录</string>
     <string name="register">注册</string>
@@ -22,4 +20,16 @@
     <string name="forget_pw">忘记密码</string>
     <string name="get_sms_code">获取验证码</string>
     <string name="second_tip">%1$sS</string>
+    <string name="person_nick_default">红包口令</string>
+    <string name="person_account_show">账号： %1$s</string>
+    <string name="person_my_package">钱包</string>
+    <string name="person_my_get">我的收益</string>
+    <string name="person_red_package_record">红包记录</string>
+    <string name="person_to_get_cash">推广二维码赚钱</string>
+    <string name="person_setting">设置</string>
+    <string name="person_about_us">关于我们</string>
+    <string name="person_call">投诉举报</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

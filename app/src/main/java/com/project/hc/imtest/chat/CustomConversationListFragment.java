@@ -1,19 +1,76 @@
 package com.project.hc.imtest.chat;
 
 import android.view.View;
+import com.example.hongcheng.common.util.ActivityUtils;
+import com.hyphenate.EMMessageListener;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMConversation;
+import com.hyphenate.chat.EMMessage;
+import com.hyphenate.easeui.EaseUI;
 import com.hyphenate.easeui.ui.EaseConversationListFragment;
 import com.project.hc.imtest.R;
 
-/**
- * Created by zhangzhao on 2017/3/1.
- */
+import java.util.List;
 
-public class CustomConversationListFragment extends EaseConversationListFragment {
+public class CustomConversationListFragment extends EaseConversationListFragment implements EMMessageListener {
 
     @Override
-    protected void initView() {
-        super.initView();
+    protected void setUpView() {
+        super.setUpView();
+
         hideTitleBar();
         getView().findViewById(R.id.il_search_bar).setVisibility(View.GONE);
+
+        setConversationListItemClickListener(new EaseConversationListItemClickListener() {
+            @Override
+            public void onListItemClicked(EMConversation conversation) {
+                ChatUtils.goToChat(getActivity(), conversation.conversationId(), conversation.getType());
+            }
+        });
+
+        EMClient.getInstance().chatManager().addMessageListener(this);
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EMClient.getInstance().chatManager().removeMessageListener(this);
+    }
+
+    @Override
+    public void onMessageReceived(List<EMMessage> list) {
+        if(ActivityUtils.isTopActivity(getContext(), CustomChatActivity.class)) {
+            return;
+        }
+        for (EMMessage message : list) {
+            EaseUI.getInstance().getNotifier().vibrateAndPlayTone(message);
+        }
+        refresh();
+    }
+
+    @Override
+    public void onCmdMessageReceived(List<EMMessage> list) {
+
+    }
+
+    @Override
+    public void onMessageRead(List<EMMessage> list) {
+
+    }
+
+    @Override
+    public void onMessageDelivered(List<EMMessage> list) {
+
+    }
+
+    @Override
+    public void onMessageRecalled(List<EMMessage> list) {
+
+    }
+
+    @Override
+    public void onMessageChanged(EMMessage emMessage, Object o) {
+
     }
 }

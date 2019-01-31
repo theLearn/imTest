@@ -4,11 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMConversation;
 import com.hyphenate.easeui.EaseConstant;
 
 public final class ChatUtils {
 
-    private ChatUtils(){}
+    private ChatUtils() {
+    }
 
     /**
      * 获取所有未读消息数量
@@ -30,9 +32,17 @@ public final class ChatUtils {
     /**
      * 开始聊天
      */
-    public static void goToChat(Context context, String id) {
+    public static void goToChat(Context context, String id, EMConversation.EMConversationType type) {
+        int typeId = EaseConstant.CHATTYPE_SINGLE;
+        if (type == EMConversation.EMConversationType.GroupChat) {
+            typeId = EaseConstant.CHATTYPE_GROUP;
+        } else if (type == EMConversation.EMConversationType.ChatRoom) {
+            typeId = EaseConstant.CHATTYPE_CHATROOM;
+        }
+
         Intent i = new Intent(context, CustomChatActivity.class);
         i.putExtra(EaseConstant.EXTRA_USER_ID, id);
+        i.putExtra(EaseConstant.EXTRA_CHAT_TYPE, typeId);
         context.startActivity(i);
     }
 

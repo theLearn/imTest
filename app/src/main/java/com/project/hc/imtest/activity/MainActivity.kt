@@ -1,6 +1,7 @@
 package com.project.hc.imtest.activity
 
 import android.support.v4.app.Fragment
+import android.support.v4.view.ViewPager
 import android.support.v7.app.ActionBar
 import android.view.LayoutInflater
 import android.view.Menu
@@ -14,6 +15,7 @@ import com.project.hc.imtest.R
 import com.project.hc.imtest.chat.ChatUtils
 import com.project.hc.imtest.chat.CommonCallback
 import com.project.hc.imtest.chat.CustomConversationListFragment
+import com.project.hc.imtest.fragment.PersonFragment
 import kotlinx.android.synthetic.main.content_main.*
 
 
@@ -23,6 +25,12 @@ class MainActivity : BasicActivity() {
     private lateinit var mAdapter: FragmentAdapter
     private val fragments: MutableList<Fragment> = arrayListOf()
     private val titles: MutableList<String> = arrayListOf()
+    private val tabResId: Array<Int> = arrayOf(
+        R.drawable.selector_tab_img_first,
+        R.drawable.selector_tab_img_two,
+        R.drawable.selector_tab_img_three,
+        R.drawable.selector_tab_img_four
+    )
 
     override fun getLayoutResId(): Int {
         return R.layout.content_main
@@ -36,7 +44,7 @@ class MainActivity : BasicActivity() {
         setAbTitle(R.string.home)
 
         operateLoadingDialog(true)
-        ChatUtils.loginChat(this, "18502729006", "137954682", object : CommonCallback{
+        ChatUtils.loginChat(this, "18502729006", "137954682", object : CommonCallback {
             override fun onSuccess() {
                 runOnUiThread {
                     initTab()
@@ -56,19 +64,19 @@ class MainActivity : BasicActivity() {
         vp_main.removeAllViews()
         tabs_main.removeAllTabs()
 
-        titles.add("环信")
-        titles.add("通讯录")
-        titles.add("发现")
-        titles.add("我")
+        titles.add(getString(R.string.home))
+        titles.add(getString(R.string.message))
+        titles.add(getString(R.string.service))
+        titles.add(getString(R.string.person))
 
         val conversationListFragment = CustomConversationListFragment()
         conversationListFragment.setConversationListItemClickListener { conversation ->
-            ChatUtils.goToChat(this@MainActivity, conversation.conversationId())
+            ChatUtils.goToChat(this@MainActivity, conversation.conversationId(), conversation.type)
         }
         fragments.add(conversationListFragment)
         fragments.add(CustomConversationListFragment())
         fragments.add(CustomConversationListFragment())
-        fragments.add(CustomConversationListFragment())
+        fragments.add(PersonFragment())
 
         mAdapter = FragmentAdapter(supportFragmentManager)
         mAdapter.mTitles = titles
@@ -81,11 +89,28 @@ class MainActivity : BasicActivity() {
         for (i in 0..3) {
             val itemView = LayoutInflater.from(this).inflate(R.layout.item_tab_bottom, tabs_main, false)
             val iconView = itemView.findViewById<ImageView>(R.id.iv_tab_item)
-            iconView.setBackgroundResource(R.drawable.selector_tab_img_first)
+            iconView.setImageResource(tabResId[i])
             val txtView = itemView.findViewById<TextView>(R.id.tv_tab_item)
             txtView.text = titles[i]
             tabs_main.getTabAt(i)?.customView = itemView
         }
+
+        vp_main.addOnPageChangeListener(object :
+            ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(p0: Int) {
+            }
+
+            override fun onPageScrolled(p0: Int, p1: Float, p2: Int) {
+            }
+
+            override fun onPageSelected(position: Int) {
+                if (position >= 3) {
+                    setAbTitle("")
+                } else {
+                    setAbTitle(titles[position])
+                }
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

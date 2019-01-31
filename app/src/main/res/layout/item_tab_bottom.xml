@@ -12,8 +12,7 @@
             android:layout_width="@dimen/public_space_value_25"
             android:layout_height="@dimen/public_space_value_25"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/selector_tab_img_first"
-            android:scaleType="fitXY" />
+            android:scaleType="fitCenter" />
 
     <TextView
             android:layout_marginTop="@dimen/public_space_value_3"
