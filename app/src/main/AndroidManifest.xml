@@ -50,6 +50,11 @@
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
 
+        <activity android:name="com.project.hc.imtest.activity.PersonInfoActivity"
+                  android:configChanges="keyboardHidden|orientation"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
+
         <activity android:name="com.project.hc.imtest.chat.CustomChatActivity"
                   android:configChanges="keyboardHidden|orientation"
                   android:screenOrientation="portrait"

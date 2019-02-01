@@ -29,7 +29,8 @@
     <string name="person_setting">设置</string>
     <string name="person_about_us">关于我们</string>
     <string name="person_call">投诉举报</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_person_info">个人信息</string>
+    <string name="my_nick">我的昵称</string>
+    <string name="photo">头像</string>
+    <string name="logout">退出登陆</string>
 </resources>

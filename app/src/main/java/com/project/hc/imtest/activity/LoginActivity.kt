@@ -3,6 +3,7 @@ package com.project.hc.imtest.activity
 import android.content.Intent
 import android.view.View
 import com.example.hongcheng.common.base.BasicActivity
+import com.example.hongcheng.common.util.ScreenUtils
 import com.example.hongcheng.common.util.ToastUtils
 import com.example.hongcheng.common.util.ValidateUtils
 import com.example.hongcheng.common.util.ViewUtils
@@ -17,6 +18,8 @@ class LoginActivity : BasicActivity(), View.OnClickListener {
     }
 
     override fun initView() {
+        ScreenUtils.setLightStatusBar(this, true)
+        ScreenUtils.setWindowStatusBarColor(this, R.color.white)
         iv_login_cancel.setOnClickListener(this)
         tv_register_account.setOnClickListener(this)
         tv_forget_pw.setOnClickListener(this)

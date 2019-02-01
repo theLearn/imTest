@@ -39,8 +39,8 @@ class MainActivity : BasicActivity() {
     override fun initView() {
         setSupportActionBar(tb_main)
         actionBar = supportActionBar
-        ScreenUtils.setWindowStatusBarColor(this, resources.getColor(R.color.colorBase))
-
+        ScreenUtils.setLightStatusBar(this, true)
+        ScreenUtils.setWindowStatusBarColor(this, R.color.white)
         setAbTitle(R.string.home)
 
         operateLoadingDialog(true)
