@@ -33,4 +33,6 @@
     <string name="my_nick">我的昵称</string>
     <string name="photo">头像</string>
     <string name="logout">退出登陆</string>
+    <string name="group_name_default">福利群</string>
+    <string name="group_des_default">10个包(赔率1.0)</string>
 </resources>

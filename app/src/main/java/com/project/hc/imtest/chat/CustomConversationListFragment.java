@@ -4,7 +4,6 @@ import android.view.View;
 import com.example.hongcheng.common.util.ActivityUtils;
 import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.EaseUI;
 import com.hyphenate.easeui.ui.EaseConversationListFragment;
@@ -20,14 +19,6 @@ public class CustomConversationListFragment extends EaseConversationListFragment
 
         hideTitleBar();
         getView().findViewById(R.id.il_search_bar).setVisibility(View.GONE);
-
-        setConversationListItemClickListener(new EaseConversationListItemClickListener() {
-            @Override
-            public void onListItemClicked(EMConversation conversation) {
-                ChatUtils.goToChat(getActivity(), conversation.conversationId(), conversation.getType());
-            }
-        });
-
         EMClient.getInstance().chatManager().addMessageListener(this);
     }
 
@@ -40,7 +31,7 @@ public class CustomConversationListFragment extends EaseConversationListFragment
 
     @Override
     public void onMessageReceived(List<EMMessage> list) {
-        if(ActivityUtils.isTopActivity(getContext(), CustomChatActivity.class)) {
+        if (ActivityUtils.isTopActivity(getContext(), CustomChatActivity.class)) {
             return;
         }
         for (EMMessage message : list) {

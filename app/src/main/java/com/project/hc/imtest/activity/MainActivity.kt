@@ -15,6 +15,7 @@ import com.project.hc.imtest.R
 import com.project.hc.imtest.chat.ChatUtils
 import com.project.hc.imtest.chat.CommonCallback
 import com.project.hc.imtest.chat.CustomConversationListFragment
+import com.project.hc.imtest.fragment.GroupListFragment
 import com.project.hc.imtest.fragment.PersonFragment
 import kotlinx.android.synthetic.main.content_main.*
 
@@ -69,12 +70,12 @@ class MainActivity : BasicActivity() {
         titles.add(getString(R.string.service))
         titles.add(getString(R.string.person))
 
+        fragments.add(GroupListFragment())
         val conversationListFragment = CustomConversationListFragment()
         conversationListFragment.setConversationListItemClickListener { conversation ->
             ChatUtils.goToChat(this@MainActivity, conversation.conversationId(), conversation.type)
         }
         fragments.add(conversationListFragment)
-        fragments.add(CustomConversationListFragment())
         fragments.add(CustomConversationListFragment())
         fragments.add(PersonFragment())
 
