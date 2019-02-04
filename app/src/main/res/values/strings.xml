@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">imTest</string>
     <string name="home">大厅</string>
+    <string name="title_home_left">踩雷红包</string>
+    <string name="title_home_right">接龙红包</string>
     <string name="message">消息</string>
     <string name="service">服务</string>
     <string name="person">我</string>

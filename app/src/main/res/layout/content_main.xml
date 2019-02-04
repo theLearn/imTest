@@ -11,7 +11,48 @@
             android:background="@color/white"
             app:titleTextColor="@color/text_default"
             app:layout_scrollFlags="scroll|enterAlways|snap"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+        <RadioGroup
+                android:id="@+id/rg_title_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_theme_stroke"
+                android:orientation="horizontal">
+
+            <RadioButton
+                    android:id="@+id/rb_title_home_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="@string/title_home_left"
+                    android:textColor="@drawable/selector_theme_text_color"
+                    android:background="@drawable/bg_select_round_theme_left"
+                    android:paddingLeft="@dimen/public_space_value_10"
+                    android:paddingRight="@dimen/public_space_value_10"
+                    android:paddingTop="@dimen/public_space_value_8"
+                    android:button="@null"
+                    android:checked="true"
+                    android:paddingBottom="@dimen/public_space_value_8"
+                    android:textSize="@dimen/small_text_size"/>
+
+            <RadioButton
+                    android:id="@+id/rb_title_home_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:background="@drawable/bg_select_round_theme_right"
+                    android:textColor="@drawable/selector_theme_text_color"
+                    android:textSize="@dimen/small_text_size"
+                    android:paddingLeft="@dimen/public_space_value_10"
+                    android:paddingRight="@dimen/public_space_value_10"
+                    android:paddingTop="@dimen/public_space_value_8"
+                    android:paddingBottom="@dimen/public_space_value_8"
+                    android:button="@null"
+                    android:text="@string/title_home_right"/>
+
+        </RadioGroup>
+    </android.support.v7.widget.Toolbar>
 
     <android.support.v4.view.ViewPager
             android:id="@+id/vp_main"

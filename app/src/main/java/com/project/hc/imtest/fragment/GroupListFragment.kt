@@ -20,6 +20,8 @@ import kotlinx.android.synthetic.main.fragment_group_list.*
 class GroupListFragment : BasicFragment() {
 
     private lateinit var mAdapter: GroupListAdapter
+    private val leftList: MutableList<EMGroupInfo> = arrayListOf()
+    private val rithtList: MutableList<EMGroupInfo> = arrayListOf()
 
     override fun getLayoutResId(): Int {
         return R.layout.fragment_group_list
@@ -43,9 +45,13 @@ class GroupListFragment : BasicFragment() {
         EMClient.getInstance().groupManager()
             .asyncGetPublicGroupsFromServer(10, "0", object : EMValueCallBack<EMCursorResult<EMGroupInfo>> {
                 override fun onSuccess(value: EMCursorResult<EMGroupInfo>?) {
+                    value?.data?.let {
+                        leftList.clear()
+                        leftList.addAll(it)
+                    }
+
                     activity?.runOnUiThread {
-                        mAdapter.data = value?.data!!
-                        mAdapter.notifyDataSetChanged()
+                        loadData(true)
                     }
                 }
 
@@ -79,5 +85,15 @@ class GroupListFragment : BasicFragment() {
 
     private fun toGroup(groupId: String) {
         ChatUtils.goToChat(activity, groupId, EMConversation.EMConversationType.GroupChat)
+    }
+
+    fun loadData(isLeft: Boolean) {
+        if (isLeft) {
+            mAdapter.data = leftList
+        } else {
+            mAdapter.data = rithtList
+        }
+
+        mAdapter.notifyDataSetChanged()
     }
 }

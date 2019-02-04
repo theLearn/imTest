@@ -4,8 +4,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
 import android.support.v7.app.ActionBar
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuItem
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.hongcheng.common.base.BasicActivity
@@ -24,6 +23,7 @@ class MainActivity : BasicActivity() {
 
     private var actionBar: ActionBar? = null
     private lateinit var mAdapter: FragmentAdapter
+    private val groupListFragment: GroupListFragment = GroupListFragment()
     private val fragments: MutableList<Fragment> = arrayListOf()
     private val titles: MutableList<String> = arrayListOf()
     private val tabResId: Array<Int> = arrayOf(
@@ -42,7 +42,18 @@ class MainActivity : BasicActivity() {
         actionBar = supportActionBar
         ScreenUtils.setLightStatusBar(this, true)
         ScreenUtils.setWindowStatusBarColor(this, R.color.white)
-        setAbTitle(R.string.home)
+        setAbTitle("")
+
+        rg_title_home.setOnCheckedChangeListener { radioGroup, i ->
+            when (i) {
+                R.id.rb_title_home_left -> {
+                    groupListFragment.loadData(true)
+                }
+                R.id.rb_title_home_right -> {
+                    groupListFragment.loadData(false)
+                }
+            }
+        }
 
         operateLoadingDialog(true)
         ChatUtils.loginChat(this, "18502729006", "137954682", object : CommonCallback {
@@ -70,7 +81,7 @@ class MainActivity : BasicActivity() {
         titles.add(getString(R.string.service))
         titles.add(getString(R.string.person))
 
-        fragments.add(GroupListFragment())
+        fragments.add(groupListFragment)
         val conversationListFragment = CustomConversationListFragment()
         conversationListFragment.setConversationListItemClickListener { conversation ->
             ChatUtils.goToChat(this@MainActivity, conversation.conversationId(), conversation.type)
@@ -105,33 +116,26 @@ class MainActivity : BasicActivity() {
             }
 
             override fun onPageSelected(position: Int) {
-                if (position >= 3) {
-                    setAbTitle("")
-                } else {
-                    setAbTitle(titles[position])
+                when (position) {
+                    0 -> {
+                        setAbTitle("")
+                        rg_title_home.visibility = View.VISIBLE
+                    }
+                    1 -> {
+                        setAbTitle(titles[position])
+                        rg_title_home.visibility = View.GONE
+                    }
+                    2 -> {
+                        setAbTitle(titles[position])
+                        rg_title_home.visibility = View.GONE
+                    }
+                    3 -> {
+                        setAbTitle("")
+                        rg_title_home.visibility = View.GONE
+                    }
                 }
             }
         })
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_tb_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_message -> {
-            }
-            R.id.action_fav -> {
-            }
-            R.id.action_search -> {
-
-            }
-            else -> {
-            }
-        }
-        return true
     }
 
     private fun setAbTitle(resId: Int) {
