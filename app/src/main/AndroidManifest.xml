@@ -55,6 +55,51 @@
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
 
+        <activity android:name="com.project.hc.imtest.activity.PackageActivity"
+                  android:configChanges="keyboardHidden|orientation"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
+
+        <activity android:name="com.project.hc.imtest.activity.MyGetActivity"
+                  android:configChanges="keyboardHidden|orientation"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
+
+        <activity android:name="com.project.hc.imtest.activity.RedPackageHistoryActivity"
+                  android:configChanges="keyboardHidden|orientation"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
+
+        <activity android:name="com.project.hc.imtest.activity.SettingActivity"
+                  android:configChanges="keyboardHidden|orientation"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
+
+        <activity android:name="com.project.hc.imtest.activity.AboutActivity"
+                  android:configChanges="keyboardHidden|orientation"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
+
+        <activity android:name="com.project.hc.imtest.activity.IntroduceActivity"
+                  android:configChanges="keyboardHidden|orientation"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
+
+        <activity android:name="com.project.hc.imtest.activity.BindAccountActivity"
+                  android:configChanges="keyboardHidden|orientation"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
+
+        <activity android:name="com.project.hc.imtest.activity.BindAlipayActivity"
+                  android:configChanges="keyboardHidden|orientation"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
+
+        <activity android:name="com.project.hc.imtest.activity.BindBankActivity"
+                  android:configChanges="keyboardHidden|orientation"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
+
         <activity android:name="com.project.hc.imtest.chat.CustomChatActivity"
                   android:configChanges="keyboardHidden|orientation"
                   android:screenOrientation="portrait"

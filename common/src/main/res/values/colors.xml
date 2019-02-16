@@ -274,6 +274,7 @@
     <color name="text_red_d0">#d0021b</color>
     <color name="text_red_ff">#ff0000</color>
     <color name="text_red_ff4b">#ff4b4b</color>
+    <color name="text_red_ff50">#FF5050</color>
     <color name="text_gray_b8">#b8b8b8</color>
 
     <!-- 背景颜色 -->
@@ -293,6 +294,7 @@
     <color name="colorGray">#CCCCCC</color>
     <color name="text_default">#ff474747</color>
     <color name="text_second_default">#ffc2c2c2</color>
+    <color name="text_third_default">#ff474747</color>
     <color name="text_gray">#AAAAAA</color>
     <color name="line_gray">#E6E6E6</color>
     <color name="text_ab">#ffababab</color>

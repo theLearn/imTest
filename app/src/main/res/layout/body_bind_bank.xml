@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:paddingLeft="@dimen/public_space_value_18"
+              android:paddingRight="@dimen/public_space_value_18"
+              android:orientation="vertical">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/public_space_value_20"
+            android:paddingBottom="@dimen/public_space_value_20"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+        <TextView
+                android:layout_width="@dimen/public_space_value_90"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/normal_text_size"
+                android:text="@string/bank"
+                android:textColor="@color/text_default"/>
+        <EditText
+                android:id="@+id/et_bind_bank_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/normal_text_size"
+                android:hint="@string/please_input_bank_name_hint"
+                android:layout_marginLeft="@dimen/public_space_value_10"
+                android:textColor="@color/text_default"
+                android:singleLine="true"
+                android:inputType="text"
+                android:maxLength="20"
+                android:background="@null"/>
+    </LinearLayout>
+
+    <include layout="@layout/line_horizontal"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/public_space_value_20"
+            android:paddingBottom="@dimen/public_space_value_20"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+        <TextView
+                android:layout_width="@dimen/public_space_value_90"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/normal_text_size"
+                android:text="@string/card_no"
+                android:textColor="@color/text_default"/>
+        <EditText
+                android:id="@+id/et_bind_bank_card_no"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/normal_text_size"
+                android:textColor="@color/text_default"
+                android:hint="@string/please_input_bank_card_no_hint"
+                android:singleLine="true"
+                android:inputType="number"
+                android:maxLength="30"
+                android:layout_marginLeft="@dimen/public_space_value_10"
+                android:background="@null"/>
+    </LinearLayout>
+
+    <include layout="@layout/line_horizontal"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/public_space_value_20"
+            android:paddingBottom="@dimen/public_space_value_20"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+        <TextView
+                android:layout_width="@dimen/public_space_value_90"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/normal_text_size"
+                android:text="@string/card_no_confim"
+                android:textColor="@color/text_default"/>
+        <EditText
+                android:id="@+id/et_bind_bank_card_no_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/normal_text_size"
+                android:textColor="@color/text_default"
+                android:hint="@string/please_input_bank_card_no_hint"
+                android:singleLine="true"
+                android:inputType="number"
+                android:maxLength="30"
+                android:layout_marginLeft="@dimen/public_space_value_10"
+                android:background="@null"/>
+    </LinearLayout>
+
+    <include layout="@layout/line_horizontal"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/public_space_value_20"
+            android:paddingBottom="@dimen/public_space_value_20"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+        <TextView
+                android:layout_width="@dimen/public_space_value_90"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/normal_text_size"
+                android:text="@string/bank_card_name"
+                android:textColor="@color/text_default"/>
+        <EditText
+                android:id="@+id/et_bind_bank_card_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/normal_text_size"
+                android:textColor="@color/text_default"
+                android:hint="@string/please_input_card_name_hint"
+                android:singleLine="true"
+                android:inputType="text"
+                android:maxLength="16"
+                android:layout_marginLeft="@dimen/public_space_value_10"
+                android:background="@null"/>
+    </LinearLayout>
+
+    <include layout="@layout/line_horizontal"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/public_space_value_20"
+            android:paddingBottom="@dimen/public_space_value_20"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+        <TextView
+                android:layout_width="@dimen/public_space_value_90"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/normal_text_size"
+                android:text="@string/certify_card_no"
+                android:textColor="@color/text_default"/>
+        <EditText
+                android:id="@+id/et_bind_bank_certify_card_no"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/normal_text_size"
+                android:textColor="@color/text_default"
+                android:hint="@string/please_input_certify_crad_no_hint"
+                android:singleLine="true"
+                android:inputType="text"
+                android:maxLength="20"
+                android:layout_marginLeft="@dimen/public_space_value_10"
+                android:background="@null"/>
+    </LinearLayout>
+
+    <include layout="@layout/line_horizontal"/>
+
+    <Button
+            android:id="@+id/bt_bind_bank_submit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/public_space_value_40"
+            android:layout_marginTop="@dimen/public_space_value_60"
+            android:background="@drawable/bg_bt_bottom"
+            android:textSize="@dimen/large_text_size"
+            android:text="@string/submit"
+            android:textColor="@color/white"/>
+
+</LinearLayout>

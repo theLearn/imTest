@@ -21,7 +21,7 @@ class GroupListFragment : BasicFragment() {
 
     private lateinit var mAdapter: GroupListAdapter
     private val leftList: MutableList<EMGroupInfo> = arrayListOf()
-    private val rithtList: MutableList<EMGroupInfo> = arrayListOf()
+    private val rightList: MutableList<EMGroupInfo> = arrayListOf()
 
     override fun getLayoutResId(): Int {
         return R.layout.fragment_group_list
@@ -91,7 +91,7 @@ class GroupListFragment : BasicFragment() {
         if (isLeft) {
             mAdapter.data = leftList
         } else {
-            mAdapter.data = rithtList
+            mAdapter.data = rightList
         }
 
         mAdapter.notifyDataSetChanged()

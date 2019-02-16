@@ -8,7 +8,7 @@ import com.example.hongcheng.common.util.ImageLoadUtils
 import com.example.hongcheng.common.util.ValidateUtils
 import com.example.hongcheng.common.util.ViewUtils
 import com.project.hc.imtest.R
-import com.project.hc.imtest.activity.PersonInfoActivity
+import com.project.hc.imtest.activity.*
 import kotlinx.android.synthetic.main.fragment_person.*
 
 class PersonFragment : BasicFragment(), View.OnClickListener {
@@ -38,18 +38,24 @@ class PersonFragment : BasicFragment(), View.OnClickListener {
                 startActivity(Intent(activity, PersonInfoActivity::class.java))
             }
             R.id.ll_person_package -> {
+                startActivity(Intent(activity, PackageActivity::class.java))
             }
             R.id.ll_person_get_cash -> {
+                startActivity(Intent(activity, MyGetActivity::class.java))
             }
             R.id.ll_person_red_record -> {
+                startActivity(Intent(activity, RedPackageHistoryActivity::class.java))
             }
             R.id.ll_person_cash -> {
             }
             R.id.ll_person_setting -> {
+                startActivity(Intent(activity, SettingActivity::class.java))
             }
             R.id.ll_person_about -> {
+                startActivity(Intent(activity, AboutActivity::class.java))
             }
             R.id.ll_person_call -> {
+                startActivity(Intent(activity, IntroduceActivity::class.java))
             }
             else -> {
 

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <include layout="@layout/line_horizontal"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_theme_round"
+            android:gravity="center_vertical"
+            android:paddingTop="@dimen/public_space_value_35"
+            android:paddingBottom="@dimen/public_space_value_35"
+            android:paddingLeft="@dimen/public_space_value_70"
+            android:paddingRight="@dimen/public_space_value_70"
+            android:layout_margin="@dimen/public_space_value_8"
+            android:orientation="horizontal">
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+            <ImageView
+                    android:layout_width="@dimen/public_space_value_30"
+                    android:layout_height="@dimen/public_space_value_30"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/icon_package_white"/>
+
+            <TextView
+                    android:layout_marginTop="@dimen/public_space_value_10"
+                    android:layout_width="wrap_content"
+                    android:textSize="@dimen/big_text_size"
+                    android:text="@string/person_my_package"
+                    android:textColor="@color/white"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <TextView
+                android:id="@+id/tv_package_amount"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:textSize="@dimen/large_text_size"
+                android:textColor="@color/white"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_white_round"
+            android:gravity="center_vertical"
+            android:paddingTop="@dimen/public_space_value_10"
+            android:paddingBottom="@dimen/public_space_value_10"
+            android:layout_margin="@dimen/public_space_value_8"
+            android:orientation="horizontal">
+        <LinearLayout
+                android:id="@+id/ll_recharge"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/public_space_value_10"
+                android:paddingBottom="@dimen/public_space_value_10"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+            <ImageView
+                    android:layout_width="@dimen/public_space_value_25"
+                    android:layout_height="@dimen/public_space_value_25"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/icon_recharge"/>
+
+            <TextView
+                    android:layout_marginTop="@dimen/public_space_value_10"
+                    android:layout_width="wrap_content"
+                    android:text="@string/recharge"
+                    android:textSize="@dimen/normal_text_size"
+                    android:textColor="@color/text_default"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+        <include layout="@layout/line_vertical"/>
+
+        <LinearLayout
+                android:id="@+id/ll_cash_withdrawal"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/public_space_value_10"
+                android:paddingBottom="@dimen/public_space_value_10"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+            <ImageView
+                    android:layout_width="@dimen/public_space_value_25"
+                    android:layout_height="@dimen/public_space_value_25"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/icon_cash_withdrawal"/>
+
+            <TextView
+                    android:layout_marginTop="@dimen/public_space_value_10"
+                    android:layout_width="wrap_content"
+                    android:text="@string/cash_withdrawal"
+                    android:textSize="@dimen/normal_text_size"
+                    android:textColor="@color/text_default"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

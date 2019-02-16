@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical">
+
+    <EditText
+            android:id="@+id/et_introduce_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_gray_stroke"
+            android:padding="@dimen/public_space_value_20"
+            android:layout_marginTop="@dimen/public_space_value_15"
+            android:layout_marginBottom="@dimen/public_space_value_15"
+            android:layout_marginRight="@dimen/public_space_value_20"
+            android:layout_marginLeft="@dimen/public_space_value_20"
+            android:textSize="@dimen/normal_text_size"
+            android:textColor="@color/text_default"
+            android:hint="@string/please_input_name_hint"
+            android:singleLine="true"
+            android:inputType="text"
+            android:maxLength="20"/>
+
+    <EditText
+            android:id="@+id/et_introduce_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/normal_text_size"
+            android:textColor="@color/text_default"
+            android:hint="@string/please_input_your_phone_hint"
+            android:singleLine="true"
+            android:inputType="phone"
+            android:maxLength="20"
+            android:background="@drawable/bg_gray_stroke"
+            android:padding="@dimen/public_space_value_20"
+            android:layout_marginTop="@dimen/public_space_value_15"
+            android:layout_marginBottom="@dimen/public_space_value_15"
+            android:layout_marginRight="@dimen/public_space_value_20"
+            android:layout_marginLeft="@dimen/public_space_value_20"/>
+
+    <EditText
+            android:id="@+id/et_introduce"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/normal_text_size"
+            android:textColor="@color/text_default"
+            android:hint="@string/please_input_introduce_hint"
+            android:gravity="top"
+            android:inputType="textMultiLine"
+            android:maxLines="6"
+            android:minLines="6"
+            android:maxLength="200"
+            android:background="@drawable/bg_gray_stroke"
+            android:padding="@dimen/public_space_value_20"
+            android:layout_marginTop="@dimen/public_space_value_15"
+            android:layout_marginBottom="@dimen/public_space_value_15"
+            android:layout_marginRight="@dimen/public_space_value_20"
+            android:layout_marginLeft="@dimen/public_space_value_20"/>
+
+    <Button
+            android:id="@+id/bt_submit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/public_space_value_40"
+            android:layout_marginLeft="@dimen/public_space_value_20"
+            android:layout_marginRight="@dimen/public_space_value_20"
+            android:layout_marginTop="@dimen/public_space_value_20"
+            android:background="@drawable/bg_bt_bottom"
+            android:textSize="@dimen/large_text_size"
+            android:text="@string/submit"
+            android:textColor="@color/white"/>
+</LinearLayout>
+
