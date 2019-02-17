@@ -12,6 +12,17 @@
             app:titleTextColor="@color/text_default"
             app:layout_scrollFlags="scroll|enterAlways|snap"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+        <TextView
+                android:id="@+id/tv_main_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|center_vertical"
+                android:visibility="gone"
+                android:singleLine="true"
+                android:text="@string/app_name"
+                android:textColor="@color/text_default"
+                android:textSize="20sp"/>
+
         <RadioGroup
                 android:id="@+id/rg_title_home"
                 android:layout_width="wrap_content"

@@ -10,7 +10,7 @@ import android.view.View
 import com.example.hongcheng.common.util.ScreenUtils
 import com.example.hongcheng.common.view.DividerItemDecoration
 import com.project.hc.imtest.R
-import com.project.hc.imtest.adapter.viewholder.RedPackageListAdapter
+import com.project.hc.imtest.adapter.RedPackageListAdapter
 import com.project.hc.imtest.model.RedPackageInfo
 import kotlinx.android.synthetic.main.body_red_package_history.*
 

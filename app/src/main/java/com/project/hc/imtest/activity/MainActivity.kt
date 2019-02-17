@@ -16,6 +16,7 @@ import com.project.hc.imtest.chat.CommonCallback
 import com.project.hc.imtest.chat.CustomConversationListFragment
 import com.project.hc.imtest.fragment.GroupListFragment
 import com.project.hc.imtest.fragment.PersonFragment
+import com.project.hc.imtest.fragment.ServiceFragment
 import kotlinx.android.synthetic.main.content_main.*
 
 
@@ -42,7 +43,7 @@ class MainActivity : BasicActivity() {
         actionBar = supportActionBar
         ScreenUtils.setLightStatusBar(this, true)
         ScreenUtils.setWindowStatusBarColor(this, R.color.white)
-        setAbTitle("")
+        actionBar?.title = ""
 
         rg_title_home.setOnCheckedChangeListener { radioGroup, i ->
             when (i) {
@@ -84,10 +85,10 @@ class MainActivity : BasicActivity() {
         fragments.add(groupListFragment)
         val conversationListFragment = CustomConversationListFragment()
         conversationListFragment.setConversationListItemClickListener { conversation ->
-            ChatUtils.goToChat(this@MainActivity, conversation.conversationId(), conversation.type)
+            ChatUtils.goToChat(this@MainActivity, conversation.conversationId(), "", conversation.type)
         }
         fragments.add(conversationListFragment)
-        fragments.add(CustomConversationListFragment())
+        fragments.add(ServiceFragment())
         fragments.add(PersonFragment())
 
         mAdapter = FragmentAdapter(supportFragmentManager)
@@ -118,32 +119,25 @@ class MainActivity : BasicActivity() {
             override fun onPageSelected(position: Int) {
                 when (position) {
                     0 -> {
-                        setAbTitle("")
+                        tv_main_title.visibility = View.GONE
                         rg_title_home.visibility = View.VISIBLE
                     }
                     1 -> {
-                        setAbTitle(titles[position])
+                        tv_main_title.text = titles[position]
+                        tv_main_title.visibility = View.VISIBLE
                         rg_title_home.visibility = View.GONE
                     }
                     2 -> {
-                        setAbTitle(titles[position])
+                        tv_main_title.text = titles[position]
+                        tv_main_title.visibility = View.VISIBLE
                         rg_title_home.visibility = View.GONE
                     }
                     3 -> {
-                        setAbTitle("")
+                        tv_main_title.visibility = View.GONE
                         rg_title_home.visibility = View.GONE
                     }
                 }
             }
         })
     }
-
-    private fun setAbTitle(resId: Int) {
-        actionBar?.setTitle(resId)
-    }
-
-    private fun setAbTitle(title: String) {
-        actionBar?.title = title
-    }
-
 }

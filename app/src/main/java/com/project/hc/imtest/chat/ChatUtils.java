@@ -32,7 +32,7 @@ public final class ChatUtils {
     /**
      * 开始聊天
      */
-    public static void goToChat(Context context, String id, EMConversation.EMConversationType type) {
+    public static void goToChat(Context context, String id, String title, EMConversation.EMConversationType type) {
         int typeId = EaseConstant.CHATTYPE_SINGLE;
         if (type == EMConversation.EMConversationType.GroupChat) {
             typeId = EaseConstant.CHATTYPE_GROUP;
@@ -43,6 +43,7 @@ public final class ChatUtils {
         Intent i = new Intent(context, CustomChatActivity.class);
         i.putExtra(EaseConstant.EXTRA_USER_ID, id);
         i.putExtra(EaseConstant.EXTRA_CHAT_TYPE, typeId);
+        i.putExtra(EaseConstant.EXTRA_TITLE, title);
         context.startActivity(i);
     }
 

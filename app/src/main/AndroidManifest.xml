@@ -85,6 +85,21 @@
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
 
+        <activity android:name="com.project.hc.imtest.activity.ModifyPwActivity"
+                  android:configChanges="keyboardHidden|orientation"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
+
+        <activity android:name="com.project.hc.imtest.activity.MsgListActivity"
+                  android:configChanges="keyboardHidden|orientation"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
+
+        <activity android:name="com.project.hc.imtest.activity.WfIntroduceActivity"
+                  android:configChanges="keyboardHidden|orientation"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
+
         <activity android:name="com.project.hc.imtest.activity.BindAccountActivity"
                   android:configChanges="keyboardHidden|orientation"
                   android:screenOrientation="portrait"

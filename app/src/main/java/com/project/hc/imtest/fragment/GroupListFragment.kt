@@ -84,7 +84,7 @@ class GroupListFragment : BasicFragment() {
     }
 
     private fun toGroup(groupId: String) {
-        ChatUtils.goToChat(activity, groupId, EMConversation.EMConversationType.GroupChat)
+        ChatUtils.goToChat(activity, groupId, "", EMConversation.EMConversationType.GroupChat)
     }
 
     fun loadData(isLeft: Boolean) {

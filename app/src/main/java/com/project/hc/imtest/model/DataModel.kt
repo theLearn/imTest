@@ -30,3 +30,31 @@ data class RedPackageInfo(
         }
     }
 }
+
+data class MsgInfo(
+    var title: String,
+    var time: String,
+    var content: String
+) : Parcelable {
+    constructor(source: Parcel) : this(
+        source.readString(),
+        source.readString(),
+        source.readString()
+    )
+
+    override fun describeContents() = 0
+
+    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
+        writeString(title)
+        writeString(time)
+        writeString(content)
+    }
+
+    companion object {
+        @JvmField
+        val CREATOR: Parcelable.Creator<MsgInfo> = object : Parcelable.Creator<MsgInfo> {
+            override fun createFromParcel(source: Parcel): MsgInfo = MsgInfo(source)
+            override fun newArray(size: Int): Array<MsgInfo?> = arrayOfNulls(size)
+        }
+    }
+}

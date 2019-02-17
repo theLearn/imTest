@@ -1,6 +1,5 @@
 package com.project.hc.imtest.activity
 
-import android.content.Intent
 import android.view.View
 import com.example.hongcheng.common.util.ViewUtils
 import com.project.hc.imtest.R

@@ -45,7 +45,9 @@ class SettingActivity : AppCommonActivity(), View.OnClickListener {
             R.id.ll_setting_bind_account -> {
                 startActivity(Intent(this, BindAccountActivity::class.java))
             }
-            R.id.ll_setting_modify_pw -> {}
+            R.id.ll_setting_modify_pw -> {
+                startActivity(Intent(this, ModifyPwActivity::class.java))
+            }
             R.id.ll_setting_check_app_version -> {}
             else -> {
 
