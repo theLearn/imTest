@@ -3,7 +3,6 @@ package com.project.hc.imtest.chat;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
-import com.example.hongcheng.common.util.ToastUtils;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.ui.EaseChatFragment;
@@ -11,6 +10,7 @@ import com.hyphenate.easeui.widget.EaseChatExtendMenu;
 import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
 import com.project.hc.imtest.R;
 import com.project.hc.imtest.activity.RedPackageSendActivity;
+import com.project.hc.imtest.fragment.OpenRedPackageFragment;
 
 public class CustomChatFragment extends EaseChatFragment implements EaseChatFragment.EaseChatFragmentHelper {
     protected int[] itemIds = { ITEM_RED_PACKAGE};
@@ -60,7 +60,8 @@ public class CustomChatFragment extends EaseChatFragment implements EaseChatFrag
     @Override
     public boolean onMessageBubbleClick(EMMessage message) {
         if (message.getType() == EMMessage.Type.TXT && message.getBooleanAttribute("red",false)) {
-            ToastUtils.show(getActivity(), "红包");
+            OpenRedPackageFragment openRedPackageFragment = new OpenRedPackageFragment();
+            openRedPackageFragment.show(getFragmentManager(), "OpenRedPackageFragment");
             return true;
         }
         return false;

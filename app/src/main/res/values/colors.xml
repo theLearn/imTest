@@ -3,4 +3,6 @@
     <color name="bar_default">#fff3f3f3</color>
     <color name="bt_send_red_package_normal">#ffdc143c</color>
     <color name="bt_send_red_package_gray">#55dc143c</color>
+    <color name="text_red_package">#fff5e2b1</color>
+    <color name="bg_red_package">#fff05a49</color>
 </resources>

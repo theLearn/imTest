@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent" android:layout_height="match_parent">
+
+
+    <com.example.hongcheng.common.view.LinearLayoutForRect
+            android:background="@mipmap/bg_open_red_package"
+            android:layout_width="match_parent"
+            app:ll_scale="1.62"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:layout_weight="9"
+                android:layout_height="0dp">
+            <LinearLayout
+                    android:layout_marginTop="@dimen/public_space_value_100"
+                    android:layout_width="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_height="wrap_content">
+                <ImageView
+                        android:id="@+id/iv_red_package_user_photo"
+                        android:layout_width="@dimen/public_space_value_25"
+                        android:layout_height="@dimen/public_space_value_25"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/icon_photo_default"/>
+
+                <TextView
+                        android:id="@+id/tv_red_package_who"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/public_space_value_10"
+                        android:layout_marginRight="@dimen/public_space_value_20"
+                        android:singleLine="true"
+                        android:text="@string/who_red_package"
+                        android:textSize="@dimen/big_text_size"
+                        android:textColor="@color/text_red_package"/>
+            </LinearLayout>
+
+            <TextView
+                    android:id="@+id/tv_red_package_tip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/public_space_value_10"
+                    android:layout_marginLeft="@dimen/public_space_value_20"
+                    android:layout_marginRight="@dimen/public_space_value_20"
+                    android:textSize="@dimen/big_text_size"
+                    android:textColor="@color/text_red_package"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:layout_weight="5"
+                android:layout_height="0dp">
+            <ImageView
+                    android:id="@+id/iv_red_package_open"
+                    android:layout_width="@dimen/public_space_value_80"
+                    android:layout_height="@dimen/public_space_value_80"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/icon_open_red_package"/>
+            <TextView
+                    android:id="@+id/tv_red_package_view_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:padding="@dimen/public_space_value_10"
+                    android:text="@string/open_red_package_tip"
+                    android:textSize="@dimen/normal_text_size"
+                    android:textColor="@color/text_red_package"/>
+        </LinearLayout>
+    </com.example.hongcheng.common.view.LinearLayoutForRect>
+
+    <ImageView
+            android:id="@+id/iv_red_package_cancel"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_width="@dimen/public_space_value_30"
+            android:layout_height="@dimen/public_space_value_30"
+            android:scaleType="fitXY"
+            android:src="@mipmap/icon_close_red_package"/>
+
+</RelativeLayout>
