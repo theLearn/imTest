@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="bar_default">#fff3f3f3</color>
+    <color name="bt_send_red_package_normal">#ffdc143c</color>
+    <color name="bt_send_red_package_gray">#55dc143c</color>
 </resources>

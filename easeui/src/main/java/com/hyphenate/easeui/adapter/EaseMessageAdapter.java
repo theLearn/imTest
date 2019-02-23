@@ -21,7 +21,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
-
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
@@ -30,14 +29,7 @@ import com.hyphenate.easeui.model.styles.EaseMessageListItemStyle;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.easeui.widget.EaseChatMessageList.MessageListItemClickListener;
 import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
-import com.hyphenate.easeui.widget.presenter.EaseChatBigExpressionPresenter;
-import com.hyphenate.easeui.widget.presenter.EaseChatFilePresenter;
-import com.hyphenate.easeui.widget.presenter.EaseChatImagePresenter;
-import com.hyphenate.easeui.widget.presenter.EaseChatLocationPresenter;
-import com.hyphenate.easeui.widget.presenter.EaseChatRowPresenter;
-import com.hyphenate.easeui.widget.presenter.EaseChatTextPresenter;
-import com.hyphenate.easeui.widget.presenter.EaseChatVideoPresenter;
-import com.hyphenate.easeui.widget.presenter.EaseChatVoicePresenter;
+import com.hyphenate.easeui.widget.presenter.*;
 
 public class EaseMessageAdapter extends BaseAdapter{
 
@@ -63,6 +55,8 @@ public class EaseMessageAdapter extends BaseAdapter{
 	private static final int MESSAGE_TYPE_RECV_FILE = 11;
 	private static final int MESSAGE_TYPE_SENT_EXPRESSION = 12;
 	private static final int MESSAGE_TYPE_RECV_EXPRESSION = 13;
+	private static final int MESSAGE_TYPE_SENT_RED_PACKAGE = 14;
+	private static final int MESSAGE_TYPE_RECV_RED_PACKAGE = 15;
 	
 	
 	public int itemTypeCount; 
@@ -171,9 +165,9 @@ public class EaseMessageAdapter extends BaseAdapter{
 	 */
 	public int getViewTypeCount() {
 	    if(customRowProvider != null && customRowProvider.getCustomChatRowTypeCount() > 0){
-	        return customRowProvider.getCustomChatRowTypeCount() + 14;
+	        return customRowProvider.getCustomChatRowTypeCount() + 14 + 2;
 	    }
-        return 14;
+        return 14 + 2;
     }
 	
 
@@ -187,13 +181,15 @@ public class EaseMessageAdapter extends BaseAdapter{
 		}
 		
 		if(customRowProvider != null && customRowProvider.getCustomChatRowType(message) > 0){
-		    return customRowProvider.getCustomChatRowType(message) + 13;
+		    return customRowProvider.getCustomChatRowType(message) + 13 + 2;
 		}
 		
 		if (message.getType() == EMMessage.Type.TXT) {
 		    if(message.getBooleanAttribute(EaseConstant.MESSAGE_ATTR_IS_BIG_EXPRESSION, false)){
 		        return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_EXPRESSION : MESSAGE_TYPE_SENT_EXPRESSION;
-		    }
+		    }else if (message.getBooleanAttribute("red",false)){
+				return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_RED_PACKAGE : MESSAGE_TYPE_SENT_RED_PACKAGE;
+			}
 			return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_TXT : MESSAGE_TYPE_SENT_TXT;
 		}
 		if (message.getType() == EMMessage.Type.IMAGE) {
@@ -227,7 +223,9 @@ public class EaseMessageAdapter extends BaseAdapter{
         case TXT:
             if(message.getBooleanAttribute(EaseConstant.MESSAGE_ATTR_IS_BIG_EXPRESSION, false)){
 				presenter = new EaseChatBigExpressionPresenter();
-            }else{
+            }else if (message.getBooleanAttribute("red",false)){
+				presenter = new EaseChatRedPackagePresenter();//需要自己创建
+			}else{
 				presenter = new EaseChatTextPresenter();
             }
             break;
