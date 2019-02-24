@@ -67,6 +67,10 @@ public abstract class EaseChatPrimaryMenuBase extends RelativeLayout{
     public abstract void onTextInsert(CharSequence text);
     
     public abstract EditText getEditText();
+
+    protected void forbiddenWords() {
+
+    }
     
     /**
      * hide keyboard

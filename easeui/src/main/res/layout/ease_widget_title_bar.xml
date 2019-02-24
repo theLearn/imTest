@@ -10,6 +10,9 @@
         android:id="@+id/left_layout"
         android:layout_width="50dip"
         android:layout_height="match_parent"
+        android:paddingLeft="16dp"
+        android:paddingTop="13dp"
+        android:paddingBottom="13dp"
         android:background="@drawable/ease_common_tab_bg"
         android:clickable="true" >
 
@@ -26,12 +29,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:textColor="#ffffff"
+        android:textColor="#ff474747"
         android:textSize="20sp" />
 
     <RelativeLayout
         android:id="@+id/right_layout"
         android:layout_width="50dp"
+        android:paddingRight="16dp"
+        android:paddingTop="13dp"
+        android:paddingBottom="13dp"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:background="@drawable/ease_common_tab_bg" >

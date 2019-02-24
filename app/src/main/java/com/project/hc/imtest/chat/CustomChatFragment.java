@@ -35,6 +35,7 @@ public class CustomChatFragment extends EaseChatFragment implements EaseChatFrag
     protected void setUpView() {
         super.setUpView();
         setChatFragmentHelper(this);
+        inputMenu.forbiddenWords();
     }
 
     @Override
