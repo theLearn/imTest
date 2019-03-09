@@ -24,14 +24,5 @@ public class HttpConstants {
     public static final int COMMON_SUCCESS_CODE = 0;
 
     //基础路径
-    public static final String BASE_URL = "http:192.168.0.103:8080/";
-
-    //获取卡片信息路径
-    public static final String GET_CARDS_URL = "card/cards";
-
-    //获取卡片信息路径
-    public static final String GET_CARDS_DETAIL = "card/cardDetail";
-    
-    //文件上传下载路径
-    public static final String FILE_OPERATE = "file/operate";
+    public static final String BASE_URL = "http://39.108.165.84/api/v1/";
 }

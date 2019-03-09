@@ -3,11 +3,17 @@ package com.project.hc.imtest.activity
 import android.content.Intent
 import android.view.View
 import com.example.hongcheng.common.base.BasicActivity
-import com.example.hongcheng.common.util.ScreenUtils
-import com.example.hongcheng.common.util.ToastUtils
-import com.example.hongcheng.common.util.ValidateUtils
-import com.example.hongcheng.common.util.ViewUtils
+import com.example.hongcheng.common.cache.CacheManager
+import com.example.hongcheng.common.util.*
+import com.example.hongcheng.data.retrofit.ActionException
+import com.example.hongcheng.data.retrofit.BaseSubscriber
+import com.example.hongcheng.data.retrofit.RetrofitClient
+import com.example.hongcheng.data.retrofit.RetrofitManager
 import com.project.hc.imtest.R
+import com.project.hc.imtest.api.ApiConstants
+import com.project.hc.imtest.api.ApiRetrofit
+import com.project.hc.imtest.application.BaseApplication
+import com.project.hc.imtest.model.LoginInfo
 import kotlinx.android.synthetic.main.activity_login.*
 
 
@@ -24,6 +30,13 @@ class LoginActivity : BasicActivity(), View.OnClickListener {
         tv_register_account.setOnClickListener(this)
         tv_forget_pw.setOnClickListener(this)
         bt_login.setOnClickListener(this)
+
+        val phone : String = SPUtils.getStringFromSP(this, ApiConstants.MOBILE)
+        val password : String = SPUtils.getStringFromSP(this, ApiConstants.PASSWORD)
+        if(!StringUtils.isEmpty(phone)) {
+            et_login_phone.setText(phone)
+            et_login_pw.setText(password)
+        }
     }
 
     override fun onClick(view: View?) {
@@ -61,7 +74,24 @@ class LoginActivity : BasicActivity(), View.OnClickListener {
             return
         }
 
-        startActivity(Intent(this, MainActivity::class.java))
-        finish()
+        operateLoadingDialog(true)
+        compositeDisposable.add(
+            RetrofitClient.getInstance().map<LoginInfo>(
+                RetrofitManager.createRetrofit<ApiRetrofit>(BaseApplication.getInstance(), ApiRetrofit::class.java)
+                    .login(phone, password), object : BaseSubscriber<LoginInfo>() {
+                    override fun onError(e: ActionException) {
+                        operateLoadingDialog(false)
+                        ToastUtils.show(BaseApplication.getInstance(), e.message)
+                    }
+
+                    override fun onBaseNext(loginInfo : LoginInfo) {
+                        operateLoadingDialog(false)
+                        BaseApplication.getInstance()?.loginInfo = loginInfo
+                        SPUtils.putValueToSP(this@LoginActivity, ApiConstants.MOBILE, phone)
+                        SPUtils.putValueToSP(this@LoginActivity, ApiConstants.PASSWORD, password)
+                        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                        finish()
+                    }
+                }))
     }
 }

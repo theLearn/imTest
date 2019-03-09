@@ -1,7 +1,6 @@
 package com.project.hc.imtest.activity
 
 import android.graphics.Color
-import android.os.Handler
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
@@ -12,14 +11,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import com.example.hongcheng.common.util.ScreenUtils
+import com.example.hongcheng.common.util.ToastUtils
 import com.example.hongcheng.common.view.DividerItemDecoration
+import com.example.hongcheng.data.retrofit.ActionException
+import com.example.hongcheng.data.retrofit.BaseSubscriber
+import com.example.hongcheng.data.retrofit.RetrofitClient
+import com.example.hongcheng.data.retrofit.RetrofitManager
 import com.project.hc.imtest.R
 import com.project.hc.imtest.adapter.RedPackageListAdapter
+import com.project.hc.imtest.api.ApiRetrofit
+import com.project.hc.imtest.application.BaseApplication
+import com.project.hc.imtest.model.RecordList
 import com.project.hc.imtest.model.RedPackageInfo
 import kotlinx.android.synthetic.main.body_my_get.*
 
 
 class MyGetActivity : AppCommonActivity(), SwipeRefreshLayout.OnRefreshListener {
+
+    companion object {
+        private const val PAGE_SIZE : Int = 10
+    }
 
     private lateinit var mAdapter: RedPackageListAdapter
     private var page: Int = 0
@@ -68,9 +79,6 @@ class MyGetActivity : AppCommonActivity(), SwipeRefreshLayout.OnRefreshListener 
             dataList.clear()
             getData()
         }
-
-        showReplace(tv_my_get_today, R.string.my_get_today_tip, "100.0", R.color.text_red_ff50)
-        showReplace(tv_my_get_month, R.string.my_get_month_tip, "100.0", R.color.text_red_ff50)
     }
 
     override fun onRefresh() {
@@ -80,15 +88,30 @@ class MyGetActivity : AppCommonActivity(), SwipeRefreshLayout.OnRefreshListener 
     }
 
     private fun getData() {
-        Handler().postDelayed({
-            for (i in 1..20) {
-                dataList.add(RedPackageInfo("踩雷红包", "+2000.0", "2019-02-20 18:20:20"))
-            }
+        compositeDisposable.add(
+            RetrofitClient.getInstance().map<RecordList>(
+                RetrofitManager.createRetrofit<ApiRetrofit>(BaseApplication.getInstance(), ApiRetrofit::class.java)
+                    .getProfit(page, PAGE_SIZE), object : BaseSubscriber<RecordList>() {
+                    override fun onError(e: ActionException) {
+                        srl_my_get.isRefreshing = false
+                        ToastUtils.show(BaseApplication.getInstance(), e.message)
+                    }
 
-            srl_my_get.isRefreshing = false
-            mAdapter.data = dataList
-            rv_my_get.enableLoadMore(dataList.size <= 40)
-        }, 2000)
+                    override fun onBaseNext(obj : RecordList) {
+                        srl_my_get.isRefreshing = false
+                        showReplace(tv_my_get_today, R.string.my_get_today_tip, obj.today_profit, R.color.text_red_ff50)
+                        showReplace(tv_my_get_month, R.string.my_get_month_tip, obj.month_profit, R.color.text_red_ff50)
+                        val count = try {
+                            Integer.parseInt(obj.count)
+                        } catch (e : NumberFormatException) {
+                            0
+                        }
+                        dataList.addAll(obj.data)
+                        mAdapter.data = dataList
+                        rv_my_get.enableLoadMore(dataList.size <= count)
+                        page++
+                    }
+                }))
     }
 
     private fun showReplace(tv: TextView, tip: Int, replace: String, replaceColor: Int) {

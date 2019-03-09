@@ -64,12 +64,18 @@ public class RetrofitClient {
 
         @Override
         public ObservableSource<T> apply(BaseResponse<T> tResponse) {
-            int code = tResponse.getStatus();
-            String message = tResponse.getDescription();
-            if (code == HttpConstants.COMMON_SUCCESS_CODE) {
+            String code = tResponse.getCode();
+            String message = tResponse.getMsg();
+            if (tResponse.isSuccess()) {
                 return Observable.just(tResponse.getData());
             } else {
-                return Observable.error(new ActionException(code, message));
+                int errCode;
+                try {
+                    errCode = Integer.parseInt(code);
+                } catch (NumberFormatException e) {
+                    errCode = 999;
+                }
+                return Observable.error(new ActionException(errCode, message));
             }
         }
     }

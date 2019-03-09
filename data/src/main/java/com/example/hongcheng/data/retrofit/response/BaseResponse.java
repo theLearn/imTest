@@ -7,24 +7,24 @@ import com.example.hongcheng.common.constant.BaseConstants;
  * Created by hongcheng on 16/3/30.
  */
 public class BaseResponse<T>{
-    protected int status;
-    protected String description;
+    protected String code;
+    protected String msg;
     protected T data;
 
-    public int getStatus() {
-        return status;
+    public String getCode() {
+        return code;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public String getDescription() {
-        return description;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
     public T getData() {
@@ -36,12 +36,16 @@ public class BaseResponse<T>{
     }
 
     public boolean isSuccess(){
-        return BaseConstants.STATUS_SUCCESS == status;
+        String success = "" + BaseConstants.STATUS_SUCCESS;
+        return success.equals(code);
     }
-    
+
     @Override
-    public String toString()
-    {
-        return "BaseResponse{" + "status=" + status + ", description='" + description + '\'' + ", data=" + data + '}';
+    public String toString() {
+        return "BaseResponse{" +
+                "code='" + code + '\'' +
+                ", msg='" + msg + '\'' +
+                ", data=" + data +
+                '}';
     }
 }

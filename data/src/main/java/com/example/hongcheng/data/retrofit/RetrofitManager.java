@@ -7,7 +7,9 @@ import com.example.hongcheng.common.util.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -27,6 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class RetrofitManager {
     public static Map<String, Object> mRetrofitMap = new HashMap<String, Object>();
+    private static List<Interceptor> interceptors = new ArrayList<>();
 
     public static <T> T createRetrofit(Context context, Class<T> t){
 
@@ -35,7 +38,7 @@ public class RetrofitManager {
         if(mRetrofit == null){
             //设置缓存
             HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
-            httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
+            httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             OkHttpClient.Builder okHttpBuilder = new OkHttpClient.Builder().addInterceptor(httpLoggingInterceptor);
             //缓存路径
             File httpCache = context.getCacheDir();
@@ -43,8 +46,6 @@ public class RetrofitManager {
                 httpCache = new File(httpCache, "HttpResponseCache");
                 okHttpBuilder.cache(new Cache(httpCache, HttpConstants.HTTP_RESPONSE_DISK_CACHE_MAX_SIZE));
             }
-            //设置缓存策略
-            okHttpBuilder.addNetworkInterceptor(new CacheInterceptors(context));
 
             //设置超时时间
             okHttpBuilder.connectTimeout(HttpConstants.CONNECT_TIMEOUT, TimeUnit.MILLISECONDS);
@@ -62,6 +63,13 @@ public class RetrofitManager {
 //                }
 //            });
 
+            for (Interceptor interceptor : interceptors) {
+                //设置缓存策略
+//                okHttpBuilder.addNetworkInterceptor(new CacheInterceptors(context));
+                okHttpBuilder.addNetworkInterceptor(interceptor);
+            }
+
+
             Retrofit retrofit = new Retrofit.Builder()
                                     .baseUrl(HttpConstants.BASE_URL)
                                     .addConverterFactory(GsonConverterFactory.create())
@@ -73,6 +81,10 @@ public class RetrofitManager {
         }
 
         return mRetrofit;
+    }
+
+    public static void setInterceptors(List<Interceptor> interceptors) {
+        RetrofitManager.interceptors = interceptors;
     }
 
     private static class CacheInterceptors implements Interceptor {

@@ -3,12 +3,19 @@ package com.project.hc.imtest.application
 import android.support.multidex.MultiDexApplication
 import com.example.hongcheng.common.lifecycle.ActivityLifecycleImpl
 import com.example.hongcheng.common.util.ResUtil
+import com.example.hongcheng.data.retrofit.RetrofitManager
 import com.example.hongcheng.data.room.DBInit
 import com.hyphenate.chat.EMClient
 import com.hyphenate.chat.EMOptions
 import com.hyphenate.easeui.EaseUI
+import com.project.hc.imtest.model.LoginInfo
+import okhttp3.Interceptor
+import okhttp3.Response
+import java.io.IOException
 
 class BaseApplication : MultiDexApplication() {
+
+    internal var loginInfo : LoginInfo? = null
 
     private object BaseApplicationHolder {
         var INSTANCE: BaseApplication? = null
@@ -37,6 +44,36 @@ class BaseApplication : MultiDexApplication() {
         EMClient.getInstance().init(applicationContext, options)
 //在做打包混淆时，关闭debug模式，避免消耗不必要的资源
         EMClient.getInstance().setDebugMode(true)
-        EaseUI.getInstance().init(applicationContext, options);
+        EaseUI.getInstance().init(applicationContext, options)
+
+        val interceptors: MutableList<Interceptor> = arrayListOf()
+        interceptors.add(AddTokenInterceptors())
+        RetrofitManager.setInterceptors(interceptors)
+    }
+
+    private class AddTokenInterceptors() : Interceptor {
+
+        @Throws(IOException::class)
+        override fun intercept(chain: Interceptor.Chain): Response {
+            val original = chain.request()
+            val requestBuilder = original.newBuilder()
+            val token : String? = BaseApplication.getInstance()?.loginInfo?.token
+            if(token != null) {
+                requestBuilder
+//                .header("platform", "platform")//平台
+//                .header("sysVersion", "sysVersion")//系统版本号
+//                .header("device", "device")//设备信息
+//                .header("screen", "screen")//屏幕大小
+//                .header("uuid", "uuid")//设备唯一码
+//                .header("version", "version")//app版本
+//                .header("apiVersion", "apiVersion")//api版本
+                    .header("token", token)//令牌
+//                .header("channelId", "channelId")//渠道
+//                .header("networkType", "networkType")//网络类型
+            }
+
+            val request = requestBuilder.build()
+            return chain.proceed(request)
+        }
     }
 }

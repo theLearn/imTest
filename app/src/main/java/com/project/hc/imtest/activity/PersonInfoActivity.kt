@@ -1,9 +1,14 @@
 package com.project.hc.imtest.activity
 
+import android.content.Intent
 import android.view.View
 import com.example.hongcheng.common.util.ImageLoadUtils
+import com.example.hongcheng.common.util.SPUtils
+import com.example.hongcheng.common.util.ValidateUtils
 import com.example.hongcheng.common.util.ViewUtils
 import com.project.hc.imtest.R
+import com.project.hc.imtest.api.ApiConstants
+import com.project.hc.imtest.application.BaseApplication
 import kotlinx.android.synthetic.main.body_person_info.*
 
 class PersonInfoActivity : AppCommonActivity(), View.OnClickListener {
@@ -25,9 +30,7 @@ class PersonInfoActivity : AppCommonActivity(), View.OnClickListener {
     }
 
     override fun initBodyView(view: View) {
-        ImageLoadUtils.bindImageUrlForRound(iv_person_info_photo, "", R.mipmap.icon_photo_default)
-        tv_person_info_nick.setText(R.string.person_nick_default)
-        tv_person_info_phone.text = "18502729006"
+        tv_person_info_phone.text = ValidateUtils.phoneNoHide(SPUtils.getStringFromSP(this, ApiConstants.MOBILE))
 
         ll_person_info_photo.setOnClickListener(this)
         ll_person_info_nick.setOnClickListener(this)
@@ -35,11 +38,21 @@ class PersonInfoActivity : AppCommonActivity(), View.OnClickListener {
         bt_logout.setOnClickListener(this)
     }
 
+    override fun onStart() {
+        super.onStart()
+        ImageLoadUtils.bindImageUrlForRound(iv_person_info_photo, BaseApplication.getInstance()?.loginInfo?.photo, R.mipmap.icon_photo_default)
+        tv_person_info_nick.text = BaseApplication.getInstance()?.loginInfo?.nickname
+    }
+
     override fun onClick(view: View?) {
         if(ViewUtils.isFastClick()) return
         when(view?.id) {
-            R.id.ll_person_info_photo -> {}
-            R.id.ll_person_info_nick -> {}
+            R.id.ll_person_info_photo -> {
+                startActivity(Intent(this, ModifyPhotoActivity::class.java))
+            }
+            R.id.ll_person_info_nick -> {
+                startActivity(Intent(this, ModifyNameActivity::class.java))
+            }
             R.id.ll_person_info_phone -> {}
             R.id.bt_logout -> {}
             else -> {

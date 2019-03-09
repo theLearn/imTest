@@ -1,21 +1,32 @@
 package com.project.hc.imtest.activity
 
 import android.graphics.Color
-import android.os.Handler
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import com.example.hongcheng.common.util.ScreenUtils
+import com.example.hongcheng.common.util.ToastUtils
 import com.example.hongcheng.common.view.DividerItemDecoration
+import com.example.hongcheng.data.retrofit.ActionException
+import com.example.hongcheng.data.retrofit.BaseSubscriber
+import com.example.hongcheng.data.retrofit.RetrofitClient
+import com.example.hongcheng.data.retrofit.RetrofitManager
 import com.project.hc.imtest.R
 import com.project.hc.imtest.adapter.RedPackageListAdapter
+import com.project.hc.imtest.api.ApiRetrofit
+import com.project.hc.imtest.application.BaseApplication
+import com.project.hc.imtest.model.RecordList
 import com.project.hc.imtest.model.RedPackageInfo
 import kotlinx.android.synthetic.main.body_red_package_history.*
 
 
 class RedPackageHistoryActivity : AppCommonActivity(),  SwipeRefreshLayout.OnRefreshListener {
+
+    companion object {
+        private const val PAGE_SIZE : Int = 10
+    }
 
     private lateinit var mAdapter : RedPackageListAdapter
     private var page : Int = 0
@@ -73,14 +84,27 @@ class RedPackageHistoryActivity : AppCommonActivity(),  SwipeRefreshLayout.OnRef
     }
 
     private fun getData() {
-        Handler().postDelayed({
-            for (i in 1..20) {
-                dataList.add(RedPackageInfo("踩雷红包", "+2000.0", "2019-02-20 18:20:20"))
-            }
+        compositeDisposable.add(
+            RetrofitClient.getInstance().map<RecordList>(
+                RetrofitManager.createRetrofit<ApiRetrofit>(BaseApplication.getInstance(), ApiRetrofit::class.java)
+                    .getRedRecord(page, PAGE_SIZE), object : BaseSubscriber<RecordList>() {
+                    override fun onError(e: ActionException) {
+                        srl_red_package.isRefreshing = false
+                        ToastUtils.show(BaseApplication.getInstance(), e.message)
+                    }
 
-            srl_red_package.isRefreshing = false
-            mAdapter.data = dataList
-            rv_red_package_list.enableLoadMore(dataList.size <= 40)
-        }, 2000)
+                    override fun onBaseNext(obj : RecordList) {
+                        srl_red_package.isRefreshing = false
+                        val count = try {
+                            Integer.parseInt(obj.count)
+                        } catch (e : NumberFormatException) {
+                            0
+                        }
+                        dataList.addAll(obj.data)
+                        mAdapter.data = dataList
+                        rv_red_package_list.enableLoadMore(dataList.size <= count)
+                        page++
+                    }
+                }))
     }
 }

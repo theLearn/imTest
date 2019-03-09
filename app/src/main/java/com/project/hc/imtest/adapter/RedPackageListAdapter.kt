@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import com.example.hongcheng.common.base.BaseListAdapter
 import com.project.hc.imtest.R
 import com.project.hc.imtest.adapter.viewholder.RedPackageListViewHolder
+import com.project.hc.imtest.application.BaseApplication
 import com.project.hc.imtest.model.RedPackageInfo
 
 class RedPackageListAdapter : BaseListAdapter<RedPackageInfo, RedPackageListViewHolder>() {
@@ -20,8 +21,18 @@ class RedPackageListAdapter : BaseListAdapter<RedPackageInfo, RedPackageListView
 
     override fun onBaseBindViewHolder(holder: RedPackageListViewHolder, position: Int) {
         val model = data[position]
-        holder.tvType.text = model.type
-        holder.tvTime.text = model.time
-        holder.tvAmount.text = model.amount
+        holder.tvTime.text = model.add_time
+
+
+        val redType : Int = if("1" == model.status) R.string.title_home_right else R.string.title_home_left
+        holder.tvType.setText(redType)
+
+        if("2" == model.type){
+            holder.tvAmount.setTextColor(BaseApplication.getInstance()?.resources?.getColor(R.color.colorBase)!!)
+            holder.tvAmount.text =  "+" + model.money
+        } else {
+            holder.tvAmount.setTextColor(BaseApplication.getInstance()?.resources?.getColor(R.color.bg_red_package)!!)
+            holder.tvAmount.text =  "-" + model.money
+        }
     }
 }

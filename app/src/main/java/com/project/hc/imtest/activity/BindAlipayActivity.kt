@@ -4,7 +4,13 @@ import android.view.View
 import com.example.hongcheng.common.util.ToastUtils
 import com.example.hongcheng.common.util.ValidateUtils
 import com.example.hongcheng.common.util.ViewUtils
+import com.example.hongcheng.data.retrofit.ActionException
+import com.example.hongcheng.data.retrofit.BaseSubscriber
+import com.example.hongcheng.data.retrofit.RetrofitClient
+import com.example.hongcheng.data.retrofit.RetrofitManager
 import com.project.hc.imtest.R
+import com.project.hc.imtest.api.ApiRetrofit
+import com.project.hc.imtest.application.BaseApplication
 import kotlinx.android.synthetic.main.body_bind_alipay.*
 
 
@@ -66,6 +72,21 @@ class BindAlipayActivity : AppCommonActivity(), View.OnClickListener {
             return
         }
 
-        finish()
+        operateLoadingDialog(true)
+        compositeDisposable.add(
+            RetrofitClient.getInstance().map<Any>(
+                RetrofitManager.createRetrofit<ApiRetrofit>(BaseApplication.getInstance(), ApiRetrofit::class.java)
+                    .bindAlipay(alipay, name, alipayConfirm), object : BaseSubscriber<Any>() {
+                    override fun onError(e: ActionException) {
+                        operateLoadingDialog(false)
+                        ToastUtils.show(BaseApplication.getInstance(), e.message)
+                    }
+
+                    override fun onBaseNext(obj : Any) {
+                        operateLoadingDialog(false)
+                        ToastUtils.show(BaseApplication.getInstance(), "绑定成功")
+                        finish()
+                    }
+                }))
     }
 }

@@ -11,7 +11,7 @@ public class BaseConstants {
     public static final boolean DEBUG = true;
 
     //成功标志
-    public static final int STATUS_SUCCESS = 0;
+    public static final int STATUS_SUCCESS = 200;
 
     //RecyclerView限制个数及开关
     public static final boolean IS_LIMIT = true;

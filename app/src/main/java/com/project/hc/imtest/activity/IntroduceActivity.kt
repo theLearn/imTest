@@ -4,7 +4,13 @@ import android.view.View
 import com.example.hongcheng.common.util.ToastUtils
 import com.example.hongcheng.common.util.ValidateUtils
 import com.example.hongcheng.common.util.ViewUtils
+import com.example.hongcheng.data.retrofit.ActionException
+import com.example.hongcheng.data.retrofit.BaseSubscriber
+import com.example.hongcheng.data.retrofit.RetrofitClient
+import com.example.hongcheng.data.retrofit.RetrofitManager
 import com.project.hc.imtest.R
+import com.project.hc.imtest.api.ApiRetrofit
+import com.project.hc.imtest.application.BaseApplication
 import kotlinx.android.synthetic.main.body_introduce.*
 
 
@@ -58,12 +64,27 @@ class IntroduceActivity : AppCommonActivity(), View.OnClickListener {
             ToastUtils.show(this, "手机号格式不正确")
             return
         }
-        val password = et_introduce.text.toString().trim()
-        if (ValidateUtils.isEmpty(password)) {
+        val content = et_introduce.text.toString().trim()
+        if (ValidateUtils.isEmpty(content)) {
             ToastUtils.show(this, "请输入意见")
             return
         }
 
-        finish()
+        operateLoadingDialog(true)
+        compositeDisposable.add(
+            RetrofitClient.getInstance().map<Any>(
+                RetrofitManager.createRetrofit<ApiRetrofit>(BaseApplication.getInstance(), ApiRetrofit::class.java)
+                    .complain(phone, name, content), object : BaseSubscriber<Any>() {
+                    override fun onError(e: ActionException) {
+                        operateLoadingDialog(false)
+                        ToastUtils.show(BaseApplication.getInstance(), e.message)
+                    }
+
+                    override fun onBaseNext(obj : Any) {
+                        operateLoadingDialog(false)
+                        ToastUtils.show(BaseApplication.getInstance(), "提交成功")
+                        finish()
+                    }
+                }))
     }
 }
