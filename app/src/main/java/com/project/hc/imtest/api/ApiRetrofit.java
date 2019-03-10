@@ -1,9 +1,7 @@
 package com.project.hc.imtest.api;
 
 import com.example.hongcheng.data.retrofit.response.BaseResponse;
-import com.project.hc.imtest.model.LoginInfo;
-import com.project.hc.imtest.model.PointInfo;
-import com.project.hc.imtest.model.RecordList;
+import com.project.hc.imtest.model.*;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -50,4 +48,16 @@ public interface ApiRetrofit {
 
     @GET(ApiConstants.GET_PROFIT_URL)
     Observable<BaseResponse<RecordList>> getProfit(@Query("page") int page, @Query("pageSize") int pageSize);
+
+    @GET(ApiConstants.GET_SYSTEM_NOTIFY_URL)
+    Observable<BaseResponse<List<MsgInfo>>> getSystemNotifyList(@Query("page") int page, @Query("pageSize") int pageSize);
+
+    @GET(ApiConstants.GET_GROUP_LIST_URL)
+    Observable<BaseResponse<BaseListResponse<GroupInfo>>> getAllGroup(@Query("type") String type, @Query("page") int page, @Query("pageSize") int pageSize);
+
+    @GET(ApiConstants.FORGET_PW_URL)
+    Observable<BaseResponse<Object>> forgetPw(@Query("mobile") String mobile, @Query("password") String password, @Query("code") String code);
+
+    @GET(ApiConstants.REGISTER_URL)
+    Observable<BaseResponse<Object>> register(@Query("mobile") String mobile, @Query("password") String password, @Query("code") String code, @Query("nickname") String nickname);
 }

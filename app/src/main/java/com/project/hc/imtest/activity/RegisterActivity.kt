@@ -6,7 +6,13 @@ import com.example.hongcheng.common.util.ScreenUtils
 import com.example.hongcheng.common.util.ToastUtils
 import com.example.hongcheng.common.util.ValidateUtils
 import com.example.hongcheng.common.util.ViewUtils
+import com.example.hongcheng.data.retrofit.ActionException
+import com.example.hongcheng.data.retrofit.BaseSubscriber
+import com.example.hongcheng.data.retrofit.RetrofitClient
+import com.example.hongcheng.data.retrofit.RetrofitManager
 import com.project.hc.imtest.R
+import com.project.hc.imtest.api.ApiRetrofit
+import com.project.hc.imtest.application.BaseApplication
 import com.project.hc.imtest.util.SMSCountDownUtil
 import kotlinx.android.synthetic.main.activity_register.*
 
@@ -109,5 +115,22 @@ class RegisterActivity : BasicActivity(), View.OnClickListener, SMSCountDownUtil
             ToastUtils.show(this, "请输入验证码")
             return
         }
+
+        operateLoadingDialog(true)
+        compositeDisposable.add(
+            RetrofitClient.getInstance().map<Any>(
+                RetrofitManager.createRetrofit<ApiRetrofit>(BaseApplication.getInstance(), ApiRetrofit::class.java)
+                    .register(phone, password, smsCode, nick), object : BaseSubscriber<Any>() {
+                    override fun onError(e: ActionException) {
+                        operateLoadingDialog(false)
+                        ToastUtils.show(BaseApplication.getInstance(), e.message)
+                    }
+
+                    override fun onBaseNext(obj : Any) {
+                        operateLoadingDialog(false)
+                        ToastUtils.show(BaseApplication.getInstance(), "注册成功")
+                        finish()
+                    }
+                }))
     }
 }

@@ -1,16 +1,22 @@
 package com.project.hc.imtest.activity
 
 import android.graphics.Color
-import android.os.Handler
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import com.example.hongcheng.common.util.ScreenUtils
+import com.example.hongcheng.common.util.ToastUtils
 import com.example.hongcheng.common.view.DividerItemDecoration
+import com.example.hongcheng.data.retrofit.ActionException
+import com.example.hongcheng.data.retrofit.BaseSubscriber
+import com.example.hongcheng.data.retrofit.RetrofitClient
+import com.example.hongcheng.data.retrofit.RetrofitManager
 import com.project.hc.imtest.R
 import com.project.hc.imtest.adapter.MsgListAdapter
+import com.project.hc.imtest.api.ApiRetrofit
+import com.project.hc.imtest.application.BaseApplication
 import com.project.hc.imtest.model.MsgInfo
 import kotlinx.android.synthetic.main.body_msg_list.*
 import kotlinx.android.synthetic.main.layout_app_common_title.*
@@ -21,6 +27,7 @@ class MsgListActivity : AppCommonActivity(),  SwipeRefreshLayout.OnRefreshListen
     companion object {
         const val SYSTEM_NOTIFY : Int = 0
         const val PLATFORM_NOTIFY : Int = 1
+        private const val PAGE_SIZE : Int = 10
     }
 
     private lateinit var mAdapter : MsgListAdapter
@@ -84,14 +91,22 @@ class MsgListActivity : AppCommonActivity(),  SwipeRefreshLayout.OnRefreshListen
     }
 
     private fun getData() {
-        Handler().postDelayed({
-            for (i in 1..20) {
-                dataList.add(MsgInfo("通知", "2019-02-20 18:20:20", "平台需要更新，不充值可以提现，晚上25点关群，凌晨两点之前全部都需提现，过期不处理提现"))
-            }
+        compositeDisposable.add(
+            RetrofitClient.getInstance().map<List<MsgInfo>>(
+                RetrofitManager.createRetrofit<ApiRetrofit>(BaseApplication.getInstance(), ApiRetrofit::class.java)
+                    .getSystemNotifyList(page, PAGE_SIZE), object : BaseSubscriber<List<MsgInfo>>() {
+                    override fun onError(e: ActionException) {
+                        srl_msg.isRefreshing = false
+                        ToastUtils.show(BaseApplication.getInstance(), e.message)
+                    }
 
-            srl_msg.isRefreshing = false
-            mAdapter.data = dataList
-            rv_msg_list.enableLoadMore(dataList.size <= 40)
-        }, 2000)
+                    override fun onBaseNext(obj : List<MsgInfo>) {
+                        srl_msg.isRefreshing = false
+                        dataList.addAll(obj)
+                        mAdapter.data = dataList
+                        rv_msg_list.enableLoadMore(obj.size >= PAGE_SIZE)
+                        page++
+                    }
+                }))
     }
 }

@@ -21,7 +21,7 @@ class MsgListAdapter : BaseListAdapter<MsgInfo, MsgListViewHolder>() {
     override fun onBaseBindViewHolder(holder: MsgListViewHolder, position: Int) {
         val model = data[position]
         holder.tvTitle.text = model.title
-        holder.tvTime.text = model.time
+        holder.tvTime.text = model.add_time
         holder.tvContent.text = model.content
     }
 }

@@ -108,7 +108,7 @@ class MyGetActivity : AppCommonActivity(), SwipeRefreshLayout.OnRefreshListener 
                         }
                         dataList.addAll(obj.data)
                         mAdapter.data = dataList
-                        rv_my_get.enableLoadMore(dataList.size <= count)
+                        rv_my_get.enableLoadMore(dataList.size < count)
                         page++
                     }
                 }))

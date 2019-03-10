@@ -102,7 +102,7 @@ class RedPackageHistoryActivity : AppCommonActivity(),  SwipeRefreshLayout.OnRef
                         }
                         dataList.addAll(obj.data)
                         mAdapter.data = dataList
-                        rv_red_package_list.enableLoadMore(dataList.size <= count)
+                        rv_red_package_list.enableLoadMore(dataList.size < count)
                         page++
                     }
                 }))

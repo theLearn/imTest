@@ -34,6 +34,61 @@ data class LoginInfo(
     }
 }
 
+data class GroupInfo(
+    var id: String,
+    var gid: String,
+    var name: String,
+    var type: String,
+    var status: String,
+    var addTime: String,
+    var minMoney: String,
+    var maxMoney: String,
+    var hb_number: String,
+    var pic: String,
+    var jl: String,
+    var pl: String
+) : Parcelable {
+    constructor(source: Parcel) : this(
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString()
+    )
+
+    override fun describeContents() = 0
+
+    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
+        writeString(id)
+        writeString(gid)
+        writeString(name)
+        writeString(type)
+        writeString(status)
+        writeString(addTime)
+        writeString(minMoney)
+        writeString(maxMoney)
+        writeString(hb_number)
+        writeString(pic)
+        writeString(jl)
+        writeString(pl)
+    }
+
+    companion object {
+        @JvmField
+        val CREATOR: Parcelable.Creator<GroupInfo> = object : Parcelable.Creator<GroupInfo> {
+            override fun createFromParcel(source: Parcel): GroupInfo = GroupInfo(source)
+            override fun newArray(size: Int): Array<GroupInfo?> = arrayOfNulls(size)
+        }
+    }
+}
+
 data class PointInfo(
     var points: String
 ) : Parcelable {
@@ -172,7 +227,7 @@ data class RedPackageDetailInfo(
 
 data class MsgInfo(
     var title: String,
-    var time: String,
+    var add_time: String,
     var content: String
 ) : Parcelable {
     constructor(source: Parcel) : this(
@@ -185,7 +240,7 @@ data class MsgInfo(
 
     override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
         writeString(title)
-        writeString(time)
+        writeString(add_time)
         writeString(content)
     }
 

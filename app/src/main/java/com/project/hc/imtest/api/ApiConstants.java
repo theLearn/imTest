@@ -25,6 +25,14 @@ public class ApiConstants {
     public static final String GET_RED_RECORD_URL = "user/hb_record";
     //我的收益
     public static final String GET_PROFIT_URL = "user/my_profit";
+    //获取系统通知
+    public static final String GET_SYSTEM_NOTIFY_URL = "AppNotice/noticeList";
+    //获取所有群
+    public static final String GET_GROUP_LIST_URL = " user/all_group";
+    //忘记密码
+    public static final String FORGET_PW_URL = "user/forget_password";
+    //注册
+    public static final String REGISTER_URL = "user/register";
 
     public static final String MOBILE = "mobile";
     public static final String PASSWORD = "password";

@@ -1,9 +1,5 @@
 package com.hyphenate.easeui.widget;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Handler;
@@ -13,7 +9,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.domain.EaseEmojicon;
 import com.hyphenate.easeui.domain.EaseEmojiconGroupEntity;
@@ -24,6 +19,10 @@ import com.hyphenate.easeui.widget.EaseChatPrimaryMenuBase.EaseChatPrimaryMenuLi
 import com.hyphenate.easeui.widget.emojicon.EaseEmojiconMenu;
 import com.hyphenate.easeui.widget.emojicon.EaseEmojiconMenuBase;
 import com.hyphenate.easeui.widget.emojicon.EaseEmojiconMenuBase.EaseEmojiconMenuListener;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * input menu
@@ -45,6 +44,7 @@ public class EaseChatInputMenu extends LinearLayout {
     private ChatInputMenuListener listener;
     private Context context;
     private boolean inited;
+    private boolean toggleMoreEnable;
 
     public EaseChatInputMenu(Context context, AttributeSet attrs, int defStyle) {
         this(context, attrs);
@@ -255,11 +255,18 @@ public class EaseChatInputMenu extends LinearLayout {
         getPrimaryMenu().onTextInsert(text);
     }
 
+    public void enableToggleMore(boolean enable) {
+        toggleMoreEnable = enable;
+    }
+
     /**
      * show or hide extend menu
      * 
      */
     protected void toggleMore() {
+        if(toggleMoreEnable) {
+            return;
+        }
         if (chatExtendMenuContainer.getVisibility() == View.GONE) {
             hideKeyboard();
             handler.postDelayed(new Runnable() {
