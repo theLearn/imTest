@@ -6,10 +6,12 @@ import android.os.Parcelable
 data class LoginInfo(
     var token: String,
     var userId: String,
+    var hx_pwd: String,
     var nickname: String,
     var photo: String
 ) : Parcelable {
     constructor(source: Parcel) : this(
+        source.readString(),
         source.readString(),
         source.readString(),
         source.readString(),
@@ -21,6 +23,7 @@ data class LoginInfo(
     override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
         writeString(token)
         writeString(userId)
+        writeString(hx_pwd)
         writeString(nickname)
         writeString(photo)
     }

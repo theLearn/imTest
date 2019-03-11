@@ -11,6 +11,7 @@ import com.example.hongcheng.common.base.BasicActivity
 import com.example.hongcheng.common.base.FragmentAdapter
 import com.example.hongcheng.common.util.ScreenUtils
 import com.project.hc.imtest.R
+import com.project.hc.imtest.application.BaseApplication
 import com.project.hc.imtest.chat.ChatUtils
 import com.project.hc.imtest.chat.CommonCallback
 import com.project.hc.imtest.chat.CustomConversationListFragment
@@ -57,7 +58,7 @@ class MainActivity : BasicActivity() {
         }
 
         operateLoadingDialog(true)
-        ChatUtils.loginChat(this, "18502729006", "137954682", object : CommonCallback {
+        ChatUtils.loginChat(this, BaseApplication.getInstance()?.loginInfo?.userId, BaseApplication.getInstance()?.loginInfo?.hx_pwd, object : CommonCallback {
             override fun onSuccess() {
                 runOnUiThread {
                     initTab()

@@ -60,4 +60,19 @@ public interface ApiRetrofit {
 
     @GET(ApiConstants.REGISTER_URL)
     Observable<BaseResponse<Object>> register(@Query("mobile") String mobile, @Query("password") String password, @Query("code") String code, @Query("nickname") String nickname);
+
+    @GET(ApiConstants.GET_GROUP_INFO_URL)
+    Observable<BaseResponse<GroupInfo>> getGroupInfoById( @Query("gid") String gid);
+
+    @GET(ApiConstants.SEND_CL_RED_URL)
+    Observable<BaseResponse<Object>> sendClRed(@Query("money") String money, @Query("gid") String gid, @Query("thunder  ") String thunder);
+
+    @GET(ApiConstants.SEND_JL_RED_URL)
+    Observable<BaseResponse<Object>> sendJlRed(@Query("money") String money, @Query("gid") String gid);
+
+    @GET(ApiConstants.RECEIVE_CL_RED_URL)
+    Observable<BaseResponse<Object>> receiveClRed(@Query("gid") String gid, @Query("hb_id") String hb_id);
+
+    @GET(ApiConstants.RECEIVE_JL_RED_URL)
+    Observable<BaseResponse<Object>> receiveJlRed(@Query("gid") String gid, @Query("hb_id") String hb_id);
 }

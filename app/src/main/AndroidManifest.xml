@@ -141,7 +141,7 @@
                   android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
 
         <!-- 设置环信应用的AppKey -->
-        <meta-data android:name="EASEMOB_APPKEY"  android:value="1100190126055721#imtest" />
+        <meta-data android:name="EASEMOB_APPKEY"  android:value="1113190219030993#zhongleyou" />
         <!-- 声明SDK所需的service SDK核心功能-->
         <service android:name="com.hyphenate.chat.EMChatService" android:exported="true"/>
         <service android:name="com.hyphenate.chat.EMJobService"

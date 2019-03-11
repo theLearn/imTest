@@ -33,6 +33,16 @@ public class ApiConstants {
     public static final String FORGET_PW_URL = "user/forget_password";
     //注册
     public static final String REGISTER_URL = "user/register";
+    //根据id获取群信息
+    public static final String GET_GROUP_INFO_URL = "AppGroup/groupInfo";
+    //发踩雷红包
+    public static final String SEND_CL_RED_URL = "RedPacket/sendCailRed";
+    //发接龙红包
+    public static final String SEND_JL_RED_URL = "RedPacket/sendJielRed";
+    //抢踩雷红包
+    public static final String RECEIVE_CL_RED_URL = "RedPacket/robCailRed";
+    //抢接龙红包
+    public static final String RECEIVE_JL_RED_URL = "RedPacket/robJielRed";
 
     public static final String MOBILE = "mobile";
     public static final String PASSWORD = "password";

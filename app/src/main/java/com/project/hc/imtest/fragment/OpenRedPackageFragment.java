@@ -10,9 +10,17 @@ import android.view.*;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.hongcheng.common.util.ImageLoadUtils;
+import com.example.hongcheng.common.util.ToastUtils;
 import com.example.hongcheng.common.util.ViewUtils;
+import com.example.hongcheng.data.retrofit.ActionException;
+import com.example.hongcheng.data.retrofit.BaseSubscriber;
+import com.example.hongcheng.data.retrofit.RetrofitClient;
+import com.example.hongcheng.data.retrofit.RetrofitManager;
+import com.hyphenate.chat.EMMessage;
 import com.project.hc.imtest.R;
 import com.project.hc.imtest.activity.RedPackageDetailActivity;
+import com.project.hc.imtest.api.ApiRetrofit;
+import com.project.hc.imtest.application.BaseApplication;
 
 /**
  * Created by hongcheng on 17/8/21.
@@ -22,7 +30,9 @@ public class OpenRedPackageFragment extends DialogFragment implements View.OnCli
 
 	private ImageView open;
 	private  TextView tip, viewDetail;
-	
+	private boolean isCl;
+	private EMMessage message;
+
 	@NonNull
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState)
@@ -53,6 +63,8 @@ public class OpenRedPackageFragment extends DialogFragment implements View.OnCli
 	
 	private void initView()
 	{
+		message  = getArguments().getParcelable("message");
+		isCl = getArguments().getBoolean("isCl", false);
 		ImageView photo = dialogView.findViewById(R.id.iv_red_package_user_photo);
 		open = dialogView.findViewById(R.id.iv_red_package_open);
 		ImageView cancel = dialogView.findViewById(R.id.iv_red_package_cancel);
@@ -70,12 +82,6 @@ public class OpenRedPackageFragment extends DialogFragment implements View.OnCli
 		viewDetail.setOnClickListener(this);
 	}
 
-	private void redPackageFinish () {
-		tip.setVisibility(View.VISIBLE);
-		open.setVisibility(View.INVISIBLE);
-		viewDetail.setVisibility(View.VISIBLE);
-	}
-
 	@Override
 	public void onClick(View v) {
 		if(ViewUtils.isFastClick()) {
@@ -85,7 +91,7 @@ public class OpenRedPackageFragment extends DialogFragment implements View.OnCli
 		{
 			case R.id.iv_red_package_open :
 				if(View.VISIBLE == open.getVisibility()) {
-					redPackageFinish ();
+					openRed();
 				}
 				break;
 			case R.id.iv_red_package_cancel :
@@ -97,6 +103,51 @@ public class OpenRedPackageFragment extends DialogFragment implements View.OnCli
 			default:
 				break;
 		}
+	}
 
+	private void redPackageFinish () {
+		tip.setVisibility(View.VISIBLE);
+		open.setVisibility(View.INVISIBLE);
+		viewDetail.setVisibility(View.VISIBLE);
+	}
+
+	private void openRed() {
+		if(isCl) {
+			openCl();
+		} else {
+			openJl();
+		}
+	}
+
+	private void openCl() {
+		RetrofitClient.getInstance().map(
+				RetrofitManager.createRetrofit(BaseApplication.getInstance(), ApiRetrofit.class)
+						.receiveClRed(message.getTo(), message.getStringAttribute("hb_id", "")), new BaseSubscriber<Object>() {
+					@Override
+					public void onBaseNext(Object groupInfo) {
+						redPackageFinish ();
+					}
+
+					@Override
+					public void onError(ActionException e) {
+						ToastUtils.show(BaseApplication.getInstance(), e.getErrorMessage());
+					}
+				});
+	}
+
+	private void openJl() {
+		RetrofitClient.getInstance().map(
+				RetrofitManager.createRetrofit(BaseApplication.getInstance(), ApiRetrofit.class)
+						.receiveJlRed(message.getTo(), message.getStringAttribute("hb_id", "")), new BaseSubscriber<Object>() {
+					@Override
+					public void onBaseNext(Object groupInfo) {
+						redPackageFinish ();
+					}
+
+					@Override
+					public void onError(ActionException e) {
+						ToastUtils.show(BaseApplication.getInstance(), e.getErrorMessage());
+					}
+				});
 	}
 }

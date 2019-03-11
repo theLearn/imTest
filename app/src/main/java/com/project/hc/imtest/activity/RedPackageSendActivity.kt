@@ -4,13 +4,20 @@ import android.app.Activity
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import com.example.hongcheng.common.util.ToastUtils
 import com.example.hongcheng.common.util.ValidateUtils
 import com.example.hongcheng.common.util.ViewUtils
+import com.example.hongcheng.data.retrofit.ActionException
+import com.example.hongcheng.data.retrofit.BaseSubscriber
+import com.example.hongcheng.data.retrofit.RetrofitClient
+import com.example.hongcheng.data.retrofit.RetrofitManager
 import com.hyphenate.chat.EMClient
 import com.hyphenate.chat.EMMessage
 import com.hyphenate.chat.EMMessage.ChatType
 import com.hyphenate.easeui.EaseConstant
 import com.project.hc.imtest.R
+import com.project.hc.imtest.api.ApiRetrofit
+import com.project.hc.imtest.application.BaseApplication
 import kotlinx.android.synthetic.main.body_red_pacage_setting.*
 
 
@@ -38,7 +45,7 @@ class RedPackageSendActivity : AppCommonActivity(), View.OnClickListener, TextWa
     override fun initBodyView(view: View) {
         chatType = intent.getIntExtra(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_SINGLE)
         toChatUsername = intent.getStringExtra(EaseConstant.EXTRA_USER_ID)
-        isCl = intent.getBooleanExtra("isCl", true)
+        isCl = intent.getBooleanExtra("isCl", false)
         bt_confirm_red_package_setting.setOnClickListener(this)
         et_red_package_setting_amount.addTextChangedListener(this)
         et_red_package_setting_ws.addTextChangedListener(this)
@@ -76,9 +83,49 @@ class RedPackageSendActivity : AppCommonActivity(), View.OnClickListener, TextWa
     }
 
     private fun submit() {
-        sendRedPackage()
-        setResult(Activity.RESULT_OK)
-        finish()
+        if(isCl) {
+            sendCl()
+        } else {
+            sendJl()
+        }
+    }
+
+    private fun sendCl() {
+        operateLoadingDialog(true)
+        compositeDisposable.add(
+            RetrofitClient.getInstance().map<Any>(
+                RetrofitManager.createRetrofit<ApiRetrofit>(BaseApplication.getInstance(), ApiRetrofit::class.java)
+                    .sendClRed(et_red_package_setting_amount.text.toString().trim(), toChatUsername, et_red_package_setting_ws.text.toString().trim()), object : BaseSubscriber<Any>() {
+                    override fun onError(e: ActionException) {
+                        operateLoadingDialog(false)
+                        ToastUtils.show(BaseApplication.getInstance(), e.message)
+                    }
+
+                    override fun onBaseNext(obj : Any) {
+                        operateLoadingDialog(false)
+                        setResult(Activity.RESULT_OK)
+                        finish()
+                    }
+                }))
+    }
+
+    private fun sendJl() {
+        operateLoadingDialog(true)
+        compositeDisposable.add(
+            RetrofitClient.getInstance().map<Any>(
+                RetrofitManager.createRetrofit<ApiRetrofit>(BaseApplication.getInstance(), ApiRetrofit::class.java)
+                    .sendJlRed(et_red_package_setting_amount.text.toString().trim(), toChatUsername), object : BaseSubscriber<Any>() {
+                    override fun onError(e: ActionException) {
+                        operateLoadingDialog(false)
+                        ToastUtils.show(BaseApplication.getInstance(), e.message)
+                    }
+
+                    override fun onBaseNext(obj : Any) {
+                        operateLoadingDialog(false)
+                        setResult(Activity.RESULT_OK)
+                        finish()
+                    }
+                }))
     }
 
     private fun sendRedPackage() {
