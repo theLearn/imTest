@@ -65,14 +65,26 @@ public interface ApiRetrofit {
     Observable<BaseResponse<GroupInfo>> getGroupInfoById( @Query("gid") String gid);
 
     @GET(ApiConstants.SEND_CL_RED_URL)
-    Observable<BaseResponse<Object>> sendClRed(@Query("money") String money, @Query("gid") String gid, @Query("thunder  ") String thunder);
+    Observable<BaseResponse<RedDetailInfo>> sendClRed(@Query("money") String money, @Query("gid") String gid, @Query("thunder") String thunder);
 
     @GET(ApiConstants.SEND_JL_RED_URL)
-    Observable<BaseResponse<Object>> sendJlRed(@Query("money") String money, @Query("gid") String gid);
+    Observable<BaseResponse<RedDetailInfo>> sendJlRed(@Query("money") String money, @Query("gid") String gid);
 
     @GET(ApiConstants.RECEIVE_CL_RED_URL)
-    Observable<BaseResponse<Object>> receiveClRed(@Query("gid") String gid, @Query("hb_id") String hb_id);
+    Observable<BaseResponse<RedDetailInfo>> receiveClRed(@Query("gid") String gid, @Query("hb_id") String hb_id);
 
     @GET(ApiConstants.RECEIVE_JL_RED_URL)
-    Observable<BaseResponse<Object>> receiveJlRed(@Query("gid") String gid, @Query("hb_id") String hb_id);
+    Observable<BaseResponse<RedDetailInfo>> receiveJlRed(@Query("gid") String gid, @Query("hb_id") String hb_id);
+
+    @GET(ApiConstants.GET_RED_DETAIL_URL)
+    Observable<BaseResponse<RedPackageDetailInfo>> getRedDetail(@Query("hb_id") String hb_id, @Query("page") int page, @Query("pageSize") int pageSize);
+
+    @GET(ApiConstants.GET_KF_ID_URL)
+    Observable<BaseResponse<KFInfo>> getKfInfo();
+
+    @GET(ApiConstants.GET_TIME_URL)
+    Observable<BaseResponse<SMSTime>> getTime(@Query("mobile") String mobile);
+
+    @GET(ApiConstants.GET_SMS_CODE_URL)
+    Observable<BaseResponse<Object>> getSmsCode(@Query("mobile") String mobile, @Query("type") String type, @Query("time") String time);
 }

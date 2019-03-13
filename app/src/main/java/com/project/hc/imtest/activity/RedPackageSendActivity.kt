@@ -18,6 +18,7 @@ import com.hyphenate.easeui.EaseConstant
 import com.project.hc.imtest.R
 import com.project.hc.imtest.api.ApiRetrofit
 import com.project.hc.imtest.application.BaseApplication
+import com.project.hc.imtest.model.RedDetailInfo
 import kotlinx.android.synthetic.main.body_red_pacage_setting.*
 
 
@@ -93,16 +94,17 @@ class RedPackageSendActivity : AppCommonActivity(), View.OnClickListener, TextWa
     private fun sendCl() {
         operateLoadingDialog(true)
         compositeDisposable.add(
-            RetrofitClient.getInstance().map<Any>(
+            RetrofitClient.getInstance().map<RedDetailInfo>(
                 RetrofitManager.createRetrofit<ApiRetrofit>(BaseApplication.getInstance(), ApiRetrofit::class.java)
-                    .sendClRed(et_red_package_setting_amount.text.toString().trim(), toChatUsername, et_red_package_setting_ws.text.toString().trim()), object : BaseSubscriber<Any>() {
+                    .sendClRed(et_red_package_setting_amount.text.toString().trim(), toChatUsername, et_red_package_setting_ws.text.toString().trim()), object : BaseSubscriber<RedDetailInfo>() {
                     override fun onError(e: ActionException) {
                         operateLoadingDialog(false)
                         ToastUtils.show(BaseApplication.getInstance(), e.message)
                     }
 
-                    override fun onBaseNext(obj : Any) {
+                    override fun onBaseNext(obj : RedDetailInfo) {
                         operateLoadingDialog(false)
+                        sendRedPackage(obj.hb_id)
                         setResult(Activity.RESULT_OK)
                         finish()
                     }
@@ -112,32 +114,29 @@ class RedPackageSendActivity : AppCommonActivity(), View.OnClickListener, TextWa
     private fun sendJl() {
         operateLoadingDialog(true)
         compositeDisposable.add(
-            RetrofitClient.getInstance().map<Any>(
+            RetrofitClient.getInstance().map<RedDetailInfo>(
                 RetrofitManager.createRetrofit<ApiRetrofit>(BaseApplication.getInstance(), ApiRetrofit::class.java)
-                    .sendJlRed(et_red_package_setting_amount.text.toString().trim(), toChatUsername), object : BaseSubscriber<Any>() {
+                    .sendJlRed(et_red_package_setting_amount.text.toString().trim(), toChatUsername), object : BaseSubscriber<RedDetailInfo>() {
                     override fun onError(e: ActionException) {
                         operateLoadingDialog(false)
                         ToastUtils.show(BaseApplication.getInstance(), e.message)
                     }
 
-                    override fun onBaseNext(obj : Any) {
+                    override fun onBaseNext(obj : RedDetailInfo) {
                         operateLoadingDialog(false)
+                        sendRedPackage(obj.hb_id)
                         setResult(Activity.RESULT_OK)
                         finish()
                     }
                 }))
     }
 
-    private fun sendRedPackage() {
+    private fun sendRedPackage(hb_id : String) {
         //发送扩展消息
-        val message = EMMessage.createTxtSendMessage("hh", toChatUsername)
+        val message = EMMessage.createTxtSendMessage("[红包]", toChatUsername)
         //增加自己的属性
         message.setAttribute("red", true)
-        message.setAttribute("CARDS", "cards")
-        message.setAttribute("USERNAME", "God-Eye")
-        message.setAttribute("USERID", "1")
-        message.setAttribute("USERHEADER", "")
-        message.setAttribute("USERCITY", "青岛")
+        message.setAttribute("redCode", hb_id)
         //设置群聊和聊天室发送消息
         if (chatType === EaseConstant.CHATTYPE_GROUP) {
             message.chatType = ChatType.GroupChat

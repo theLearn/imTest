@@ -17,6 +17,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -187,7 +188,7 @@ public class EaseMessageAdapter extends BaseAdapter{
 		if (message.getType() == EMMessage.Type.TXT) {
 		    if(message.getBooleanAttribute(EaseConstant.MESSAGE_ATTR_IS_BIG_EXPRESSION, false)){
 		        return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_EXPRESSION : MESSAGE_TYPE_SENT_EXPRESSION;
-		    }else if (message.getBooleanAttribute("red",false)){
+		    }else if (!TextUtils.isEmpty(message.getStringAttribute("redCode",""))){
 				return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_RED_PACKAGE : MESSAGE_TYPE_SENT_RED_PACKAGE;
 			}
 			return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_TXT : MESSAGE_TYPE_SENT_TXT;
@@ -223,7 +224,7 @@ public class EaseMessageAdapter extends BaseAdapter{
         case TXT:
             if(message.getBooleanAttribute(EaseConstant.MESSAGE_ATTR_IS_BIG_EXPRESSION, false)){
 				presenter = new EaseChatBigExpressionPresenter();
-            }else if (message.getBooleanAttribute("red",false)){
+            }else if (!TextUtils.isEmpty(message.getStringAttribute("redCode",""))){
 				presenter = new EaseChatRedPackagePresenter();//需要自己创建
 			}else{
 				presenter = new EaseChatTextPresenter();

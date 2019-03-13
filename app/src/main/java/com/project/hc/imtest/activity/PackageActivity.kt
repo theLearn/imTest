@@ -7,9 +7,12 @@ import com.example.hongcheng.data.retrofit.ActionException
 import com.example.hongcheng.data.retrofit.BaseSubscriber
 import com.example.hongcheng.data.retrofit.RetrofitClient
 import com.example.hongcheng.data.retrofit.RetrofitManager
+import com.hyphenate.chat.EMConversation
 import com.project.hc.imtest.R
 import com.project.hc.imtest.api.ApiRetrofit
 import com.project.hc.imtest.application.BaseApplication
+import com.project.hc.imtest.chat.ChatUtils
+import com.project.hc.imtest.model.KFInfo
 import com.project.hc.imtest.model.PointInfo
 import kotlinx.android.synthetic.main.body_package.*
 
@@ -61,12 +64,31 @@ class PackageActivity : AppCommonActivity(), View.OnClickListener {
         if(ViewUtils.isFastClick()) return
         when(v?.id) {
             R.id.ll_recharge -> {
+                getKfInfo(R.string.recharge)
             }
             R.id.ll_cash_withdrawal -> {
+                getKfInfo(R.string.cash_withdrawal)
             }
             else -> {
 
             }
         }
+    }
+
+    private fun getKfInfo(id : Int) {
+        operateLoadingDialog(true)
+        RetrofitClient.getInstance().map<KFInfo>(
+            RetrofitManager.createRetrofit<ApiRetrofit>(BaseApplication.getInstance(), ApiRetrofit::class.java)
+                .kfInfo, object : BaseSubscriber<KFInfo>() {
+                override fun onError(e: ActionException) {
+                    operateLoadingDialog(false)
+                    ToastUtils.show(BaseApplication.getInstance(), e.message)
+                }
+
+                override fun onBaseNext(obj: KFInfo) {
+                    operateLoadingDialog(false)
+                    ChatUtils.goToChat(this@PackageActivity, obj.mid, getString(id), EMConversation.EMConversationType.Chat)
+                }
+            })
     }
 }

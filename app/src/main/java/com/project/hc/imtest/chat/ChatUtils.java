@@ -2,6 +2,7 @@ package com.project.hc.imtest.chat;
 
 import android.content.Context;
 import android.content.Intent;
+import com.example.hongcheng.common.util.StringUtils;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
@@ -51,6 +52,9 @@ public final class ChatUtils {
      * 登录聊天
      */
     public static void loginChat(final Context context, final String username, final String password, final CommonCallback callback) {
+        if(StringUtils.isEmpty(username)) {
+            return;
+        }
         if (EMClient.getInstance().isLoggedInBefore() && username.equals(EMClient.getInstance().getCurrentUser())) {
             EMClient.getInstance().groupManager().loadAllGroups();
             EMClient.getInstance().chatManager().loadAllConversations();

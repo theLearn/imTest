@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import com.example.hongcheng.common.util.ToastUtils;
+import com.example.hongcheng.common.view.fragment.LoadingFragment;
 import com.example.hongcheng.data.retrofit.ActionException;
 import com.example.hongcheng.data.retrofit.BaseSubscriber;
 import com.example.hongcheng.data.retrofit.RetrofitClient;
@@ -16,17 +17,20 @@ import com.hyphenate.easeui.ui.EaseChatFragment;
 import com.hyphenate.easeui.widget.EaseChatExtendMenu;
 import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
 import com.project.hc.imtest.R;
+import com.project.hc.imtest.activity.RedPackageDetailActivity;
 import com.project.hc.imtest.activity.RedPackageSendActivity;
 import com.project.hc.imtest.api.ApiRetrofit;
 import com.project.hc.imtest.application.BaseApplication;
 import com.project.hc.imtest.fragment.OpenRedPackageFragment;
 import com.project.hc.imtest.model.GroupInfo;
+import com.project.hc.imtest.model.RedPackageDetailInfo;
 
 public class CustomChatFragment extends EaseChatFragment implements EaseChatFragment.EaseChatFragmentHelper {
     protected int[] itemIds = { ITEM_RED_PACKAGE};
     protected int[] itemStrings = { R.string.red_package};
     protected int[] itemdrawables = { R.mipmap.icon_send_red};
     private  boolean isCl;
+    private LoadingFragment mLoadingDialog;
 
     private CardItemClickListener customMenuItemClickListener;
 
@@ -48,11 +52,10 @@ public class CustomChatFragment extends EaseChatFragment implements EaseChatFrag
         setChatFragmentHelper(this);
         if(EaseConstant.CHATTYPE_SINGLE != chatType) {
             inputMenu.forbiddenWords();
+            getGroupInfo();
         } else {
             inputMenu.enableToggleMore(true);
         }
-
-        getGroupInfo();
     }
 
     private void getGroupInfo() {
@@ -93,13 +96,15 @@ public class CustomChatFragment extends EaseChatFragment implements EaseChatFrag
 
     @Override
     public boolean onMessageBubbleClick(EMMessage message) {
-        if (!TextUtils.isEmpty(message.getStringAttribute("hb_id",""))) {
-            OpenRedPackageFragment openRedPackageFragment = new OpenRedPackageFragment();
-            Bundle bundle = new Bundle();
-            bundle.putBoolean("isCl", isCl);
-            bundle.putParcelable("message", message);
-            openRedPackageFragment.setArguments(bundle);
-            openRedPackageFragment.show(getFragmentManager(), "OpenRedPackageFragment");
+        String redCode = message.getStringAttribute("redCode","");
+        if (message.getType() == EMMessage.Type.TXT && !TextUtils.isEmpty(redCode)) {
+            if(message.getBooleanAttribute("rob", false)) {
+                Intent intent = new Intent(getActivity(), RedPackageDetailActivity.class);
+                intent.putExtra("message", message);
+                startActivity(intent);
+            } else {
+                getRedDetail(redCode, message);
+            }
             return true;
         }
         return false;
@@ -137,7 +142,6 @@ public class CustomChatFragment extends EaseChatFragment implements EaseChatFrag
                     break;
             }
         }
-
     }
 
     private void toSendRed() {
@@ -149,10 +153,46 @@ public class CustomChatFragment extends EaseChatFragment implements EaseChatFrag
         inputMenu.hideExtendMenuContainer();
     }
 
+    private void getRedDetail(String redCode, final EMMessage message) {
+        operateLoadingDialog(true);
+        RetrofitClient.getInstance().map(
+                RetrofitManager.createRetrofit(BaseApplication.getInstance(), ApiRetrofit.class)
+                        .getRedDetail(redCode, 0, 100), new BaseSubscriber<RedPackageDetailInfo> () {
+                    @Override
+                    public void onBaseNext(RedPackageDetailInfo obj) {
+                        operateLoadingDialog(false);
+                        OpenRedPackageFragment openRedPackageFragment = new OpenRedPackageFragment();
+                        Bundle bundle = new Bundle();
+                        bundle.putBoolean("isCl", isCl);
+                        bundle.putParcelable("message", message);
+                        bundle.putParcelable("redDetail", obj);
+                        openRedPackageFragment.setArguments(bundle);
+                        openRedPackageFragment.show(getFragmentManager(), "OpenRedPackageFragment");
+                    }
+
+                    @Override
+                    public void onError(ActionException e) {
+                        operateLoadingDialog(false);
+                        ToastUtils.show(BaseApplication.getInstance(), e.getErrorMessage());
+                    }
+                });
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(Activity.RESULT_OK == resultCode && 1 == requestCode) {
             messageList.refresh();//刷新消息数据
+        }
+    }
+
+    private void operateLoadingDialog(Boolean isOpen) {
+        if (mLoadingDialog == null) {
+            mLoadingDialog = new LoadingFragment();
+        }
+        if (isOpen && !mLoadingDialog.isAdded()) {
+            mLoadingDialog.show(getActivity().getSupportFragmentManager(), "LoadingFragment");
+        } else {
+            mLoadingDialog.dismiss();
         }
     }
 }

@@ -37,6 +37,108 @@ data class LoginInfo(
     }
 }
 
+data class SMSTime(var time: String) : Parcelable {
+    constructor(source: Parcel) : this(
+        source.readString()
+    )
+
+    override fun describeContents() = 0
+
+    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
+        writeString(time)
+    }
+
+    companion object {
+        @JvmField
+        val CREATOR: Parcelable.Creator<SMSTime> = object : Parcelable.Creator<SMSTime> {
+            override fun createFromParcel(source: Parcel): SMSTime = SMSTime(source)
+            override fun newArray(size: Int): Array<SMSTime?> = arrayOfNulls(size)
+        }
+    }
+}
+
+data class KFInfo(
+    var mid: String,
+    var nickname: String,
+    var pwd: String,
+    var name: String,
+    var email: String,
+    var mobile: String,
+    var lucky: String,
+    var birthday: String,
+    var litpic: String,
+    var province: String,
+    var city: String,
+    var cardid: String,
+    var equipment_id: String,
+    var points: String,
+    var if_robot: String,
+    var if_service: String,
+    var status: String,
+    var login_time: String,
+    var add_time: String,
+    var hx_pwd: String,
+    var photo: String
+) : Parcelable {
+    constructor(source: Parcel) : this(
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString()
+    )
+
+    override fun describeContents() = 0
+
+    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
+        writeString(mid)
+        writeString(nickname)
+        writeString(pwd)
+        writeString(name)
+        writeString(email)
+        writeString(mobile)
+        writeString(lucky)
+        writeString(birthday)
+        writeString(litpic)
+        writeString(province)
+        writeString(city)
+        writeString(cardid)
+        writeString(equipment_id)
+        writeString(points)
+        writeString(if_robot)
+        writeString(if_service)
+        writeString(status)
+        writeString(login_time)
+        writeString(add_time)
+        writeString(hx_pwd)
+        writeString(photo)
+    }
+
+    companion object {
+        @JvmField
+        val CREATOR: Parcelable.Creator<KFInfo> = object : Parcelable.Creator<KFInfo> {
+            override fun createFromParcel(source: Parcel): KFInfo = KFInfo(source)
+            override fun newArray(size: Int): Array<KFInfo?> = arrayOfNulls(size)
+        }
+    }
+}
+
 data class GroupInfo(
     var id: String,
     var gid: String,
@@ -88,6 +190,34 @@ data class GroupInfo(
         val CREATOR: Parcelable.Creator<GroupInfo> = object : Parcelable.Creator<GroupInfo> {
             override fun createFromParcel(source: Parcel): GroupInfo = GroupInfo(source)
             override fun newArray(size: Int): Array<GroupInfo?> = arrayOfNulls(size)
+        }
+    }
+}
+
+data class MsgInfo(
+    var title: String,
+    var add_time: String,
+    var content: String
+) : Parcelable {
+    constructor(source: Parcel) : this(
+        source.readString(),
+        source.readString(),
+        source.readString()
+    )
+
+    override fun describeContents() = 0
+
+    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
+        writeString(title)
+        writeString(add_time)
+        writeString(content)
+    }
+
+    companion object {
+        @JvmField
+        val CREATOR: Parcelable.Creator<MsgInfo> = object : Parcelable.Creator<MsgInfo> {
+            override fun createFromParcel(source: Parcel): MsgInfo = MsgInfo(source)
+            override fun newArray(size: Int): Array<MsgInfo?> = arrayOfNulls(size)
         }
     }
 }
@@ -197,13 +327,21 @@ data class RedPackageInfo(
     }
 }
 
-data class RedPackageDetailInfo(
-    var url: String,
-    var name: String,
-    var amount: String,
-    var time: String
+data class RedDetailInfo(
+    var hb_id: String,
+    var id: String,
+    var mid: String,
+    var money: String,
+    var add_time: String,
+    var litpic: String,
+    var nickname: String,
+    var if_do: String
 ) : Parcelable {
     constructor(source: Parcel) : this(
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
         source.readString(),
         source.readString(),
         source.readString(),
@@ -213,10 +351,54 @@ data class RedPackageDetailInfo(
     override fun describeContents() = 0
 
     override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
-        writeString(url)
-        writeString(name)
-        writeString(amount)
-        writeString(time)
+        writeString(hb_id)
+        writeString(id)
+        writeString(mid)
+        writeString(money)
+        writeString(add_time)
+        writeString(litpic)
+        writeString(nickname)
+        writeString(if_do)
+    }
+
+    companion object {
+        @JvmField
+        val CREATOR: Parcelable.Creator<RedDetailInfo> = object : Parcelable.Creator<RedDetailInfo> {
+            override fun createFromParcel(source: Parcel): RedDetailInfo = RedDetailInfo(source)
+            override fun newArray(size: Int): Array<RedDetailInfo?> = arrayOfNulls(size)
+        }
+    }
+}
+
+data class RedPackageDetailInfo(
+    var hb_data: RedDataInfo,
+    var data: MutableList<RedDetailInfo>,
+    var type: String,
+    var take: String,
+    var takeMoney: String,
+    var count: String,
+    var if_end: String
+) : Parcelable {
+    constructor(source: Parcel) : this(
+        source.readParcelable<RedDataInfo>(RedDataInfo::class.java.classLoader),
+        source.createTypedArrayList(RedDetailInfo.CREATOR),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString()
+    )
+
+    override fun describeContents() = 0
+
+    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
+        writeParcelable(hb_data, 0)
+        writeTypedList(data)
+        writeString(type)
+        writeString(take)
+        writeString(takeMoney)
+        writeString(count)
+        writeString(if_end)
     }
 
     companion object {
@@ -228,12 +410,42 @@ data class RedPackageDetailInfo(
     }
 }
 
-data class MsgInfo(
-    var title: String,
+data class RedDataInfo(
+    var id: String,
+    var name: String,
+    var mobile: String,
+    var money: String,
+    var type: String,
+    var status: String,
+    var integral: String,
+    var groupname: String,
+    var gid: String,
     var add_time: String,
-    var content: String
+    var mid: String,
+    var serial: String,
+    var remark: String,
+    var thunder: String,
+    var hb_number: String,
+    var end_time: String,
+    var nickname: String,
+    var pic: String
 ) : Parcelable {
     constructor(source: Parcel) : this(
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
         source.readString(),
         source.readString(),
         source.readString()
@@ -242,16 +454,31 @@ data class MsgInfo(
     override fun describeContents() = 0
 
     override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
-        writeString(title)
+        writeString(id)
+        writeString(name)
+        writeString(mobile)
+        writeString(money)
+        writeString(type)
+        writeString(status)
+        writeString(integral)
+        writeString(groupname)
+        writeString(gid)
         writeString(add_time)
-        writeString(content)
+        writeString(mid)
+        writeString(serial)
+        writeString(remark)
+        writeString(thunder)
+        writeString(hb_number)
+        writeString(end_time)
+        writeString(nickname)
+        writeString(pic)
     }
 
     companion object {
         @JvmField
-        val CREATOR: Parcelable.Creator<MsgInfo> = object : Parcelable.Creator<MsgInfo> {
-            override fun createFromParcel(source: Parcel): MsgInfo = MsgInfo(source)
-            override fun newArray(size: Int): Array<MsgInfo?> = arrayOfNulls(size)
+        val CREATOR: Parcelable.Creator<RedDataInfo> = object : Parcelable.Creator<RedDataInfo> {
+            override fun createFromParcel(source: Parcel): RedDataInfo = RedDataInfo(source)
+            override fun newArray(size: Int): Array<RedDataInfo?> = arrayOfNulls(size)
         }
     }
 }

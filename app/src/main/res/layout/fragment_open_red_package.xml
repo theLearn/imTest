@@ -70,7 +70,6 @@
                     android:id="@+id/tv_red_package_view_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
                     android:padding="@dimen/public_space_value_10"
                     android:text="@string/open_red_package_tip"
                     android:textSize="@dimen/normal_text_size"

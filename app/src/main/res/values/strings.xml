@@ -43,7 +43,7 @@
     <string name="money_tip">金额</string>
     <string name="my_get_today_tip">今日收益x元</string>
     <string name="my_get_month_tip">月总收益x元</string>
-    <string name="about_tip">友信APP是一款清量级的用户聊天工具， 聊聊，为交友而生！一款随时可以提现 的用户聊天工具，充值或者提现，随你所想！友信APP24小时都在下红包雨~ 快来抢红包吧！</string>
+    <string name="about_tip">众乐游APP是一款清量级的用户聊天工具， 聊聊，为交友而生！一款随时可以提现 的用户聊天工具，充值或者提现，随你所想！众乐游APP24小时都在下红包雨~ 快来抢红包吧！</string>
     <string name="title_jl_introduce">接龙玩法说明</string>
     <string name="title_cl_introduce">踩雷玩法说明</string>
     <string name="wf_introduce">玩法说明</string>
@@ -94,7 +94,7 @@
     <string name="red_package">红包</string>
     <string name="who_red_package">%1$s的红包</string>
     <string name="open_red_package_tip">看看大家的手气 ></string>
-    <string name="open_red_package_detail_tip">%1$s个红包被抢光了</string>
+    <string name="open_red_package_detail_tip">已领取%1$s/%2$s个, 共%1$s/%2$s元</string>
     <string name="title_modify_nick_name">昵称修改</string>
     <string name="title_modify_photo">头像修改</string>
 </resources>

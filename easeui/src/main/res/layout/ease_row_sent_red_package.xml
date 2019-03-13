@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:gravity="center_horizontal"
               android:orientation="vertical"
               android:paddingTop="13dp">
 
@@ -10,7 +9,8 @@
             android:id="@+id/timestamp"
             style="@style/chat_text_date_style"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -22,7 +22,6 @@
         <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="right"
                 android:orientation="vertical">
 
             <TextView
@@ -49,7 +48,8 @@
                 android:id="@+id/iv_userhead"
                 android:layout_width="@dimen/size_avatar"
                 android:layout_height="@dimen/size_avatar"
-                android:layout_marginRight="@dimen/margin_chat_activity"
+                android:layout_marginLeft="@dimen/public_space_value_10"
+                android:layout_marginRight="@dimen/public_space_value_10"
                 android:src="@drawable/ease_default_avatar"
                 android:scaleType="fitXY"/>
     </LinearLayout>

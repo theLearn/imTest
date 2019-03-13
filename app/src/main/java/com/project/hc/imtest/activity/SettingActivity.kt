@@ -35,7 +35,9 @@ class SettingActivity : AppCommonActivity(), View.OnClickListener {
         ll_setting_check_app_version.setOnClickListener(this)
 
         ssv_setting_sound.setOnChangedListener { slipSwitch, checkState ->
-            ToastUtils.show(this, checkState.toString())
+            if(checkState) {
+
+            }
         }
     }
 
@@ -50,7 +52,7 @@ class SettingActivity : AppCommonActivity(), View.OnClickListener {
             }
             R.id.ll_setting_check_app_version -> {}
             else -> {
-
+                ToastUtils.show(this, "已是最新版本！")
             }
         }
     }

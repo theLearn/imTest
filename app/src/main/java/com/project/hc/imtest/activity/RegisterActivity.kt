@@ -13,6 +13,7 @@ import com.example.hongcheng.data.retrofit.RetrofitManager
 import com.project.hc.imtest.R
 import com.project.hc.imtest.api.ApiRetrofit
 import com.project.hc.imtest.application.BaseApplication
+import com.project.hc.imtest.model.SMSTime
 import com.project.hc.imtest.util.SMSCountDownUtil
 import kotlinx.android.synthetic.main.activity_register.*
 
@@ -46,7 +47,16 @@ class RegisterActivity : BasicActivity(), View.OnClickListener, SMSCountDownUtil
         when (view?.id) {
             R.id.iv_register_cancel -> finish()
             R.id.tv_register_sms_code_tip -> {
-                SMSCountDownUtil.getInstance().start()
+                val phone = et_register_phone.text.toString().trim()
+                if (ValidateUtils.isEmpty(phone)) {
+                    ToastUtils.show(this, "请输入手机号")
+                    return
+                }
+                if (!ValidateUtils.isPhone(phone)) {
+                    ToastUtils.show(this, "手机号格式不正确")
+                    return
+                }
+                getTime()
             }
             R.id.bt_register -> {
                 register()
@@ -55,6 +65,42 @@ class RegisterActivity : BasicActivity(), View.OnClickListener, SMSCountDownUtil
 
             }
         }
+    }
+
+    private fun getTime() {
+        operateLoadingDialog(true)
+        compositeDisposable.add(
+            RetrofitClient.getInstance().map<SMSTime>(
+                RetrofitManager.createRetrofit<ApiRetrofit>(BaseApplication.getInstance(), ApiRetrofit::class.java)
+                    .getTime(et_register_phone.text.toString().trim()), object : BaseSubscriber<SMSTime>() {
+                    override fun onError(e: ActionException) {
+                        operateLoadingDialog(false)
+                        ToastUtils.show(BaseApplication.getInstance(), e.message)
+                    }
+
+                    override fun onBaseNext(obj : SMSTime) {
+                        operateLoadingDialog(false)
+                        getSmsCode(obj.time)
+                    }
+                }))
+    }
+
+    private fun getSmsCode(time : String) {
+        operateLoadingDialog(true)
+        compositeDisposable.add(
+            RetrofitClient.getInstance().map<Any>(
+                RetrofitManager.createRetrofit<ApiRetrofit>(BaseApplication.getInstance(), ApiRetrofit::class.java)
+                    .getSmsCode(et_register_phone.text.toString().trim(), "2", time), object : BaseSubscriber<Any>() {
+                    override fun onError(e: ActionException) {
+                        operateLoadingDialog(false)
+                        ToastUtils.show(BaseApplication.getInstance(), e.message)
+                    }
+
+                    override fun onBaseNext(obj : Any) {
+                        operateLoadingDialog(false)
+                        SMSCountDownUtil.getInstance().start()
+                    }
+                }))
     }
 
     override fun showCountDownState(isRunning: Boolean) {

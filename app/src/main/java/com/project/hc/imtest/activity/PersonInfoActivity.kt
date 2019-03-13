@@ -2,13 +2,13 @@ package com.project.hc.imtest.activity
 
 import android.content.Intent
 import android.view.View
-import com.example.hongcheng.common.util.ImageLoadUtils
-import com.example.hongcheng.common.util.SPUtils
-import com.example.hongcheng.common.util.ValidateUtils
-import com.example.hongcheng.common.util.ViewUtils
+import com.example.hongcheng.common.lifecycle.ActivityLifecycleImpl
+import com.example.hongcheng.common.util.*
 import com.project.hc.imtest.R
 import com.project.hc.imtest.api.ApiConstants
 import com.project.hc.imtest.application.BaseApplication
+import com.project.hc.imtest.chat.ChatUtils
+import com.project.hc.imtest.chat.CommonCallback
 import kotlinx.android.synthetic.main.body_person_info.*
 
 class PersonInfoActivity : AppCommonActivity(), View.OnClickListener {
@@ -54,10 +54,32 @@ class PersonInfoActivity : AppCommonActivity(), View.OnClickListener {
                 startActivity(Intent(this, ModifyNameActivity::class.java))
             }
             R.id.ll_person_info_phone -> {}
-            R.id.bt_logout -> {}
+            R.id.bt_logout -> {
+                operateLoadingDialog(true)
+                ChatUtils.logoutChat(false, object : CommonCallback {
+                    override fun onSuccess() {
+                        runOnUiThread {
+                            operateLoadingDialog(false)
+                            toLogin()
+                        }
+                    }
+
+                    override fun onFail(message: String) {
+                        runOnUiThread {
+                            operateLoadingDialog(false)
+                            toLogin()
+                        }
+                    }
+                })
+            }
             else -> {
 
             }
         }
+    }
+
+    private fun toLogin() {
+        ActivityLifecycleImpl.getInstance().finishAll();
+        startActivity(Intent(this, LoginActivity::class.java))
     }
 }

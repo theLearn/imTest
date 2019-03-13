@@ -48,7 +48,7 @@ abstract class BasicActivity : AppCompatActivity(), CommonUI {
             mLoadingDialog = LoadingFragment()
         }
 
-        mLoadingDialog?.let { if (isOpen) it.show(supportFragmentManager, "LoadingFragment") else it.dismiss() }
+        mLoadingDialog?.let { if (isOpen && !it.isAdded) it.show(supportFragmentManager, "LoadingFragment") else it.dismiss() }
     }
 
     private val REQUEST_PERMISSIONS_NEED= 1

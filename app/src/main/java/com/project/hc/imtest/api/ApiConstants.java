@@ -43,6 +43,14 @@ public class ApiConstants {
     public static final String RECEIVE_CL_RED_URL = "RedPacket/robCailRed";
     //抢接龙红包
     public static final String RECEIVE_JL_RED_URL = "RedPacket/robJielRed";
+    //获取红包详情
+    public static final String GET_RED_DETAIL_URL = "RedPacket/redRecord";
+    //获取客服信息
+    public static final String GET_KF_ID_URL = "user/get_kf";
+    //获取时间戳
+    public static final String GET_TIME_URL = "code/get_time";
+    //获取短信验证码
+    public static final String GET_SMS_CODE_URL = "code/phoneMd5";
 
     public static final String MOBILE = "mobile";
     public static final String PASSWORD = "password";
