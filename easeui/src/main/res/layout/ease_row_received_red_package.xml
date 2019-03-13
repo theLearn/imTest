@@ -32,14 +32,14 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-            <!--<TextView-->
-                    <!--android:id="@+id/tv_userid"-->
-                    <!--style="@style/chat_text_name_style"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginLeft="@dimen/chat_nick_margin_left"-->
-                    <!--android:textSize="@dimen/chat_nick_text_size"-->
-                    <!--android:visibility="gone"/>-->
+            <TextView
+                    android:id="@+id/tv_userid"
+                    style="@style/chat_text_name_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/chat_nick_margin_left"
+                    android:textSize="@dimen/chat_nick_text_size"
+                    android:visibility="gone"/>
 
             <ImageView
                     android:id="@+id/bubble"
@@ -47,6 +47,7 @@
                     android:layout_height="88dp"
                     android:layout_marginRight="75dp"
                     android:layout_marginLeft="@dimen/margin_chat_activity"
+                    android:layout_marginTop="@dimen/margin_chat_activity"
                     android:scaleType="fitXY"
                     android:src="@drawable/ease_send_red_package"/>
 

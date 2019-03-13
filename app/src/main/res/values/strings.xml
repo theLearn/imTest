@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">众乐游</string>
+    <string name="app_name">聊吧</string>
     <string name="home">大厅</string>
     <string name="title_home_left">踩雷红包</string>
     <string name="title_home_right">接龙红包</string>
@@ -43,14 +43,14 @@
     <string name="money_tip">金额</string>
     <string name="my_get_today_tip">今日收益x元</string>
     <string name="my_get_month_tip">月总收益x元</string>
-    <string name="about_tip">众乐游APP是一款清量级的用户聊天工具， 聊聊，为交友而生！一款随时可以提现 的用户聊天工具，充值或者提现，随你所想！众乐游APP24小时都在下红包雨~ 快来抢红包吧！</string>
+    <string name="about_tip">聊吧APP是一款清量级的用户聊天工具， 聊聊，为交友而生！一款随时可以提现 的用户聊天工具，充值或者提现，随你所想！聊吧APP24小时都在下红包雨~ 快来抢红包吧！</string>
     <string name="title_jl_introduce">接龙玩法说明</string>
     <string name="title_cl_introduce">踩雷玩法说明</string>
     <string name="wf_introduce">玩法说明</string>
     <string name="jl_introduce_tip">1.系统创建房间时设置包数，金额，惩罚。\n2.玩家可以自由发包，自由抢包，自由发挥。\n3.抢包结束后惩罚最小或最大金额玩家，绝对公平公正。\n4.惩罚金额等同于玩家的发包金额。\n5.未被惩罚的玩家抢到金币直接加入个人于额。\n6.玩家金额需要大于等于红包金额，否则无法抢包。\n7.红包人数若不够，一分钟之后红包失效，剩余金额返还。\n8.红包人数若不够，一分钟之后红包失效，剩余金额返还。\n9.大豹子、大顺子按发包金额40%奖励，小豹子、小顺子按发包金额30%奖励。</string>
     <string name="cl_introduce_tip">1.发红包：20-500，中雷自动返。（多雷奖励截图客服兑奖，三雷奖励10四雷奖励30，五雷奖励80，六雷奖励200）\n2.抢红包：抢包金额须大于发包金额1.6倍（抢到顺子、豹子、001奖励发包金额的30%福利自动返）</string>
     <string name="wf_introduce_tip">平台对每个玩家绝对公平公正，资金安全，绝对信誉</string>
-    <string name="app_sign_tip">——众乐游</string>
+    <string name="app_sign_tip">——聊吧</string>
     <string name="please_input_name_hint">请输入您的姓名</string>
     <string name="please_input_nick_name_hint">请输入昵称</string>
     <string name="please_input_your_phone_hint">请留下您的手机号码，以便我们联系您</string>

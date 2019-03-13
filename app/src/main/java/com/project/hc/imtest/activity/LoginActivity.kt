@@ -3,7 +3,6 @@ package com.project.hc.imtest.activity
 import android.content.Intent
 import android.view.View
 import com.example.hongcheng.common.base.BasicActivity
-import com.example.hongcheng.common.cache.CacheManager
 import com.example.hongcheng.common.util.*
 import com.example.hongcheng.data.retrofit.ActionException
 import com.example.hongcheng.data.retrofit.BaseSubscriber
@@ -37,6 +36,7 @@ class LoginActivity : BasicActivity(), View.OnClickListener {
             et_login_phone.setText(phone)
             et_login_pw.setText(password)
         }
+        verifyPermissions()
     }
 
     override fun onClick(view: View?) {
@@ -93,5 +93,13 @@ class LoginActivity : BasicActivity(), View.OnClickListener {
                         finish()
                     }
                 }))
+    }
+
+    override fun requestPermission(isSuccess: Boolean) {
+        super.requestPermission(isSuccess)
+        if(!isSuccess) {
+            ToastUtils.show(this, "缺少必要权限")
+            finish()
+        }
     }
 }

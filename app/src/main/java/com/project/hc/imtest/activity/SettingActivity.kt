@@ -50,9 +50,11 @@ class SettingActivity : AppCommonActivity(), View.OnClickListener {
             R.id.ll_setting_modify_pw -> {
                 startActivity(Intent(this, ModifyPwActivity::class.java))
             }
-            R.id.ll_setting_check_app_version -> {}
-            else -> {
+            R.id.ll_setting_check_app_version -> {
                 ToastUtils.show(this, "已是最新版本！")
+            }
+            else -> {
+
             }
         }
     }
