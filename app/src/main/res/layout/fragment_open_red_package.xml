@@ -45,7 +45,6 @@
                     android:id="@+id/tv_red_package_tip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
                     android:layout_marginTop="@dimen/public_space_value_10"
                     android:layout_marginLeft="@dimen/public_space_value_20"
                     android:layout_marginRight="@dimen/public_space_value_20"

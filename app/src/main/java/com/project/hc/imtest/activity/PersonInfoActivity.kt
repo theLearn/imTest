@@ -3,7 +3,10 @@ package com.project.hc.imtest.activity
 import android.content.Intent
 import android.view.View
 import com.example.hongcheng.common.lifecycle.ActivityLifecycleImpl
-import com.example.hongcheng.common.util.*
+import com.example.hongcheng.common.util.ImageLoadUtils
+import com.example.hongcheng.common.util.SPUtils
+import com.example.hongcheng.common.util.ValidateUtils
+import com.example.hongcheng.common.util.ViewUtils
 import com.project.hc.imtest.R
 import com.project.hc.imtest.api.ApiConstants
 import com.project.hc.imtest.application.BaseApplication
@@ -79,8 +82,8 @@ class PersonInfoActivity : AppCommonActivity(), View.OnClickListener {
     }
 
     private fun toLogin() {
-        SPUtils.putValueToSP(this@LoginActivity, ApiConstants.AUTOLOGIN, false)
-        ActivityLifecycleImpl.getInstance().finishAll();
+        SPUtils.putValueToSP(this, ApiConstants.AUTOLOGIN, false)
+        ActivityLifecycleImpl.getInstance().finishAll()
         startActivity(Intent(this, LoginActivity::class.java))
     }
 }

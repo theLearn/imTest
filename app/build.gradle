@@ -30,6 +30,9 @@ android {
             jniLibs.srcDir 'libs'
         }
     }
+
+    //use legacy for android > 6.0
+    useLibrary 'org.apache.http.legacy'
 }
 
 kapt {

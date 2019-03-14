@@ -3,6 +3,7 @@
     <string name="home">大厅</string>
     <string name="title_home_left">踩雷红包</string>
     <string name="title_home_right">接龙红包</string>
+    <string name="title_qr_code">二维码</string>
     <string name="message">消息</string>
     <string name="service">服务</string>
     <string name="person">我</string>
@@ -87,8 +88,7 @@
     <string name="jl_introduce">接龙玩法说明</string>
     <string name="cl_introduce">踩雷玩法说明</string>
     <string name="yuan">元</string>
-    <string name="hint_cl_red_package_input">请输入金额范围（元）：125~1115</string>
-    <string name="hint_jl_red_package_input">请输入金额范围（元）：6~7</string>
+    <string name="hint_red_package_amount_input">请输入金额范围（元）：%1$s~%2$s</string>
     <string name="hint_red_package_set_ws">请设置踩雷尾数</string>
     <string name="bt_send_red_package">塞钱进红包</string>
     <string name="red_package_amount_default">0.00</string>

@@ -17,6 +17,7 @@ import com.project.hc.imtest.R
 import com.project.hc.imtest.adapter.RedPackageDetailListAdapter
 import com.project.hc.imtest.api.ApiRetrofit
 import com.project.hc.imtest.application.BaseApplication
+import com.project.hc.imtest.model.RedDetailInfo
 import com.project.hc.imtest.model.RedPackageDetailInfo
 import kotlinx.android.synthetic.main.body_red_package_detail.*
 import kotlinx.android.synthetic.main.layout_app_common_title.*
@@ -87,11 +88,21 @@ class RedPackageDetailActivity : CommonActivity(){
 
                         ImageLoadUtils.bindImageUrlForRound(iv_red_package_detail_user_photo, obj.hb_data.pic, R.mipmap.icon_photo_default)
                         tv_red_package_detail_who.text = String.format(getString(R.string.who_red_package), obj.hb_data.nickname)
-                        tv_red_package_amount.text = obj.hb_data.money
                         tv_red_package_detail_tip.text = String.format(getString(R.string.open_red_package_detail_tip), obj.take, obj.count, obj.takeMoney, obj.hb_data.money)
 
                         mAdapter.data = obj.data
                         mAdapter.notifyDataSetChanged()
+
+                        if(message.getBooleanAttribute("rob", false)) {
+                            for(temp : RedDetailInfo in obj.data) {
+                                if(temp.mid == BaseApplication.getInstance()?.loginInfo?.userId) {
+                                    tv_red_package_amount.text = temp.money
+                                    break
+                                }
+                            }
+                        } else {
+                            tv_red_package_amount.text = ""
+                        }
                     }
                 }))
     }

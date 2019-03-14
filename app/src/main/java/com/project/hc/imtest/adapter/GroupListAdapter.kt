@@ -1,5 +1,6 @@
 package com.project.hc.imtest.adapter
 
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.hongcheng.common.base.BaseListAdapter
@@ -17,5 +18,10 @@ class GroupListAdapter : BaseListAdapter<GroupInfo, GroupListViewHolder>() {
         val model = data[position]
         holder.tvName.text = model.name
         ImageLoadUtils.bindImageUrlForRound(holder.ivGroupIcon, model.pic, R.mipmap.icon_photo_default)
+        var groupDesc = model.hb_number + "个红包"
+        if(!TextUtils.isEmpty(model.pl)) {
+            groupDesc += " (倍率" + model.pl + ")"
+        }
+        holder.tvDes.text = groupDesc
     }
 }

@@ -31,6 +31,7 @@ public class CustomChatFragment extends EaseChatFragment implements EaseChatFrag
     protected int[] itemdrawables = { R.mipmap.icon_send_red};
     private  boolean isCl;
     private LoadingFragment mLoadingDialog;
+    private GroupInfo mGroupInfo;
 
     private CardItemClickListener customMenuItemClickListener;
 
@@ -64,6 +65,7 @@ public class CustomChatFragment extends EaseChatFragment implements EaseChatFrag
                     .getGroupInfoById(toChatUsername), new BaseSubscriber<GroupInfo> () {
                     @Override
                     public void onBaseNext(GroupInfo groupInfo) {
+                        mGroupInfo = groupInfo;
                         isCl = "2".equals(groupInfo.getType()) ;
                     }
 
@@ -146,9 +148,7 @@ public class CustomChatFragment extends EaseChatFragment implements EaseChatFrag
 
     private void toSendRed() {
         Intent intent = new Intent(getActivity(), RedPackageSendActivity.class);
-        intent.putExtra(EaseConstant.EXTRA_CHAT_TYPE, chatType);
-        intent.putExtra(EaseConstant.EXTRA_USER_ID, toChatUsername);
-        intent.putExtra("isCl", isCl);
+        intent.putExtra("groupInfo", mGroupInfo);
         startActivityForResult(intent, 1);
         inputMenu.hideExtendMenuContainer();
     }
@@ -194,5 +194,9 @@ public class CustomChatFragment extends EaseChatFragment implements EaseChatFrag
         } else {
             mLoadingDialog.dismiss();
         }
+    }
+
+    protected int getTitleRightImageRes() {
+        return 0;
     }
 }

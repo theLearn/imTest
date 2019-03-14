@@ -11,19 +11,21 @@ import com.example.hongcheng.data.retrofit.ActionException
 import com.example.hongcheng.data.retrofit.BaseSubscriber
 import com.example.hongcheng.data.retrofit.RetrofitClient
 import com.example.hongcheng.data.retrofit.RetrofitManager
+import com.google.gson.Gson
 import com.hyphenate.chat.EMClient
 import com.hyphenate.chat.EMMessage
 import com.hyphenate.chat.EMMessage.ChatType
-import com.hyphenate.easeui.EaseConstant
 import com.project.hc.imtest.R
 import com.project.hc.imtest.api.ApiRetrofit
 import com.project.hc.imtest.application.BaseApplication
+import com.project.hc.imtest.model.GroupInfo
 import com.project.hc.imtest.model.RedDetailInfo
+import com.project.hc.imtest.model.SendRedInfo
 import kotlinx.android.synthetic.main.body_red_pacage_setting.*
 
 
 class RedPackageSendActivity : AppCommonActivity(), View.OnClickListener, TextWatcher {
-    var chatType : Int = EaseConstant.CHATTYPE_SINGLE
+    private lateinit var mGroupInfo: GroupInfo
     var toChatUsername : String? = null
     var isCl : Boolean = true
 
@@ -44,13 +46,14 @@ class RedPackageSendActivity : AppCommonActivity(), View.OnClickListener, TextWa
     }
 
     override fun initBodyView(view: View) {
-        chatType = intent.getIntExtra(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_SINGLE)
-        toChatUsername = intent.getStringExtra(EaseConstant.EXTRA_USER_ID)
-        isCl = intent.getBooleanExtra("isCl", false)
+        mGroupInfo = intent.getParcelableExtra("groupInfo")
+        toChatUsername = mGroupInfo.gid
+        isCl = "2" == mGroupInfo.type
         bt_confirm_red_package_setting.setOnClickListener(this)
         et_red_package_setting_amount.addTextChangedListener(this)
         et_red_package_setting_ws.addTextChangedListener(this)
         ll_red_package_setting_ws.visibility = if(isCl) View.VISIBLE else View.GONE
+        et_red_package_setting_amount.hint = String.format(getString(R.string.hint_red_package_amount_input), mGroupInfo.minMoney, mGroupInfo.maxMoney)
     }
 
     override fun onClick(view: View?) {
@@ -132,17 +135,20 @@ class RedPackageSendActivity : AppCommonActivity(), View.OnClickListener, TextWa
     }
 
     private fun sendRedPackage(hb_id : String) {
+        val sendInfo = SendRedInfo()
+        sendInfo.mobile = BaseApplication.getInstance()?.loginInfo?.mobile!!
+        sendInfo.nickname = BaseApplication.getInstance()?.loginInfo?.nickname!!
+        sendInfo.photo = BaseApplication.getInstance()?.loginInfo?.photo!!
+        sendInfo.type = "red"
+        sendInfo.redCode = hb_id
+
         //发送扩展消息
-        val message = EMMessage.createTxtSendMessage("[红包]", toChatUsername)
+        val message = EMMessage.createTxtSendMessage(Gson().toJson(sendInfo).toString(), toChatUsername)
         //增加自己的属性
         message.setAttribute("red", true)
         message.setAttribute("redCode", hb_id)
         //设置群聊和聊天室发送消息
-        if (chatType === EaseConstant.CHATTYPE_GROUP) {
-            message.chatType = ChatType.GroupChat
-        } else if (chatType === EaseConstant.CHATTYPE_CHATROOM) {
-            message.chatType = ChatType.ChatRoom
-        }
+        message.chatType = ChatType.GroupChat
         //发送扩展消息
         EMClient.getInstance().chatManager().sendMessage(message)
     }

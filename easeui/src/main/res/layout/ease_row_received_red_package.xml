@@ -49,7 +49,7 @@
                     android:layout_marginLeft="@dimen/margin_chat_activity"
                     android:layout_marginTop="@dimen/margin_chat_activity"
                     android:scaleType="fitXY"
-                    android:src="@drawable/ease_send_red_package"/>
+                    android:src="@drawable/ease_receive_red_package"/>
 
         </LinearLayout>
     </LinearLayout>

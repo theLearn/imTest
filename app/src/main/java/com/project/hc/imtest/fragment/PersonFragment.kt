@@ -54,6 +54,7 @@ class PersonFragment : BasicFragment(), View.OnClickListener {
                 startActivity(Intent(activity, RedPackageHistoryActivity::class.java))
             }
             R.id.ll_person_cash -> {
+                startActivity(Intent(activity, QRCodeActivity::class.java))
             }
             R.id.ll_person_setting -> {
                 startActivity(Intent(activity, SettingActivity::class.java))

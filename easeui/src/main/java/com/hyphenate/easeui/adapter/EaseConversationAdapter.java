@@ -158,6 +158,9 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
             if(content != null){
                 holder.message.setText(content);
             }
+            if(lastMessage.getType() == EMMessage.Type.TXT && !TextUtils.isEmpty(lastMessage.getStringAttribute("redCode",""))) {
+                holder.message.setText("[红包]");
+            }
             holder.time.setText(DateUtils.getTimestampString(new Date(lastMessage.getMsgTime())));
             if (lastMessage.direct() == EMMessage.Direct.SEND && lastMessage.status() == EMMessage.Status.FAIL) {
                 holder.msgState.setVisibility(View.VISIBLE);

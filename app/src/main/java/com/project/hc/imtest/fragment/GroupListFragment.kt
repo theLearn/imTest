@@ -72,7 +72,7 @@ class GroupListFragment : BasicFragment() {
                     if (601 == p0) {
                         toGroup(groupId)
                     } else {
-                        ToastUtils.show(activity, "加入失败")
+                        ToastUtils.show(activity, p0.toString() + " " + p1)
                     }
                 }
             }

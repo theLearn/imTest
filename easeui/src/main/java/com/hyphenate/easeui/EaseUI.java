@@ -3,9 +3,8 @@ package com.hyphenate.easeui;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.util.Log;
-
+import com.example.hongcheng.common.util.SPUtils;
 import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
@@ -14,15 +13,12 @@ import com.hyphenate.easeui.domain.EaseAvatarOptions;
 import com.hyphenate.easeui.domain.EaseEmojicon;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.model.EaseAtMessageHelper;
-import com.hyphenate.easeui.model.EaseNotifier;
 import com.hyphenate.easeui.model.EaseDingMessageHelper;
+import com.hyphenate.easeui.model.EaseNotifier;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import com.example.hongcheng.common.util.SPUtils;
-import com.project.hc.imtest.api.ApiConstants;
 
 public final class EaseUI {
     private static final String TAG = EaseUI.class.getSimpleName();
@@ -200,7 +196,6 @@ public final class EaseUI {
     
     /**
      * set user profile provider
-     * @param provider
      */
     public void setUserProfileProvider(EaseUserProfileProvider userProvider){
         this.userProvider = userProvider;
@@ -309,7 +304,7 @@ public final class EaseUI {
 
         @Override
         public boolean isMsgSoundAllowed(EMMessage message) {
-            return SPUtils.getBooleanFromSP(appContext, ApiConstants.ALLOWSOUND, true);
+            return SPUtils.getBooleanFromSP(appContext, "allowSound", true);
         }
 
         @Override

@@ -6,6 +6,7 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.text.TextUtils;
 import android.view.*;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -84,11 +85,15 @@ public class OpenRedPackageFragment extends DialogFragment implements View.OnCli
 			tip.setText("红包已过期");
 			open.setVisibility(View.GONE);
 			viewDetail.setVisibility(View.GONE);
-		} else if(redPackageDetailInfo.getHb_data().getMoney().equals(redPackageDetailInfo.getTakeMoney())) {
+		} else if((!TextUtils.isEmpty(redPackageDetailInfo.getTake()) && redPackageDetailInfo.getTake().equals(redPackageDetailInfo.getCount())) || redPackageDetailInfo.getHb_data().getMoney().equals(redPackageDetailInfo.getTakeMoney())) {
 			tip.setText("已抢完");
 			open.setVisibility(View.INVISIBLE);
 		} else {
 			tip.setText("恭喜发财");
+		}
+
+		if(redPackageDetailInfo.getData().isEmpty()) {
+			viewDetail.setVisibility(View.GONE);
 		}
 
 		open.setOnClickListener(this);
