@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import com.example.hongcheng.common.util.SPUtils;
+import com.project.hc.imtest.api.ApiConstants;
 
 public final class EaseUI {
     private static final String TAG = EaseUI.class.getSimpleName();
@@ -307,7 +309,7 @@ public final class EaseUI {
 
         @Override
         public boolean isMsgSoundAllowed(EMMessage message) {
-            return true;
+            return SPUtils.getBooleanFromSP(appContext, ApiConstants.ALLOWSOUND, true);
         }
 
         @Override
