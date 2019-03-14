@@ -15,7 +15,7 @@
                 android:layout_width="@dimen/public_space_value_90"
                 android:layout_height="@dimen/public_space_value_90"
                 android:scaleType="fitXY"
-                android:src="@mipmap/icon_app"/>
+                android:src="@mipmap/icon_app_2"/>
 
         <TextView
                 android:layout_width="match_parent"
