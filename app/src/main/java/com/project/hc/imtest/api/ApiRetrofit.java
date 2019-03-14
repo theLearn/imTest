@@ -87,4 +87,7 @@ public interface ApiRetrofit {
 
     @GET(ApiConstants.GET_SMS_CODE_URL)
     Observable<BaseResponse<Object>> getSmsCode(@Query("mobile") String mobile, @Query("type") String type, @Query("time") String time);
+    
+    @GET(ApiConstants.GET_QR_CODE_URL)
+    Observable<BaseResponse<QrCode>> getQrCode();
 }
