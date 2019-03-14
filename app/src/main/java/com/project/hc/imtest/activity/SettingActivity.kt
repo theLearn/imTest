@@ -5,9 +5,10 @@ import android.view.View
 import com.example.hongcheng.common.util.AppUtils
 import com.example.hongcheng.common.util.ToastUtils
 import com.example.hongcheng.common.util.ViewUtils
+import com.example.hongcheng.common.util.SPUtils
 import com.project.hc.imtest.R
 import kotlinx.android.synthetic.main.body_setting.*
-
+import com.project.hc.imtest.api.ApiConstants
 
 class SettingActivity : AppCommonActivity(), View.OnClickListener {
 
@@ -34,10 +35,10 @@ class SettingActivity : AppCommonActivity(), View.OnClickListener {
         ll_setting_modify_pw.setOnClickListener(this)
         ll_setting_check_app_version.setOnClickListener(this)
 
+        val allowSound : Boolean = SPUtils.getBooleanFromSP(this, ApiConstants.ALLOWSOUND, true) 
+        ssv_setting_sound.setChecked(allowSound)
         ssv_setting_sound.setOnChangedListener { slipSwitch, checkState ->
-            if(checkState) {
-
-            }
+            SPUtils.putValueToSP(this@SettingActivity, ApiConstants.ALLOWSOUND  , checkState)                                 
         }
     }
 
