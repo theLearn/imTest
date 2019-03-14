@@ -4,11 +4,11 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class LoginInfo(
-    var token: String,
-    var userId: String,
-    var hx_pwd: String,
-    var nickname: String,
-    var photo: String
+    var token: String = "",
+    var userId: String = "",
+    var hx_pwd: String = "",
+    var nickname: String = "",
+    var photo: String = ""
 ) : Parcelable {
     constructor(source: Parcel) : this(
         source.readString(),
@@ -37,7 +37,7 @@ data class LoginInfo(
     }
 }
 
-data class SMSTime(var time: String) : Parcelable {
+data class SMSTime(var time: String = "") : Parcelable {
     constructor(source: Parcel) : this(
         source.readString()
     )
@@ -58,27 +58,27 @@ data class SMSTime(var time: String) : Parcelable {
 }
 
 data class KFInfo(
-    var mid: String,
-    var nickname: String,
-    var pwd: String,
-    var name: String,
-    var email: String,
-    var mobile: String,
-    var lucky: String,
-    var birthday: String,
-    var litpic: String,
-    var province: String,
-    var city: String,
-    var cardid: String,
-    var equipment_id: String,
-    var points: String,
-    var if_robot: String,
-    var if_service: String,
-    var status: String,
-    var login_time: String,
-    var add_time: String,
-    var hx_pwd: String,
-    var photo: String
+    var mid: String = "",
+    var nickname: String = "",
+    var pwd: String = "",
+    var name: String = "",
+    var email: String = "",
+    var mobile: String = "",
+    var lucky: String = "",
+    var birthday: String = "",
+    var litpic: String = "",
+    var province: String = "",
+    var city: String = "",
+    var cardid: String = "",
+    var equipment_id: String = "",
+    var points: String = "",
+    var if_robot: String = "",
+    var if_service: String = "",
+    var status: String = "",
+    var login_time: String = "",
+    var add_time: String = "",
+    var hx_pwd: String = "",
+    var photo: String = ""
 ) : Parcelable {
     constructor(source: Parcel) : this(
         source.readString(),
@@ -140,18 +140,18 @@ data class KFInfo(
 }
 
 data class GroupInfo(
-    var id: String,
-    var gid: String,
-    var name: String,
-    var type: String,
-    var status: String,
-    var addTime: String,
-    var minMoney: String,
-    var maxMoney: String,
-    var hb_number: String,
-    var pic: String,
-    var jl: String,
-    var pl: String
+    var id: String = "",
+    var gid: String = "",
+    var name: String = "",
+    var type: String = "",
+    var status: String = "",
+    var addTime: String = "",
+    var minMoney: String = "",
+    var maxMoney: String = "",
+    var hb_number: String = "",
+    var pic: String = "",
+    var jl: String = "",
+    var pl: String = ""
 ) : Parcelable {
     constructor(source: Parcel) : this(
         source.readString(),
@@ -195,9 +195,9 @@ data class GroupInfo(
 }
 
 data class MsgInfo(
-    var title: String,
-    var add_time: String,
-    var content: String
+    var title: String = "",
+    var add_time: String = "",
+    var content: String = ""
 ) : Parcelable {
     constructor(source: Parcel) : this(
         source.readString(),
@@ -223,7 +223,7 @@ data class MsgInfo(
 }
 
 data class PointInfo(
-    var points: String
+    var points: String = ""
 ) : Parcelable {
     constructor(source: Parcel) : this(
         source.readString()
@@ -245,10 +245,10 @@ data class PointInfo(
 }
 
 data class RecordList(
-    var count: String,
-    var today_profit: String,
-    var month_profit: String,
-    var data: MutableList<RedPackageInfo>
+    var count: String = "",
+    var today_profit: String = "",
+    var month_profit: String = "",
+    var data: MutableList<RedPackageInfo> = arrlistof()
 ) : Parcelable {
     constructor(source: Parcel) : this(
         source.readString(),
@@ -276,17 +276,17 @@ data class RecordList(
 }
 
 data class RedPackageInfo(
-    var type: String,
-    var name: String,
-    var mobile: String,
-    var money: String,
-    var status: String,
-    var integral: String,
-    var groupname: String,
-    var gid: String,
-    var add_time: String,
-    var serial: String,
-    var remark: String
+    var type: String = "",
+    var name: String = "",
+    var mobile: String = "",
+    var money: String = "",
+    var status: String = "",
+    var integral: String = "",
+    var groupname: String = "",
+    var gid: String = "",
+    var add_time: String = "",
+    var serial: String = "",
+    var remark: String = ""
 ) : Parcelable {
     constructor(source: Parcel) : this(
         source.readString(),
@@ -328,14 +328,14 @@ data class RedPackageInfo(
 }
 
 data class RedDetailInfo(
-    var hb_id: String,
-    var id: String,
-    var mid: String,
-    var money: String,
-    var add_time: String,
-    var litpic: String,
-    var nickname: String,
-    var if_do: String
+    var hb_id: String = "",
+    var id: String = "",
+    var mid: String = "",
+    var money: String = "",
+    var add_time: String = "",
+    var litpic: String = "",
+    var nickname: String = "",
+    var if_do: String = ""
 ) : Parcelable {
     constructor(source: Parcel) : this(
         source.readString(),
@@ -371,13 +371,13 @@ data class RedDetailInfo(
 }
 
 data class RedPackageDetailInfo(
-    var hb_data: RedDataInfo,
-    var data: MutableList<RedDetailInfo>,
-    var type: String,
-    var take: String,
-    var takeMoney: String,
-    var count: String,
-    var if_end: String
+    var hb_data: RedDataInfo = "",
+    var data: MutableList<RedDetailInfo> = arrlistof(),
+    var type: String = "",
+    var take: String = "",
+    var takeMoney: String = "",
+    var count: String = "",
+    var if_end: String = ""
 ) : Parcelable {
     constructor(source: Parcel) : this(
         source.readParcelable<RedDataInfo>(RedDataInfo::class.java.classLoader),
@@ -411,24 +411,24 @@ data class RedPackageDetailInfo(
 }
 
 data class RedDataInfo(
-    var id: String,
-    var name: String,
-    var mobile: String,
-    var money: String,
-    var type: String,
-    var status: String,
-    var integral: String,
-    var groupname: String,
-    var gid: String,
-    var add_time: String,
-    var mid: String,
-    var serial: String,
-    var remark: String,
-    var thunder: String,
-    var hb_number: String,
-    var end_time: String,
-    var nickname: String,
-    var pic: String
+    var id: String = "",
+    var name: String = "",
+    var mobile: String = "",
+    var money: String = "",
+    var type: String = "",
+    var status: String = "",
+    var integral: String = "",
+    var groupname: String = "",
+    var gid: String = "",
+    var add_time: String = "",
+    var mid: String = "",
+    var serial: String = "",
+    var remark: String = "",
+    var thunder: String = "",
+    var hb_number: String = "",
+    var end_time: String = "",
+    var nickname: String = "",
+    var pic: String = ""
 ) : Parcelable {
     constructor(source: Parcel) : this(
         source.readString(),
