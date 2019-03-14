@@ -79,6 +79,7 @@ class PersonInfoActivity : AppCommonActivity(), View.OnClickListener {
     }
 
     private fun toLogin() {
+        SPUtils.putValueToSP(this@LoginActivity, ApiConstants.AUTOLOGIN, false)
         ActivityLifecycleImpl.getInstance().finishAll();
         startActivity(Intent(this, LoginActivity::class.java))
     }
