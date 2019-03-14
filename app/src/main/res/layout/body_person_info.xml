@@ -117,6 +117,7 @@
                 android:layout_width="@dimen/public_space_value_10"
                 android:layout_height="@dimen/public_space_value_10"
                 android:scaleType="fitCenter"
+                android:visibility="invisible"
                 android:src="@mipmap/icon_arrow_gray_right"/>
     </LinearLayout>
 
