@@ -87,6 +87,8 @@
     <string name="jl_introduce">接龙玩法说明</string>
     <string name="cl_introduce">踩雷玩法说明</string>
     <string name="yuan">元</string>
+    <string name="hint_cl_red_package_input">请输入金额范围（元）：125~1115</string>
+    <string name="hint_jl_red_package_input">请输入金额范围（元）：6~7</string>
     <string name="hint_red_package_set_ws">请设置踩雷尾数</string>
     <string name="bt_send_red_package">塞钱进红包</string>
     <string name="red_package_amount_default">0.00</string>
@@ -94,7 +96,7 @@
     <string name="red_package">红包</string>
     <string name="who_red_package">%1$s的红包</string>
     <string name="open_red_package_tip">看看大家的手气 ></string>
-    <string name="open_red_package_detail_tip">已领取%1$s/%2$s个, 共%1$s/%2$s元</string>
+    <string name="open_red_package_detail_tip">已领取%1$s/%2$s个, 共%3$s/%4$s元</string>
     <string name="title_modify_nick_name">昵称修改</string>
     <string name="title_modify_photo">头像修改</string>
 </resources>
