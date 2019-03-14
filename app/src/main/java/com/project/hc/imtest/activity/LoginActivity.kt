@@ -89,6 +89,7 @@ class LoginActivity : BasicActivity(), View.OnClickListener {
                         BaseApplication.getInstance()?.loginInfo = loginInfo
                         SPUtils.putValueToSP(this@LoginActivity, ApiConstants.MOBILE, phone)
                         SPUtils.putValueToSP(this@LoginActivity, ApiConstants.PASSWORD, password)
+                        SPUtils.putValueToSP(this@LoginActivity, ApiConstants.AUTOLOGIN, true)
                         startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                         finish()
                     }
@@ -100,6 +101,10 @@ class LoginActivity : BasicActivity(), View.OnClickListener {
         if(!isSuccess) {
             ToastUtils.show(this, "缺少必要权限")
             finish()
+        } else {
+            if(SPUtils.getBooleanFromSP(this, ApiConstants.AUTOLOGIN, false)){
+                login()
+            }
         }
     }
 }
