@@ -54,4 +54,5 @@ public class ApiConstants {
 
     public static final String MOBILE = "mobile";
     public static final String PASSWORD = "password";
+    public static final String AUTOLOGIN = "autoLogin";
 }
