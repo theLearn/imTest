@@ -57,6 +57,26 @@ data class SMSTime(var time: String = "") : Parcelable {
     }
 }
 
+data class QrCode(var qrCode: String = "") : Parcelable {
+    constructor(source: Parcel) : this(
+        source.readString()
+    )
+
+    override fun describeContents() = 0
+
+    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
+        writeString(qrCode)
+    }
+
+    companion object {
+        @JvmField
+        val CREATOR: Parcelable.Creator<QrCode> = object : Parcelable.Creator<QrCode> {
+            override fun createFromParcel(source: Parcel): QrCode = QrCode(source)
+            override fun newArray(size: Int): Array<QrCode?> = arrayOfNulls(size)
+        }
+    }
+}
+
 data class KFInfo(
     var mid: String = "",
     var nickname: String = "",
