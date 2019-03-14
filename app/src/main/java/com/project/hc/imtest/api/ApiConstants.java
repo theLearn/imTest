@@ -51,6 +51,8 @@ public class ApiConstants {
     public static final String GET_TIME_URL = "code/get_time";
     //获取短信验证码
     public static final String GET_SMS_CODE_URL = "code/phoneMd5";
+    //获取二维码
+    public static final String GET_QR_CODE_URL = "user/getQrCodeUrl";
 
     public static final String MOBILE = "mobile";
     public static final String PASSWORD = "password";
