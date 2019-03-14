@@ -248,7 +248,7 @@ data class RecordList(
     var count: String = "",
     var today_profit: String = "",
     var month_profit: String = "",
-    var data: MutableList<RedPackageInfo> = arrlistof()
+    var data: MutableList<RedPackageInfo> = arrayListOf()
 ) : Parcelable {
     constructor(source: Parcel) : this(
         source.readString(),
@@ -372,7 +372,7 @@ data class RedDetailInfo(
 
 data class RedPackageDetailInfo(
     var hb_data: RedDataInfo = "",
-    var data: MutableList<RedDetailInfo> = arrlistof(),
+    var data: MutableList<RedDetailInfo> = arrayListOf(),
     var type: String = "",
     var take: String = "",
     var takeMoney: String = "",
