@@ -25,7 +25,7 @@ import com.project.hc.imtest.fragment.OpenRedPackageFragment;
 import com.project.hc.imtest.model.GroupInfo;
 import com.project.hc.imtest.model.RedPackageDetailInfo;
 
-public class CustomChatFragment extends EaseChatFragment implements EaseChatFragment.EaseChatFragmentHelper {
+public class CustomChatFragment extends EaseChatFragment implements EaseChatFragment.EaseChatFragmentHelper, OpenRedPackageFragment.OnOverdueListener {
     protected int[] itemIds = { ITEM_RED_PACKAGE};
     protected int[] itemStrings = { R.string.red_package};
     protected int[] itemdrawables = { R.mipmap.icon_send_red};
@@ -52,7 +52,7 @@ public class CustomChatFragment extends EaseChatFragment implements EaseChatFrag
         super.setUpView();
         setChatFragmentHelper(this);
         if(EaseConstant.CHATTYPE_SINGLE != chatType) {
-            inputMenu.forbiddenWords();
+//            inputMenu.forbiddenWords();
             getGroupInfo();
         } else {
             inputMenu.enableToggleMore(true);
@@ -127,6 +127,11 @@ public class CustomChatFragment extends EaseChatFragment implements EaseChatFrag
         return null;
     }
 
+    @Override
+    public void onOverdue() {
+        messageList.refresh();//刷新消息数据
+    }
+
     class CardItemClickListener implements EaseChatExtendMenu.EaseChatExtendMenuItemClickListener{
 
         @Override
@@ -167,6 +172,7 @@ public class CustomChatFragment extends EaseChatFragment implements EaseChatFrag
                         bundle.putParcelable("message", message);
                         bundle.putParcelable("redDetail", obj);
                         openRedPackageFragment.setArguments(bundle);
+                        openRedPackageFragment.setListener(CustomChatFragment.this);
                         openRedPackageFragment.show(getFragmentManager(), "OpenRedPackageFragment");
                     }
 

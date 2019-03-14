@@ -88,7 +88,7 @@ class RedPackageDetailActivity : CommonActivity(){
 
                         ImageLoadUtils.bindImageUrlForRound(iv_red_package_detail_user_photo, obj.hb_data.pic, R.mipmap.icon_photo_default)
                         tv_red_package_detail_who.text = String.format(getString(R.string.who_red_package), obj.hb_data.nickname)
-                        tv_red_package_detail_tip.text = String.format(getString(R.string.open_red_package_detail_tip), obj.take, obj.count, obj.takeMoney, obj.hb_data.money)
+                        tv_red_package_detail_tip.text = String.format(getString(R.string.open_red_package_detail_tip), obj.take, obj.hb_data.hb_number, obj.takeMoney, obj.hb_data.money)
 
                         mAdapter.data = obj.data
                         mAdapter.notifyDataSetChanged()

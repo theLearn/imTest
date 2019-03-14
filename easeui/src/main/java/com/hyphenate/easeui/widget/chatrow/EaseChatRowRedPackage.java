@@ -26,11 +26,11 @@ public class EaseChatRowRedPackage extends EaseChatRow{
 
     @Override
     public void onSetUpView() {
-        boolean rob = message.getBooleanAttribute("rob", false);
+        boolean hasRead = message.getBooleanAttribute("rob", false) || message.getBooleanAttribute("end", false) || message.getBooleanAttribute("overdue", false);
         if(message.direct() == EMMessage.Direct.RECEIVE) {
-            redImg.setImageResource(rob ? R.drawable.ease_send_red_package_rob : R.drawable.ease_receive_red_package);
+            redImg.setImageResource(hasRead ? R.drawable.ease_send_red_package_rob : R.drawable.ease_receive_red_package);
         } else {
-            redImg.setImageResource(rob ? R.drawable.ease_send_red_package_rob : R.drawable.ease_send_red_package);
+            redImg.setImageResource(hasRead ? R.drawable.ease_send_red_package_rob : R.drawable.ease_send_red_package);
         }
     }
 
