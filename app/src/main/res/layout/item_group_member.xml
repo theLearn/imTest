@@ -11,14 +11,14 @@
             android:id="@+id/iv_group_member_photo"
             android:scaleType="fitXY"
             android:src="@mipmap/icon_photo_default"
-            android:layout_width="@dimen/public_space_value_60"
-            android:layout_height="@dimen/public_space_value_60"/>
+            android:layout_width="@dimen/public_space_value_50"
+            android:layout_height="@dimen/public_space_value_50"/>
 
     <TextView
             android:id="@+id/tv_group_member_name"
             android:layout_width="wrap_content"
             android:singleLine="true"
-            android:layout_margin="@dimen/public_space_value_10"
+            android:layout_margin="@dimen/public_space_value_5"
             android:textSize="@dimen/small_text_size"
             android:textColor="@color/text_second_default"
             android:layout_height="wrap_content"/>

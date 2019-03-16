@@ -197,6 +197,62 @@ data class GroupInfo(
     }
 }
 
+data class GroupMemberInfoList(
+    var count: String = "",
+    var data: MutableList<GroupMemberInfo> = arrayListOf()
+) : Parcelable {
+    constructor(source: Parcel) : this(
+        source.readString(),
+        source.createTypedArrayList(GroupMemberInfo.CREATOR)
+    )
+
+    override fun describeContents() = 0
+
+    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
+        writeString(count)
+        writeTypedList(data)
+    }
+
+    companion object {
+        @JvmField
+        val CREATOR: Parcelable.Creator<GroupMemberInfoList> = object : Parcelable.Creator<GroupMemberInfoList> {
+            override fun createFromParcel(source: Parcel): GroupMemberInfoList = GroupMemberInfoList(source)
+            override fun newArray(size: Int): Array<GroupMemberInfoList?> = arrayOfNulls(size)
+        }
+    }
+}
+
+data class GroupMemberInfo(
+    var gid: String = "",
+    var nickname: String = "",
+    var litpic: String = "",
+    var mid: String = ""
+) : Parcelable {
+    constructor(source: Parcel) : this(
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString()
+    )
+
+    override fun describeContents() = 0
+
+    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
+        writeString(gid)
+        writeString(nickname)
+        writeString(litpic)
+        writeString(mid)
+    }
+
+    companion object {
+        @JvmField
+        val CREATOR: Parcelable.Creator<GroupMemberInfo> = object : Parcelable.Creator<GroupMemberInfo> {
+            override fun createFromParcel(source: Parcel): GroupMemberInfo = GroupMemberInfo(source)
+            override fun newArray(size: Int): Array<GroupMemberInfo?> = arrayOfNulls(size)
+        }
+    }
+}
+
 data class MsgInfo(
     var title: String = "",
     var add_time: String = "",

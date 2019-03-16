@@ -48,13 +48,29 @@
                         android:textColor="@color/text_default"/>
             </LinearLayout>
 
-            <TextView
-                    android:layout_marginTop="@dimen/public_space_value_10"
-                    android:id="@+id/tv_red_package_detail_date"
-                    android:layout_width="wrap_content"
+            <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/small_text_size"
-                    android:textColor="@color/text_second_default"/>
+                    android:layout_marginTop="@dimen/public_space_value_10"
+                    android:orientation="horizontal">
+
+                <TextView
+                        android:id="@+id/tv_red_package_detail_date"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/small_text_size"
+                        android:textColor="@color/text_second_default"/>
+
+                <TextView
+                        android:id="@+id/tv_red_package_detail_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/small_text_size"
+                        android:textColor="@color/colorBase"/>
+            </LinearLayout>
+
+
         </LinearLayout>
     </LinearLayout>
 

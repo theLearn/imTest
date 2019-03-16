@@ -148,6 +148,12 @@
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
 
+        <activity android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"
+                  android:theme="@style/AppFullTheme"
+                  android:configChanges="keyboardHidden|orientation"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
+
         <activity android:name="com.project.hc.imtest.chat.CustomChatActivity"
                   android:configChanges="keyboardHidden|orientation"
                   android:screenOrientation="portrait"

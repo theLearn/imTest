@@ -53,6 +53,8 @@ public class ApiConstants {
     public static final String GET_SMS_CODE_URL = "code/phoneMd5";
     //获取二维码
     public static final String GET_QR_CODE_URL = "user/getQrCodeUrl";
+    //获取群成员
+    public static final String GET_GROUP_MEMBER_URL = "user/get_groupUser";
 
     public static final String MOBILE = "mobile";
     public static final String PASSWORD = "password";

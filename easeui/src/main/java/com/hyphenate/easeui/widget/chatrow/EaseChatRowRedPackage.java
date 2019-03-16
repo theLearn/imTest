@@ -3,11 +3,13 @@ package com.hyphenate.easeui.widget.chatrow;
 import android.content.Context;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.R;
 
 public class EaseChatRowRedPackage extends EaseChatRow{
     private ImageView redImg;
+    private TextView redDesc;
 
     public EaseChatRowRedPackage(Context context, EMMessage message, int position, BaseAdapter adapter) {
 		super(context, message, position, adapter);
@@ -21,7 +23,8 @@ public class EaseChatRowRedPackage extends EaseChatRow{
 
 	@Override
 	protected void onFindViewById() {
-        redImg = findViewById(R.id.bubble);
+        redImg = findViewById(R.id.iv_red_package);
+        redDesc = findViewById(R.id.tv_red_desc);
     }
 
     @Override
@@ -32,6 +35,9 @@ public class EaseChatRowRedPackage extends EaseChatRow{
         } else {
             redImg.setImageResource(hasRead ? R.drawable.ease_send_red_package_rob : R.drawable.ease_send_red_package);
         }
+
+        redDesc.setText(message.getStringAttribute("redDesc", "聊吧红包"));
+        redDesc.setTextColor(context.getResources().getColor(hasRead ? R.color.text_second_default : R.color.text_gray_99));
     }
 
     @Override

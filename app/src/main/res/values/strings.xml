@@ -4,7 +4,7 @@
     <string name="title_home_left">踩雷红包</string>
     <string name="title_home_right">接龙红包</string>
     <string name="title_qr_code">二维码</string>
-    <string name="title_group_member">群组信息</string>
+    <string name="title_group_member">聊天信息(%1$s)</string>
     <string name="message">消息</string>
     <string name="service">服务</string>
     <string name="person">我</string>

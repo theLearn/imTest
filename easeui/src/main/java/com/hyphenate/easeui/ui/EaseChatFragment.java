@@ -1,10 +1,12 @@
 package com.hyphenate.easeui.ui;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -12,6 +14,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.text.TextUtils;
@@ -74,6 +77,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     protected static final String ACTION_TYPING_END = "TypingEnd";
 
     protected static final int TYPING_SHOW_TIME = 5000;
+    private boolean isClickCamera;
 
     /**
      * params to fragment
@@ -131,6 +135,10 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState, boolean roaming) {
         isRoaming = roaming;
         return inflater.inflate(R.layout.ease_fragment_chat, container, false);
+    }
+
+    public boolean isClickCamera() {
+        return isClickCamera;
     }
 
     @Override
@@ -195,8 +203,14 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
 
             @Override
             public boolean onPressToSpeakBtnTouch(View v, MotionEvent event) {
+                isClickCamera = false;
+                int state = ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO);
+                if (state != PackageManager.PERMISSION_GRANTED){
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.RECORD_AUDIO}, 1);
+                    return false;
+                }
                 return voiceRecorderView.onPressToSpeakBtnTouch(v, event, new EaseVoiceRecorderCallback() {
-                    
+
                     @Override
                     public void onVoiceRecordComplete(String voiceFilePath, int voiceTimeLength) {
                         sendVoiceMessage(voiceFilePath, voiceTimeLength);
@@ -284,17 +298,17 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     }
 
     protected void setUpView() {
+        // set title
         titleBar.setTitle(toChatUsername);
-        if (chatType == EaseConstant.CHATTYPE_SINGLE) {
-            // set title
-            if(!TextUtils.isEmpty(extraTitle)) {
-                titleBar.setTitle(extraTitle);
-            } else if(EaseUserUtils.getUserInfo(toChatUsername) != null){
-                EaseUser user = EaseUserUtils.getUserInfo(toChatUsername);
-                if (user != null) {
-                    titleBar.setTitle(user.getNickname());
-                }
+        if(!TextUtils.isEmpty(extraTitle)) {
+            titleBar.setTitle(extraTitle);
+        } else if(EaseUserUtils.getUserInfo(toChatUsername) != null){
+            EaseUser user = EaseUserUtils.getUserInfo(toChatUsername);
+            if (user != null) {
+                titleBar.setTitle(user.getNickname());
             }
+        }
+        if (chatType == EaseConstant.CHATTYPE_SINGLE) {
             titleBar.setRightImageResource(R.drawable.ease_mm_title_remove);
         } else {
             int rightResId = getTitleRightImageRes();
@@ -302,10 +316,6 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
                 titleBar.setRightImageResource(R.drawable.ease_to_group_details_normal);
             }
             if (chatType == EaseConstant.CHATTYPE_GROUP) {
-                //group chat
-                EMGroup group = EMClient.getInstance().groupManager().getGroup(toChatUsername);
-                if (group != null)
-                    titleBar.setTitle(group.getGroupName());
                 // listen the event that user moved out group or group is dismissed
                 groupListener = new GroupListener();
                 EMClient.getInstance().groupManager().addGroupChangeListener(groupListener);
@@ -314,7 +324,6 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
                 EMClient.getInstance().chatroomManager().addChatRoomChangeListener(chatRoomListener);
                 onChatRoomViewCreation();
             }
-
         }
         if (chatType != EaseConstant.CHATTYPE_CHATROOM) {
             onConversationInit();
@@ -994,9 +1003,16 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     /**
      * capture new image
      */
-    protected void selectPicFromCamera() {
+    public void selectPicFromCamera() {
         if (!EaseCommonUtils.isSdcardExist()) {
             Toast.makeText(getActivity(), R.string.sd_card_does_not_exist, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        isClickCamera = true;
+        int state = ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA);
+        if (state != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, 1);
             return;
         }
 

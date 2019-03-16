@@ -5,21 +5,28 @@ import android.support.v7.widget.OrientationHelper
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
 import com.example.hongcheng.common.base.BaseListAdapter
-import com.hyphenate.EMValueCallBack
-import com.hyphenate.chat.EMClient
+import com.example.hongcheng.common.util.ToastUtils
+import com.example.hongcheng.data.retrofit.ActionException
+import com.example.hongcheng.data.retrofit.BaseSubscriber
+import com.example.hongcheng.data.retrofit.RetrofitClient
+import com.example.hongcheng.data.retrofit.RetrofitManager
 import com.hyphenate.chat.EMConversation
-import com.hyphenate.chat.EMGroup
 import com.project.hc.imtest.R
 import com.project.hc.imtest.adapter.GroupMemberAdapter
+import com.project.hc.imtest.api.ApiRetrofit
+import com.project.hc.imtest.application.BaseApplication
 import com.project.hc.imtest.chat.ChatUtils
 import com.project.hc.imtest.model.GroupInfo
+import com.project.hc.imtest.model.GroupMemberInfo
+import com.project.hc.imtest.model.GroupMemberInfoList
 import kotlinx.android.synthetic.main.body_group_member_list.*
+import kotlinx.android.synthetic.main.layout_app_common_title.*
 
 
 class GroupMemberListActivity : AppCommonActivity(), BaseListAdapter.OnItemClickListener {
 
     private lateinit var mAdapter: GroupMemberAdapter
-    private var dataList : MutableList<String> = arrayListOf()
+    private var dataList : MutableList<GroupMemberInfo> = arrayListOf()
 
     override fun isNeedShowBack(): Boolean {
         return true
@@ -47,33 +54,30 @@ class GroupMemberListActivity : AppCommonActivity(), BaseListAdapter.OnItemClick
     }
 
     private fun getData() {
-        operateLoadingDialog(true)
-
         val model = intent.getParcelableExtra<GroupInfo>("model")
-        //根据群组ID从服务器获取群组基本信息
-        EMClient.getInstance().groupManager().asyncGetGroupFromServer(model.gid, object : EMValueCallBack<EMGroup>{
-            override fun onSuccess(obj : EMGroup?) {
-                runOnUiThread {
-                    operateLoadingDialog(false)
-                    obj?.let {
-                        dataList.addAll(it.members)
+        operateLoadingDialog(true)
+        compositeDisposable.add(
+            RetrofitClient.getInstance().map<GroupMemberInfoList>(
+                RetrofitManager.createRetrofit<ApiRetrofit>(BaseApplication.getInstance(), ApiRetrofit::class.java)
+                    .getGroupMemberList(model.gid), object : BaseSubscriber<GroupMemberInfoList>() {
+                    override fun onError(e: ActionException) {
+                        operateLoadingDialog(false)
+                        ToastUtils.show(BaseApplication.getInstance(), e.message)
+                    }
+
+                    override fun onBaseNext(obj : GroupMemberInfoList) {
+                        operateLoadingDialog(false)
+                        tv_app_common_title.text = String.format(getString(R.string.title_group_member), obj.count)
+                        dataList.addAll(obj.data)
                         mAdapter.data = dataList
                         mAdapter.notifyDataSetChanged()
-                    } }
-
-            }
-
-            override fun onError(p0: Int, p1: String?) {
-                runOnUiThread {
-                    operateLoadingDialog(false)
-                }
-            }
-        })
+                    }
+                }))
 
     }
 
     override fun onItemClick(position: Int) {
-        ChatUtils.goToChat(this, mAdapter.getItem(position), "", EMConversation.EMConversationType.Chat)
+        ChatUtils.goToChat(this, mAdapter.getItem(position).mid, "", EMConversation.EMConversationType.Chat)
     }
 
     override fun onItemLongClick(position: Int) {

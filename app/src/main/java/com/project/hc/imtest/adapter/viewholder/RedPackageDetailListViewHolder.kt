@@ -10,5 +10,6 @@ class RedPackageDetailListViewHolder(itemView: View) : RecyclerView.ViewHolder(i
     val tvName = itemView.findViewById<TextView>(R.id.tv_red_package_detail_name)
     val tvAmount = itemView.findViewById<TextView>(R.id.tv_red_package_detail_amount)
     val tvDate = itemView.findViewById<TextView>(R.id.tv_red_package_detail_date)
+    val tvDesc = itemView.findViewById<TextView>(R.id.tv_red_package_detail_desc)
     val ivUserPhoto = itemView.findViewById<ImageView>(R.id.iv_red_package_detail_icon)
 }

@@ -3,7 +3,6 @@ package com.project.hc.imtest.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.hongcheng.common.base.BaseListAdapter
-import com.example.hongcheng.common.util.DateUtils
 import com.example.hongcheng.common.util.ImageLoadUtils
 import com.project.hc.imtest.R
 import com.project.hc.imtest.adapter.viewholder.RedPackageDetailListViewHolder
@@ -19,6 +18,18 @@ class RedPackageDetailListAdapter : BaseListAdapter<RedDetailInfo, RedPackageDet
         ImageLoadUtils.bindImageUrlForRound(holder.ivUserPhoto, model.litpic, R.mipmap.icon_photo_default)
         holder.tvName.text = model.nickname
         holder.tvAmount.text = model.money
-        holder.tvDate.text = DateUtils.getTime(1000 * model.add_time.toLong())
+        holder.tvDate.text = model.add_time
+        if("0" == model.if_do) {
+            holder.tvDesc.text = "手气最佳"
+            holder.tvDesc.setTextColor(holder.tvDesc.context.resources.getColor(R.color.colorBase))
+        } else if("1" == model.if_do) {
+            holder.tvDesc.text = "手气最差"
+            holder.tvDesc.setTextColor(holder.tvDesc.context.resources.getColor(R.color.bg_red_package))
+        } else if("2" == model.if_do) {
+            holder.tvDesc.text = "不幸中雷"
+            holder.tvDesc.setTextColor(holder.tvDesc.context.resources.getColor(R.color.bg_red_package))
+        } else {
+            holder.tvDesc.text = ""
+        }
     }
 }

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import com.example.hongcheng.common.util.SPUtils;
 import com.example.hongcheng.common.util.ToastUtils;
 import com.example.hongcheng.common.view.fragment.LoadingFragment;
 import com.example.hongcheng.data.retrofit.ActionException;
@@ -32,9 +31,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomChatFragment extends EaseChatFragment implements EaseChatFragment.EaseChatFragmentHelper, OpenRedPackageFragment.OnOverdueListener {
-    protected int[] itemIds = { ITEM_RED_PACKAGE};
-    protected int[] itemStrings = { R.string.red_package};
-    protected int[] itemdrawables = { R.mipmap.icon_send_red};
+    protected int[] itemIds = {};
+    protected int[] itemStrings = {};
+    protected int[] itemdrawables = {};
     private  boolean isCl;
     private LoadingFragment mLoadingDialog;
     private GroupInfo mGroupInfo;
@@ -44,6 +43,11 @@ public class CustomChatFragment extends EaseChatFragment implements EaseChatFrag
     @Override
     protected void initView() {
         customMenuItemClickListener = new CardItemClickListener();
+        if(EaseConstant.CHATTYPE_SINGLE == chatType) {
+            itemIds = new int[]{ ITEM_TAKE_PICTURE, ITEM_PICTURE};
+            itemStrings = new int[] { R.string.attach_take_pic, R.string.attach_picture};
+            itemdrawables = new int[] {R.drawable.ease_chat_takepic_selector, R.drawable.ease_chat_image_selector};
+        }
         super.initView();
     }
 
@@ -58,10 +62,7 @@ public class CustomChatFragment extends EaseChatFragment implements EaseChatFrag
         super.setUpView();
         setChatFragmentHelper(this);
         if(EaseConstant.CHATTYPE_SINGLE != chatType) {
-//            inputMenu.forbiddenWords();
             getGroupInfo();
-        } else {
-            inputMenu.enableToggleMore(true);
         }
     }
 
@@ -81,11 +82,25 @@ public class CustomChatFragment extends EaseChatFragment implements EaseChatFrag
                         List<EaseUser> users = new ArrayList<>();
                         users.add(easeUser);
                         BaseApplication.getInstance().insertUser(users);
+
+                        if(true) {
+                            itemIds = new int[]{ ITEM_RED_PACKAGE};
+                            itemStrings = new int[] {  R.string.red_package};
+                            itemdrawables = new int[] {R.mipmap.icon_send_red};
+                            inputMenu.forbiddenWords();
+                        } else {
+                            itemIds = new int[]{ ITEM_TAKE_PICTURE, ITEM_PICTURE,ITEM_RED_PACKAGE};
+                            itemStrings = new int[]{  R.string.attach_take_pic, R.string.attach_picture, R.string.red_package};
+                            itemdrawables = new int[]{ R.drawable.ease_chat_takepic_selector, R.drawable.ease_chat_image_selector, R.mipmap.icon_send_red};
+                        }
+
+                        registerExtendMenuItem();
                     }
 
                     @Override
                     public void onError(ActionException e) {
                         ToastUtils.show(BaseApplication.getInstance(), e.getErrorMessage());
+                        registerExtendMenuItem();
                  }
         });
     }
@@ -166,6 +181,12 @@ public class CustomChatFragment extends EaseChatFragment implements EaseChatFrag
                 }
             }
             switch (itemId) {
+                case ITEM_TAKE_PICTURE:
+                    selectPicFromCamera();
+                    break;
+                case ITEM_PICTURE:
+                    selectPicFromLocal();
+                    break;
                 case ITEM_RED_PACKAGE:
                     toSendRed();
                     break;
@@ -210,6 +231,7 @@ public class CustomChatFragment extends EaseChatFragment implements EaseChatFrag
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if(Activity.RESULT_OK == resultCode && 1 == requestCode) {
             messageList.refresh();//刷新消息数据
         }
