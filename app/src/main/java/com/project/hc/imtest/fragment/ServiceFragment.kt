@@ -38,10 +38,10 @@ class ServiceFragment : BasicFragment(), View.OnClickListener {
         if (ViewUtils.isFastClick()) return
         when (view?.id) {
             R.id.ll_service_recharge_12_type -> {
-                getKfInfo(R.string.recharge_12_type)
+                getKfInfo(R.string.gfkf)
             }
             R.id.ll_service_cash_ye_type -> {
-                getKfInfo(R.string.cash_ye_type)
+                getKfInfo(R.string.gfkf)
             }
 //            R.id.ll_service_system_notify -> {
 //                startActivity(Intent(activity, MsgListActivity::class.java))

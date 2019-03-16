@@ -11,6 +11,7 @@ import com.example.hongcheng.data.retrofit.RetrofitManager
 import com.project.hc.imtest.R
 import com.project.hc.imtest.api.ApiRetrofit
 import com.project.hc.imtest.application.BaseApplication
+import com.project.hc.imtest.model.AliInfo
 import kotlinx.android.synthetic.main.body_bind_alipay.*
 
 
@@ -34,6 +35,23 @@ class BindAlipayActivity : AppCommonActivity(), View.OnClickListener {
 
     override fun initBodyView(view: View) {
         bt_bind_alipay_submit.setOnClickListener(this)
+
+        operateLoadingDialog(true)
+        compositeDisposable.add(
+            RetrofitClient.getInstance().map<AliInfo>(
+                RetrofitManager.createRetrofit<ApiRetrofit>(BaseApplication.getInstance(), ApiRetrofit::class.java)
+                    .alipayInfo, object : BaseSubscriber<AliInfo>() {
+                    override fun onError(e: ActionException) {
+                        operateLoadingDialog(false)
+                        ToastUtils.show(BaseApplication.getInstance(), e.message)
+                    }
+
+                    override fun onBaseNext(obj : AliInfo) {
+                        operateLoadingDialog(false)
+                        et_bind_alipay_account.setText(obj.ali_account)
+                        et_bind_alipay_name.setText(obj.username)
+                    }
+                }))
     }
 
     override fun onClick(view: View?) {
@@ -55,17 +73,6 @@ class BindAlipayActivity : AppCommonActivity(), View.OnClickListener {
             return
         }
 
-        val alipayConfirm = et_bind_alipay_account_confirm.text.toString().trim()
-        if (ValidateUtils.isEmpty(alipayConfirm)) {
-            ToastUtils.show(this, "请再次输入支付宝账号")
-            return
-        }
-
-        if (alipayConfirm != alipay) {
-            ToastUtils.show(this, "两次输入账号不相同")
-            return
-        }
-
         val name = et_bind_alipay_name.text.toString().trim()
         if (ValidateUtils.isEmpty(name)) {
             ToastUtils.show(this, "请输入真实姓名")
@@ -76,7 +83,7 @@ class BindAlipayActivity : AppCommonActivity(), View.OnClickListener {
         compositeDisposable.add(
             RetrofitClient.getInstance().map<Any>(
                 RetrofitManager.createRetrofit<ApiRetrofit>(BaseApplication.getInstance(), ApiRetrofit::class.java)
-                    .bindAlipay(alipay, name, alipayConfirm), object : BaseSubscriber<Any>() {
+                    .bindAlipay(alipay, name, alipay), object : BaseSubscriber<Any>() {
                     override fun onError(e: ActionException) {
                         operateLoadingDialog(false)
                         ToastUtils.show(BaseApplication.getInstance(), e.message)

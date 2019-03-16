@@ -4,6 +4,7 @@
     <string name="title_home_left">踩雷红包</string>
     <string name="title_home_right">接龙红包</string>
     <string name="title_qr_code">二维码</string>
+    <string name="title_group_member">群组信息</string>
     <string name="message">消息</string>
     <string name="service">服务</string>
     <string name="person">我</string>
@@ -99,4 +100,5 @@
     <string name="open_red_package_detail_tip">已领取%1$s/%2$s个, 共%3$s/%4$s元</string>
     <string name="title_modify_nick_name">昵称修改</string>
     <string name="title_modify_photo">头像修改</string>
+    <string name="gfkf">官方客服</string>
 </resources>

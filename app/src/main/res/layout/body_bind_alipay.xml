@@ -47,35 +47,6 @@
                 android:layout_width="@dimen/public_space_value_90"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/normal_text_size"
-                android:text="@string/account_confirm"
-                android:textColor="@color/text_default"/>
-        <EditText
-                android:id="@+id/et_bind_alipay_account_confirm"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/normal_text_size"
-                android:textColor="@color/text_default"
-                android:hint="@string/please_input_alipay_account_confirm_hint"
-                android:singleLine="true"
-                android:inputType="text"
-                android:maxLength="30"
-                android:layout_marginLeft="@dimen/public_space_value_10"
-                android:background="@null"/>
-    </LinearLayout>
-
-    <include layout="@layout/line_horizontal"/>
-
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/public_space_value_20"
-            android:paddingBottom="@dimen/public_space_value_20"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-        <TextView
-                android:layout_width="@dimen/public_space_value_90"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/normal_text_size"
                 android:text="@string/real_name"
                 android:textColor="@color/text_default"/>
         <EditText

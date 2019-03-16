@@ -1,11 +1,13 @@
 package com.project.hc.imtest.activity
 
+import android.content.Intent
 import android.graphics.Color
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
+import com.example.hongcheng.common.base.BaseListAdapter
 import com.example.hongcheng.common.util.ScreenUtils
 import com.example.hongcheng.common.util.ToastUtils
 import com.example.hongcheng.common.view.DividerItemDecoration
@@ -22,7 +24,8 @@ import kotlinx.android.synthetic.main.body_msg_list.*
 import kotlinx.android.synthetic.main.layout_app_common_title.*
 
 
-class MsgListActivity : AppCommonActivity(),  SwipeRefreshLayout.OnRefreshListener {
+class MsgListActivity : AppCommonActivity(),  SwipeRefreshLayout.OnRefreshListener,
+    BaseListAdapter.OnItemClickListener {
 
     companion object {
         const val SYSTEM_NOTIFY : Int = 0
@@ -60,6 +63,7 @@ class MsgListActivity : AppCommonActivity(),  SwipeRefreshLayout.OnRefreshListen
             )
         )
         mAdapter = MsgListAdapter()
+        mAdapter.onItemClickListener = this
         rv_msg_list.adapter = mAdapter
         rv_msg_list.setEmptyView(emptyView)
         emptyView.visibility = View.GONE
@@ -108,5 +112,14 @@ class MsgListActivity : AppCommonActivity(),  SwipeRefreshLayout.OnRefreshListen
                         page++
                     }
                 }))
+    }
+
+    override fun onItemClick(position: Int) {
+        val intent = Intent(this, NoticeDetailActivity::class.java)
+        intent.putExtra("model", mAdapter.getItem(position))
+        startActivity(intent)
+    }
+
+    override fun onItemLongClick(position: Int) {
     }
 }

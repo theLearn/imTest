@@ -225,6 +225,71 @@ data class MsgInfo(
     }
 }
 
+data class AliInfo(
+    var update_time: String = "",
+    var memberId: String = "",
+    var username: String = "",
+    var ali_account: String = ""
+) : Parcelable {
+    constructor(source: Parcel) : this(
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString()
+    )
+
+    override fun describeContents() = 0
+
+    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
+        writeString(update_time)
+        writeString(memberId)
+        writeString(username)
+        writeString(ali_account)
+    }
+
+    companion object {
+        @JvmField
+        val CREATOR: Parcelable.Creator<AliInfo> = object : Parcelable.Creator<AliInfo> {
+            override fun createFromParcel(source: Parcel): AliInfo = AliInfo(source)
+            override fun newArray(size: Int): Array<AliInfo?> = arrayOfNulls(size)
+        }
+    }
+}
+
+data class BankCardInfo(
+    var bank_name: String = "",
+    var bank_code: String = "",
+    var user_name: String = "",
+    var memberId: String = "",
+    var card_id: String = ""
+) : Parcelable {
+    constructor(source: Parcel) : this(
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString()
+    )
+
+    override fun describeContents() = 0
+
+    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
+        writeString(bank_name)
+        writeString(bank_code)
+        writeString(user_name)
+        writeString(memberId)
+        writeString(card_id)
+    }
+
+    companion object {
+        @JvmField
+        val CREATOR: Parcelable.Creator<BankCardInfo> = object : Parcelable.Creator<BankCardInfo> {
+            override fun createFromParcel(source: Parcel): BankCardInfo = BankCardInfo(source)
+            override fun newArray(size: Int): Array<BankCardInfo?> = arrayOfNulls(size)
+        }
+    }
+}
+
 data class PointInfo(
     var points: String = ""
 ) : Parcelable {

@@ -64,10 +64,10 @@ class PackageActivity : AppCommonActivity(), View.OnClickListener {
         if(ViewUtils.isFastClick()) return
         when(v?.id) {
             R.id.ll_recharge -> {
-                getKfInfo(R.string.recharge)
+                getKfInfo(R.string.gfkf)
             }
             R.id.ll_cash_withdrawal -> {
-                getKfInfo(R.string.cash_withdrawal)
+                getKfInfo(R.string.gfkf)
             }
             else -> {
 

@@ -32,10 +32,10 @@ public interface ApiRetrofit {
     Observable<BaseResponse<Object>> complain(@Query("mobile") String mobile, @Query("userName") String userName, @Query("content") String content);
 
     @GET(ApiConstants.GET_CARD_INFO_URL)
-    Observable<BaseResponse<Object>> getCardInfo();
+    Observable<BaseResponse<BankCardInfo>> getCardInfo();
 
     @GET(ApiConstants.GET_ALIPAY_INFO_URL)
-    Observable<BaseResponse<Object>> getAlipayInfo();
+    Observable<BaseResponse<AliInfo>> getAlipayInfo();
 
     @GET(ApiConstants.BIND_CARD_URL)
     Observable<BaseResponse<Object>> bindCard(@Query("bankname") String bankname, @Query("bankcode") String bankcode, @Query("rebankcode") String rebankcode, @Query("username") String username, @Query("carId") String carId);

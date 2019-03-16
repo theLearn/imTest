@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import com.example.hongcheng.common.util.SPUtils;
 import com.example.hongcheng.common.util.ToastUtils;
 import com.example.hongcheng.common.view.fragment.LoadingFragment;
 import com.example.hongcheng.data.retrofit.ActionException;
@@ -13,10 +14,12 @@ import com.example.hongcheng.data.retrofit.RetrofitClient;
 import com.example.hongcheng.data.retrofit.RetrofitManager;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.EaseConstant;
+import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.ui.EaseChatFragment;
 import com.hyphenate.easeui.widget.EaseChatExtendMenu;
 import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
 import com.project.hc.imtest.R;
+import com.project.hc.imtest.activity.GroupMemberListActivity;
 import com.project.hc.imtest.activity.RedPackageDetailActivity;
 import com.project.hc.imtest.activity.RedPackageSendActivity;
 import com.project.hc.imtest.api.ApiRetrofit;
@@ -24,6 +27,9 @@ import com.project.hc.imtest.application.BaseApplication;
 import com.project.hc.imtest.fragment.OpenRedPackageFragment;
 import com.project.hc.imtest.model.GroupInfo;
 import com.project.hc.imtest.model.RedPackageDetailInfo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CustomChatFragment extends EaseChatFragment implements EaseChatFragment.EaseChatFragmentHelper, OpenRedPackageFragment.OnOverdueListener {
     protected int[] itemIds = { ITEM_RED_PACKAGE};
@@ -67,6 +73,14 @@ public class CustomChatFragment extends EaseChatFragment implements EaseChatFrag
                     public void onBaseNext(GroupInfo groupInfo) {
                         mGroupInfo = groupInfo;
                         isCl = "2".equals(groupInfo.getType()) ;
+
+                        EaseUser easeUser = new EaseUser(mGroupInfo.getGid());
+                        easeUser.setAvatar(mGroupInfo.getPic());
+                        easeUser.setNickname(mGroupInfo.getName());
+
+                        List<EaseUser> users = new ArrayList<>();
+                        users.add(easeUser);
+                        BaseApplication.getInstance().insertUser(users);
                     }
 
                     @Override
@@ -78,12 +92,22 @@ public class CustomChatFragment extends EaseChatFragment implements EaseChatFrag
 
     @Override
     public void onSetMessageAttributes(EMMessage message) {
-
+        // 通过扩展属性，将userPic和userName发送出去。
+        String userPic = BaseApplication.getInstance().getLoginInfo().getPhoto();
+        if (!TextUtils.isEmpty(userPic)) {
+            message.setAttribute("photo", userPic);
+        }
+        String userName = BaseApplication.getInstance().getLoginInfo().getNickname();
+        if (!TextUtils.isEmpty(userName)) {
+            message.setAttribute("nickname", userName);
+        }
     }
 
     @Override
     public void onEnterToChatDetails() {
-
+        Intent intent = new Intent(getActivity(), GroupMemberListActivity.class);
+        intent.putExtra("model", mGroupInfo);
+        startActivity(intent);
     }
 
     @Override
@@ -200,9 +224,5 @@ public class CustomChatFragment extends EaseChatFragment implements EaseChatFrag
         } else {
             mLoadingDialog.dismiss();
         }
-    }
-
-    protected int getTitleRightImageRes() {
-        return 0;
     }
 }

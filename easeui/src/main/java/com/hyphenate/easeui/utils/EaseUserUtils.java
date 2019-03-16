@@ -3,8 +3,7 @@ package com.hyphenate.easeui.utils;
 import android.content.Context;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.example.hongcheng.common.util.GlideApp;
+import com.example.hongcheng.common.util.ImageLoadUtils;
 import com.hyphenate.easeui.EaseUI;
 import com.hyphenate.easeui.EaseUI.EaseUserProfileProvider;
 import com.hyphenate.easeui.R;
@@ -38,14 +37,12 @@ public class EaseUserUtils {
     	EaseUser user = getUserInfo(username);
         if(user != null && user.getAvatar() != null){
             try {
-                int avatarResId = Integer.parseInt(user.getAvatar());
-                GlideApp.with(context).load(avatarResId).into(imageView);
+                ImageLoadUtils.bindImageUrlForRound(imageView, user.getAvatar(), R.drawable.ease_default_avatar);
             } catch (Exception e) {
-                //use default avatar
-                GlideApp.with(context).load(user.getAvatar()).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.ease_default_avatar).into(imageView);
+                ImageLoadUtils.bindImageUrlForRound(imageView, "", R.drawable.ease_default_avatar);
             }
         }else{
-            GlideApp.with(context).load(R.drawable.ease_default_avatar).into(imageView);
+            ImageLoadUtils.bindImageUrlForRound(imageView, "", R.drawable.ease_default_avatar);
         }
     }
     

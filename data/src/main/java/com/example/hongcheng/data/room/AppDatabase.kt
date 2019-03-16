@@ -19,20 +19,19 @@ package com.example.hongcheng.data.room
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.TypeConverters
-import com.example.hongcheng.data.room.dao.HistoryAddressDao
-import com.example.hongcheng.data.room.entity.HistoryAddressEntity
+import com.example.hongcheng.data.room.dao.EaseUserDao
+import com.example.hongcheng.data.room.entity.EaseUserInfoEntity
 
 /**
  * The Room database for this app
  */
-@Database(entities = [HistoryAddressEntity::class], version = 1, exportSchema = false)
+@Database(entities = [EaseUserInfoEntity::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
-
-    abstract fun getHistoryAddressDao(): HistoryAddressDao
+    abstract fun getEaseUserDao(): EaseUserDao
 
     companion object {
         const val DATABASE_NAME : String = "room_db"
-        const val HISTORY_ADDRESS_TABLE_NAME : String  = "historyAddress"
+        const val EASE_USER_TABLE_NAME : String  = "easeUser"
     }
 }

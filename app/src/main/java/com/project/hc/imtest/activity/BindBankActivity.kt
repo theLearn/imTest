@@ -11,6 +11,7 @@ import com.example.hongcheng.data.retrofit.RetrofitManager
 import com.project.hc.imtest.R
 import com.project.hc.imtest.api.ApiRetrofit
 import com.project.hc.imtest.application.BaseApplication
+import com.project.hc.imtest.model.BankCardInfo
 import kotlinx.android.synthetic.main.body_bind_bank.*
 
 
@@ -34,6 +35,25 @@ class BindBankActivity : AppCommonActivity(), View.OnClickListener {
 
     override fun initBodyView(view: View) {
         bt_bind_bank_submit.setOnClickListener(this)
+
+        operateLoadingDialog(true)
+        compositeDisposable.add(
+            RetrofitClient.getInstance().map<BankCardInfo>(
+                RetrofitManager.createRetrofit<ApiRetrofit>(BaseApplication.getInstance(), ApiRetrofit::class.java)
+                    .cardInfo, object : BaseSubscriber<BankCardInfo>() {
+                    override fun onError(e: ActionException) {
+                        operateLoadingDialog(false)
+                        ToastUtils.show(BaseApplication.getInstance(), e.message)
+                    }
+
+                    override fun onBaseNext(obj : BankCardInfo) {
+                        operateLoadingDialog(false)
+                        et_bind_bank_name.setText(obj.bank_name)
+                        et_bind_bank_card_no.setText(obj.bank_code)
+                        et_bind_bank_card_name.setText(obj.user_name)
+                        et_bind_bank_certify_card_no.setText(obj.card_id)
+                    }
+                }))
     }
 
     override fun onClick(view: View?) {
@@ -66,17 +86,6 @@ class BindBankActivity : AppCommonActivity(), View.OnClickListener {
             return
         }
 
-        val bankCardNoConfirm = et_bind_bank_card_no_confirm.text.toString().trim()
-        if (ValidateUtils.isEmpty(bankCardNoConfirm)) {
-            ToastUtils.show(this, "请再次输入银行卡号")
-            return
-        }
-
-        if (bankCardNoConfirm != bankCardNo) {
-            ToastUtils.show(this, "两次输入银行卡号不相同")
-            return
-        }
-
         val name = et_bind_bank_card_name.text.toString().trim()
         if (ValidateUtils.isEmpty(name)) {
             ToastUtils.show(this, "请输入银行卡姓名")
@@ -98,7 +107,7 @@ class BindBankActivity : AppCommonActivity(), View.OnClickListener {
         compositeDisposable.add(
             RetrofitClient.getInstance().map<Any>(
                 RetrofitManager.createRetrofit<ApiRetrofit>(BaseApplication.getInstance(), ApiRetrofit::class.java)
-                    .bindCard(bankName, bankCardNo, bankCardNoConfirm, name, certifyNo), object : BaseSubscriber<Any>() {
+                    .bindCard(bankName, bankCardNo, bankCardNo, name, certifyNo), object : BaseSubscriber<Any>() {
                     override fun onError(e: ActionException) {
                         operateLoadingDialog(false)
                         ToastUtils.show(BaseApplication.getInstance(), e.message)

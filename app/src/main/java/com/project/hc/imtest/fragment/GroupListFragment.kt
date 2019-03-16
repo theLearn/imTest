@@ -12,6 +12,7 @@ import com.example.hongcheng.data.retrofit.RetrofitManager
 import com.hyphenate.EMCallBack
 import com.hyphenate.chat.EMClient
 import com.hyphenate.chat.EMConversation
+import com.hyphenate.easeui.domain.EaseUser
 import com.project.hc.imtest.R
 import com.project.hc.imtest.adapter.GroupListAdapter
 import com.project.hc.imtest.api.ApiRetrofit
@@ -20,6 +21,7 @@ import com.project.hc.imtest.chat.ChatUtils
 import com.project.hc.imtest.model.BaseListResponse
 import com.project.hc.imtest.model.GroupInfo
 import kotlinx.android.synthetic.main.fragment_group_list.*
+import java.util.ArrayList
 
 
 class GroupListFragment : BasicFragment() {
@@ -122,6 +124,16 @@ class GroupListFragment : BasicFragment() {
                         leftLoadSuccess = true
                         leftList.addAll(obj.data)
                         mAdapter.data = leftList
+                    }
+
+                    for (info : GroupInfo in obj.data) {
+                        val easeUser = EaseUser(info.gid)
+                        easeUser.avatar = info.pic
+                        easeUser.nickname = info.name
+
+                        val users = ArrayList<EaseUser>()
+                        users.add(easeUser)
+                        BaseApplication.getInstance()?.insertUser(users)
                     }
 
                     mAdapter.notifyDataSetChanged()
