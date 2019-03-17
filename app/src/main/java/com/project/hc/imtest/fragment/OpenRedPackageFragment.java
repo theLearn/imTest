@@ -16,14 +16,18 @@ import com.example.hongcheng.data.retrofit.ActionException;
 import com.example.hongcheng.data.retrofit.BaseSubscriber;
 import com.example.hongcheng.data.retrofit.RetrofitClient;
 import com.example.hongcheng.data.retrofit.RetrofitManager;
+import com.google.gson.Gson;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
+import com.hyphenate.easeui.domain.EaseUser;
+import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.project.hc.imtest.R;
 import com.project.hc.imtest.activity.RedPackageDetailActivity;
 import com.project.hc.imtest.api.ApiRetrofit;
 import com.project.hc.imtest.application.BaseApplication;
 import com.project.hc.imtest.model.RedDetailInfo;
 import com.project.hc.imtest.model.RedPackageDetailInfo;
+import com.project.hc.imtest.model.RobRedInfo;
 
 /**
  * Created by hongcheng on 17/8/21.
@@ -142,9 +146,7 @@ public class OpenRedPackageFragment extends DialogFragment implements View.OnCli
                         .receiveClRed(message.getTo(), message.getStringAttribute("redCode", "")), new BaseSubscriber<RedDetailInfo>() {
                     @Override
                     public void onBaseNext(RedDetailInfo redDetailInfo) {
-                        message.setAttribute("rob", true);
-                        EMClient.getInstance().chatManager().updateMessage(message);
-                        goToDetail();
+                        openSuccess();
                     }
 
                     @Override
@@ -164,9 +166,7 @@ public class OpenRedPackageFragment extends DialogFragment implements View.OnCli
                         .receiveJlRed(message.getTo(), message.getStringAttribute("redCode", "")), new BaseSubscriber<RedDetailInfo>() {
                     @Override
                     public void onBaseNext(RedDetailInfo redDetailInfo) {
-                        message.setAttribute("rob", true);
-                        EMClient.getInstance().chatManager().updateMessage(message);
-                        goToDetail();
+                        openSuccess();
                     }
 
                     @Override
@@ -188,6 +188,45 @@ public class OpenRedPackageFragment extends DialogFragment implements View.OnCli
         if(listener != null) {
             listener.onOverdue();
         }
+    }
+
+    private void openSuccess() {
+        message.setAttribute("rob", true);
+        EMClient.getInstance().chatManager().updateMessage(message);
+
+        EaseUser easeUser = EaseUserUtils.getUserInfo(message.getFrom());
+        RobRedInfo sendInfo = new RobRedInfo();
+        sendInfo.setRedId(message.getStringAttribute("redCode", ""));
+        sendInfo.setRobRedId(BaseApplication.getInstance().getLoginInfo().getUserId());
+        sendInfo.setSendRedId(message.getFrom());
+        sendInfo.setRobRedName(BaseApplication.getInstance().getLoginInfo().getNickname());
+        if(easeUser != null && easeUser.getNickname() != null){
+            sendInfo.setSendName(easeUser.getNickname());
+        }else{
+            sendInfo.setSendName(message.getFrom());
+        }
+
+        //发送扩展消息
+        EMMessage robRedMessage = EMMessage.createTxtSendMessage(new Gson().toJson(sendInfo), message.getTo());
+        //增加自己的属性
+        robRedMessage.setAttribute("redId", message.getStringAttribute("redCode", ""));
+        robRedMessage.setAttribute("robRedId", BaseApplication.getInstance().getLoginInfo().getUserId());
+        robRedMessage.setAttribute("sendRedId", message.getFrom());
+        robRedMessage.setAttribute("robRedName", BaseApplication.getInstance().getLoginInfo().getNickname());
+        if(easeUser != null && easeUser.getNickname() != null){
+            robRedMessage.setAttribute("sendName", easeUser.getNickname());
+        }else{
+            robRedMessage.setAttribute("sendName", message.getFrom());
+        }
+
+        robRedMessage.setAttribute("type", "RobRedWarn");
+
+        //设置群聊和聊天室发送消息
+        robRedMessage.setChatType(EMMessage.ChatType.GroupChat);
+        //发送扩展消息
+        EMClient.getInstance().chatManager().sendMessage(robRedMessage);
+
+        goToDetail();
     }
 
     private OnOverdueListener listener;

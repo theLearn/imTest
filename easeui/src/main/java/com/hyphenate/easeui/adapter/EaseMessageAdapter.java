@@ -58,7 +58,9 @@ public class EaseMessageAdapter extends BaseAdapter{
 	private static final int MESSAGE_TYPE_RECV_EXPRESSION = 13;
 	private static final int MESSAGE_TYPE_SENT_RED_PACKAGE = 14;
 	private static final int MESSAGE_TYPE_RECV_RED_PACKAGE = 15;
-	
+	private static final int MESSAGE_TYPE_SENT_ROB_RED_TIP = 16;
+	private static final int MESSAGE_TYPE_RECV_ROB_RED_TIP = 17;
+
 	
 	public int itemTypeCount; 
 	
@@ -166,9 +168,9 @@ public class EaseMessageAdapter extends BaseAdapter{
 	 */
 	public int getViewTypeCount() {
 	    if(customRowProvider != null && customRowProvider.getCustomChatRowTypeCount() > 0){
-	        return customRowProvider.getCustomChatRowTypeCount() + 14 + 2;
+	        return customRowProvider.getCustomChatRowTypeCount() + 14 + 4;
 	    }
-        return 14 + 2;
+        return 14 + 4;
     }
 	
 
@@ -182,7 +184,7 @@ public class EaseMessageAdapter extends BaseAdapter{
 		}
 		
 		if(customRowProvider != null && customRowProvider.getCustomChatRowType(message) > 0){
-		    return customRowProvider.getCustomChatRowType(message) + 13 + 2;
+		    return customRowProvider.getCustomChatRowType(message) + 13 + 4;
 		}
 		
 		if (message.getType() == EMMessage.Type.TXT) {
@@ -190,6 +192,8 @@ public class EaseMessageAdapter extends BaseAdapter{
 		        return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_EXPRESSION : MESSAGE_TYPE_SENT_EXPRESSION;
 		    }else if (!TextUtils.isEmpty(message.getStringAttribute("redCode",""))){
 				return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_RED_PACKAGE : MESSAGE_TYPE_SENT_RED_PACKAGE;
+			}else if ("RobRedWarn".equals(message.getStringAttribute("type",""))){
+				return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_ROB_RED_TIP : MESSAGE_TYPE_SENT_ROB_RED_TIP;
 			}
 			return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_TXT : MESSAGE_TYPE_SENT_TXT;
 		}
@@ -226,6 +230,8 @@ public class EaseMessageAdapter extends BaseAdapter{
 				presenter = new EaseChatBigExpressionPresenter();
             }else if (!TextUtils.isEmpty(message.getStringAttribute("redCode",""))){
 				presenter = new EaseChatRedPackagePresenter();//需要自己创建
+			}else if ("RobRedWarn".equals(message.getStringAttribute("type",""))){
+				presenter = new EaseChatRobRedTipPresenter();//需要自己创建
 			}else{
 				presenter = new EaseChatTextPresenter();
             }

@@ -612,9 +612,15 @@ data class SendRedInfo(
     var nickname: String = "",
     var type: String = "",
     var photo: String = "",
+    var redType: String = "",
+    var money: String = "",
+    var thunder: String = "",
     var redCode: String = ""
 ) : Parcelable {
     constructor(source: Parcel) : this(
+        source.readString(),
+        source.readString(),
+        source.readString(),
         source.readString(),
         source.readString(),
         source.readString(),
@@ -629,6 +635,9 @@ data class SendRedInfo(
         writeString(nickname)
         writeString(type)
         writeString(photo)
+        writeString(redType)
+        writeString(money)
+        writeString(thunder)
         writeString(redCode)
     }
 
@@ -637,6 +646,43 @@ data class SendRedInfo(
         val CREATOR: Parcelable.Creator<SendRedInfo> = object : Parcelable.Creator<SendRedInfo> {
             override fun createFromParcel(source: Parcel): SendRedInfo = SendRedInfo(source)
             override fun newArray(size: Int): Array<SendRedInfo?> = arrayOfNulls(size)
+        }
+    }
+}
+
+data class RobRedInfo(
+    var robRedName: String = "",
+    var redId: String = "",
+    var sendName: String = "",
+    var robRedId: String = "",
+    var sendRedId: String = "",
+    var type: String = "RobRedWarn"
+) : Parcelable {
+    constructor(source: Parcel) : this(
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString()
+    )
+
+    override fun describeContents() = 0
+
+    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
+        writeString(robRedName)
+        writeString(redId)
+        writeString(sendName)
+        writeString(robRedId)
+        writeString(sendRedId)
+        writeString(type)
+    }
+
+    companion object {
+        @JvmField
+        val CREATOR: Parcelable.Creator<RobRedInfo> = object : Parcelable.Creator<RobRedInfo> {
+            override fun createFromParcel(source: Parcel): RobRedInfo = RobRedInfo(source)
+            override fun newArray(size: Int): Array<RobRedInfo?> = arrayOfNulls(size)
         }
     }
 }

@@ -19,17 +19,20 @@ class RedPackageDetailListAdapter : BaseListAdapter<RedDetailInfo, RedPackageDet
         holder.tvName.text = model.nickname
         holder.tvAmount.text = model.money
         holder.tvDate.text = model.add_time
-        if("0" == model.if_do) {
-            holder.tvDesc.text = "手气最佳"
-            holder.tvDesc.setTextColor(holder.tvDesc.context.resources.getColor(R.color.colorBase))
-        } else if("1" == model.if_do) {
-            holder.tvDesc.text = "手气最差"
-            holder.tvDesc.setTextColor(holder.tvDesc.context.resources.getColor(R.color.bg_red_package))
-        } else if("2" == model.if_do) {
-            holder.tvDesc.text = "不幸中雷"
-            holder.tvDesc.setTextColor(holder.tvDesc.context.resources.getColor(R.color.bg_red_package))
-        } else {
-            holder.tvDesc.text = ""
+        when {
+            "0" == model.if_do -> {
+                holder.tvDesc.text = "手气最佳"
+                holder.tvDesc.setTextColor(holder.tvDesc.context.resources.getColor(R.color.colorBase))
+            }
+            "1" == model.if_do -> {
+                holder.tvDesc.text = "手气最差"
+                holder.tvDesc.setTextColor(holder.tvDesc.context.resources.getColor(R.color.bg_red_package))
+            }
+            "2" == model.if_do -> {
+                holder.tvDesc.text = "不幸中雷"
+                holder.tvDesc.setTextColor(holder.tvDesc.context.resources.getColor(R.color.bg_red_package))
+            }
+            else -> holder.tvDesc.text = ""
         }
     }
 }

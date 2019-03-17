@@ -36,8 +36,21 @@ public class EaseChatRowRedPackage extends EaseChatRow{
             redImg.setImageResource(hasRead ? R.drawable.ease_send_red_package_rob : R.drawable.ease_send_red_package);
         }
 
-        redDesc.setText(message.getStringAttribute("redDesc", "聊吧红包"));
         redDesc.setTextColor(context.getResources().getColor(hasRead ? R.color.text_second_default : R.color.text_gray_99));
+        String redType = message.getStringAttribute("redType", "jielong");
+        StringBuilder sb = new StringBuilder();
+        if("cailei".equals(redType)) {
+            sb.append("踩雷红包");
+            sb.append(message.getStringAttribute("money", "") + "-");
+            sb.append(message.getStringAttribute("thunder", ""));
+        } else if("jielong".equals(redType)) {
+            sb.append("接龙红包");
+            sb.append(message.getStringAttribute("money", ""));
+        } else {
+            sb.append("聊吧红包");
+        }
+
+        redDesc.setText(sb.toString());
     }
 
     @Override

@@ -8,8 +8,10 @@ import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
 import com.example.hongcheng.common.rx.RxUtils
+import com.example.hongcheng.common.util.LoggerUtils
 import com.example.hongcheng.common.view.fragment.LoadingFragment
 import io.reactivex.disposables.CompositeDisposable
+import java.lang.Exception
 
 abstract class BasicActivity : AppCompatActivity(), CommonUI {
 
@@ -48,7 +50,19 @@ abstract class BasicActivity : AppCompatActivity(), CommonUI {
             mLoadingDialog = LoadingFragment()
         }
 
-        mLoadingDialog?.let { if (isOpen && !it.isAdded) it.show(supportFragmentManager, "LoadingFragment") else it.dismiss() }
+        mLoadingDialog?.let {
+            val isShow = it.dialog !=null && it.dialog.isShowing
+            try {
+                if(!isOpen) {
+                    it.dismiss()
+                } else if(!it.isAdded && !isShow) {
+                    it.show(supportFragmentManager, "LoadingFragment")
+                }
+            } catch (e : Exception) {
+                it.dismiss()
+                LoggerUtils.error("exception", e.message)
+            }
+        }
     }
 
     private val REQUEST_PERMISSIONS_NEED= 1

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:paddingTop="13dp"
+              android:paddingBottom="13dp">
+
+    <TextView
+            android:id="@+id/timestamp"
+            style="@style/chat_text_date_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+
+    <LinearLayout
+            android:id="@+id/bubble"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/margin_chat_activity">
+
+        <ImageView
+                android:id="@+id/iv_red_package"
+                android:layout_width="@dimen/public_space_value_15"
+                android:layout_height="@dimen/public_space_value_15"
+                android:scaleType="fitCenter"
+                android:src="@drawable/icon_small_red_package"/>
+
+        <TextView
+                android:id="@+id/tv_rob_red_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/small_text_size"
+                android:layout_marginLeft="@dimen/public_space_value_5"
+                android:textColor="@color/text_second_default"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/small_text_size"
+                android:text="红包"
+                android:textColor="@color/text_red_ff50"/>
+    </LinearLayout>
+
+</LinearLayout>

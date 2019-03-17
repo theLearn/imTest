@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomChatFragment extends EaseChatFragment implements EaseChatFragment.EaseChatFragmentHelper, OpenRedPackageFragment.OnOverdueListener {
+    private static final int SEND_RED_REQUEST_CODE = 777;
     protected int[] itemIds = {};
     protected int[] itemStrings = {};
     protected int[] itemdrawables = {};
@@ -199,7 +200,7 @@ public class CustomChatFragment extends EaseChatFragment implements EaseChatFrag
     private void toSendRed() {
         Intent intent = new Intent(getActivity(), RedPackageSendActivity.class);
         intent.putExtra("groupInfo", mGroupInfo);
-        startActivityForResult(intent, 1);
+        startActivityForResult(intent, SEND_RED_REQUEST_CODE);
         inputMenu.hideExtendMenuContainer();
     }
 
@@ -232,7 +233,7 @@ public class CustomChatFragment extends EaseChatFragment implements EaseChatFrag
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(Activity.RESULT_OK == resultCode && 1 == requestCode) {
+        if(Activity.RESULT_OK == resultCode && SEND_RED_REQUEST_CODE == requestCode) {
             messageList.refresh();//刷新消息数据
         }
     }

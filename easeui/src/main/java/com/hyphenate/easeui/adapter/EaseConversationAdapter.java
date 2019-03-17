@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TextView.BufferType;
 
+import com.example.hongcheng.common.util.SPUtils;
 import com.hyphenate.chat.EMChatRoom;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
@@ -97,7 +98,7 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
             holder.motioned = (TextView) convertView.findViewById(R.id.mentioned);
             convertView.setTag(holder);
         }
-        holder.list_itease_layout.setBackgroundResource(R.drawable.ease_mm_listitem);
+//        holder.list_itease_layout.setBackgroundResource(R.drawable.ease_mm_listitem);
 
         // get conversation
         EMConversation conversation = getItem(position);
@@ -158,8 +159,33 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
             if(content != null){
                 holder.message.setText(content);
             }
-            if(lastMessage.getType() == EMMessage.Type.TXT && !TextUtils.isEmpty(lastMessage.getStringAttribute("redCode",""))) {
-                holder.message.setText("[红包]");
+            if(lastMessage.getType() == EMMessage.Type.TXT) {
+                if(!TextUtils.isEmpty(lastMessage.getStringAttribute("redCode",""))) {
+                    holder.message.setText("[红包]");
+                } else if("RobRedWarn".equals(lastMessage.getStringAttribute("type",""))) {
+                    String robRedName = lastMessage.getStringAttribute("robRedName", "");
+                    String sendName = lastMessage.getStringAttribute("sendName", "");
+                    String robRedId = lastMessage.getStringAttribute("robRedId", "");
+                    String sendRedId = lastMessage.getStringAttribute("sendRedId", "");
+                    String userId = SPUtils.getStringFromSP(getContext(), "userId");
+                    StringBuilder sb = new StringBuilder();
+                    if(userId.equals(robRedId)) {
+                        sb.append("你");
+                    } else {
+                        sb.append(robRedName);
+                    }
+                    sb.append("领取了");
+                    if(sendRedId.equals(robRedId)) {
+                        sb.append("自己");
+                    } else if(userId.equals(robRedId)) {
+                        sb.append("你");
+                    }else {
+                        sb.append(sendName);
+                    }
+                    sb.append("的红包");
+
+                    holder.message.setText(sb.toString());
+                }
             }
             holder.time.setText(DateUtils.getTimestampString(new Date(lastMessage.getMsgTime())));
             if (lastMessage.direct() == EMMessage.Direct.SEND && lastMessage.status() == EMMessage.Status.FAIL) {

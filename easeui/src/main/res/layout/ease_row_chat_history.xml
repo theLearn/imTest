@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="59dp"
+    android:layout_height="71dp"
      android:id="@+id/list_itease_layout"
      android:background="#fff"
     android:gravity="center_vertical" >
@@ -39,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="7dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="11dp"
         android:layout_toRightOf="@id/avatar_container"
         android:textColor="@color/list_itease_primary_color"
         android:textSize="16sp" />
@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginRight="7dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="11dp"
         android:textColor="@color/list_itease_secondary_color"
         android:textSize="13sp" />
 
@@ -59,7 +59,7 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="13dp"
         android:layout_marginLeft="7dp"
         android:layout_toRightOf="@id/avatar_container"
         android:src="@drawable/ease_msg_state_fail_resend"
@@ -75,7 +75,7 @@
         android:layout_alignParentBottom="true"
         android:layout_toRightOf="@id/msg_state"
         android:paddingTop="7dp"
-        android:paddingBottom="7dp"
+        android:paddingBottom="13dp"
         android:paddingLeft="7dp"
         android:visibility="gone"
         />
@@ -90,7 +90,14 @@
         android:singleLine="true"
         android:ellipsize="end"
         android:padding="7dp"
+        android:layout_marginBottom="6dp"
         android:textColor="@color/list_itease_secondary_color"
         android:textSize="14sp" />
+
+    <View
+            android:layout_alignParentBottom="true"
+            android:background="@color/line_gray"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px1"/>
 
 </RelativeLayout>

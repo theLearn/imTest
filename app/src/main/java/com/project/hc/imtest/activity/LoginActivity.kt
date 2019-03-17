@@ -89,6 +89,7 @@ class LoginActivity : BasicActivity(), View.OnClickListener {
                         BaseApplication.getInstance()?.loginInfo = loginInfo
                         SPUtils.putValueToSP(this@LoginActivity, ApiConstants.MOBILE, phone)
                         SPUtils.putValueToSP(this@LoginActivity, ApiConstants.PASSWORD, password)
+                        SPUtils.putValueToSP(this@LoginActivity, "userId", loginInfo.userId)
                         SPUtils.putValueToSP(this@LoginActivity, ApiConstants.AUTOLOGIN, true)
                         startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                         finish()

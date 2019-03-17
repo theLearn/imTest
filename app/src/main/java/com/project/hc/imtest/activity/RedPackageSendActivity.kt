@@ -22,7 +22,6 @@ import com.project.hc.imtest.model.GroupInfo
 import com.project.hc.imtest.model.RedDetailInfo
 import com.project.hc.imtest.model.SendRedInfo
 import kotlinx.android.synthetic.main.body_red_pacage_setting.*
-import java.lang.StringBuilder
 
 
 class RedPackageSendActivity : AppCommonActivity(), View.OnClickListener, TextWatcher {
@@ -142,23 +141,27 @@ class RedPackageSendActivity : AppCommonActivity(), View.OnClickListener, TextWa
         sendInfo.photo = BaseApplication.getInstance()?.loginInfo?.photo!!
         sendInfo.type = "red"
         sendInfo.redCode = hb_id
+        sendInfo.money = et_red_package_setting_amount.text.toString().trim()
+        if(isCl) {
+            sendInfo.redType = "cailei"
+            sendInfo.thunder = et_red_package_setting_ws.text.toString().trim()
+        } else {
+            sendInfo.redType = "jielong"
+        }
 
         //发送扩展消息
         val message = EMMessage.createTxtSendMessage(Gson().toJson(sendInfo).toString(), toChatUsername)
         //增加自己的属性
         message.setAttribute("red", true)
         message.setAttribute("redCode", hb_id)
-        val sb = StringBuilder()
+        message.setAttribute("money", et_red_package_setting_amount.text.toString().trim())
         if(isCl) {
-            sb.append("踩雷红包  ")
-            sb.append(et_red_package_setting_amount.text.toString().trim())
-            sb.append("-")
-            sb.append(et_red_package_setting_ws.text.toString().trim())
+            message.setAttribute("redType", "cailei")
+            message.setAttribute("thunder", et_red_package_setting_ws.text.toString().trim())
         } else {
-            sb.append("接龙红包  ")
-            sb.append(et_red_package_setting_amount.text.toString().trim())
+            message.setAttribute("redType", "jielong")
         }
-        message.setAttribute("redDesc", sb.toString())
+
         //设置群聊和聊天室发送消息
         message.chatType = ChatType.GroupChat
         //发送扩展消息
