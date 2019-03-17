@@ -40,12 +40,12 @@ public class EaseChatRowRedPackage extends EaseChatRow{
         String redType = message.getStringAttribute("redType", "jielong");
         StringBuilder sb = new StringBuilder();
         if("cailei".equals(redType)) {
-            sb.append("踩雷红包");
+            sb.append("踩雷红包  ");
             sb.append(message.getStringAttribute("money", "") + "-");
             sb.append(message.getStringAttribute("thunder", ""));
         } else if("jielong".equals(redType)) {
-            sb.append("接龙红包");
-            sb.append(message.getStringAttribute("money", ""));
+            sb.append(message.getStringAttribute("money", "") + "-");
+            sb.append(message.getStringAttribute("jlDes", ""));
         } else {
             sb.append("聊吧红包");
         }

@@ -40,7 +40,7 @@ public class EaseChatRowRobRedTip extends EaseChatRow{
         sb.append("领取了");
         if(sendRedId.equals(robRedId)) {
             sb.append("自己");
-        } else if(userId.equals(robRedId)) {
+        } else if(userId.equals(sendRedId)) {
             sb.append("你");
         }else {
             sb.append(sendName);

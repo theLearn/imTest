@@ -45,9 +45,9 @@ public class CustomChatFragment extends EaseChatFragment implements EaseChatFrag
     protected void initView() {
         customMenuItemClickListener = new CardItemClickListener();
         if(EaseConstant.CHATTYPE_SINGLE == chatType) {
-            itemIds = new int[]{ ITEM_TAKE_PICTURE, ITEM_PICTURE};
-            itemStrings = new int[] { R.string.attach_take_pic, R.string.attach_picture};
-            itemdrawables = new int[] {R.drawable.ease_chat_takepic_selector, R.drawable.ease_chat_image_selector};
+            itemIds = new int[]{ ITEM_PICTURE};
+            itemStrings = new int[] { R.string.attach_picture};
+            itemdrawables = new int[] {R.drawable.ease_chat_image_selector};
         }
         super.initView();
     }
@@ -84,15 +84,15 @@ public class CustomChatFragment extends EaseChatFragment implements EaseChatFrag
                         users.add(easeUser);
                         BaseApplication.getInstance().insertUser(users);
 
-                        if(true) {
+                        if(false) {
                             itemIds = new int[]{ ITEM_RED_PACKAGE};
                             itemStrings = new int[] {  R.string.red_package};
                             itemdrawables = new int[] {R.mipmap.icon_send_red};
                             inputMenu.forbiddenWords();
                         } else {
-                            itemIds = new int[]{ ITEM_TAKE_PICTURE, ITEM_PICTURE,ITEM_RED_PACKAGE};
-                            itemStrings = new int[]{  R.string.attach_take_pic, R.string.attach_picture, R.string.red_package};
-                            itemdrawables = new int[]{ R.drawable.ease_chat_takepic_selector, R.drawable.ease_chat_image_selector, R.mipmap.icon_send_red};
+                            itemIds = new int[]{ ITEM_PICTURE,ITEM_RED_PACKAGE};
+                            itemStrings = new int[]{  R.string.attach_picture, R.string.red_package};
+                            itemdrawables = new int[]{ R.drawable.ease_chat_image_selector, R.mipmap.icon_send_red};
                         }
 
                         registerExtendMenuItem();
@@ -143,6 +143,7 @@ public class CustomChatFragment extends EaseChatFragment implements EaseChatFrag
             if(message.getBooleanAttribute("rob", false)) {
                 Intent intent = new Intent(getActivity(), RedPackageDetailActivity.class);
                 intent.putExtra("message", message);
+                intent.putExtra("isCl", isCl);
                 startActivity(intent);
             } else {
                 getRedDetail(redCode, message);
@@ -239,13 +240,17 @@ public class CustomChatFragment extends EaseChatFragment implements EaseChatFrag
     }
 
     private void operateLoadingDialog(Boolean isOpen) {
-        if (mLoadingDialog == null) {
+        if (isOpen && mLoadingDialog == null) {
             mLoadingDialog = new LoadingFragment();
         }
-        if (isOpen && !mLoadingDialog.isAdded()) {
+
+        boolean isShow = mLoadingDialog.getDialog() !=null && mLoadingDialog.getDialog() .isShowing();
+        if(!isOpen) {
+            if(isShow) {
+                mLoadingDialog.dismiss();
+            }
+        } else if(!mLoadingDialog.isAdded() && !isShow) {
             mLoadingDialog.show(getActivity().getSupportFragmentManager(), "LoadingFragment");
-        } else {
-            mLoadingDialog.dismiss();
         }
     }
 }

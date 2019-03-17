@@ -27,6 +27,7 @@ class RedPackageDetailActivity : CommonActivity(){
 
     private lateinit var mAdapter: RedPackageDetailListAdapter
     private lateinit var message: EMMessage
+    private var isCl = true
 
     override fun isNeedShowBack(): Boolean {
         return true
@@ -63,6 +64,7 @@ class RedPackageDetailActivity : CommonActivity(){
 
     override fun initBodyView(view: View) {
         message = intent.getParcelableExtra("message")
+        isCl = intent.getBooleanExtra("isCl", true)
 
         rv_red_package_open_list.layoutManager = LinearLayoutManager(rv_red_package_open_list.context)
         rv_red_package_open_list.itemAnimator = DefaultItemAnimator()
@@ -90,19 +92,36 @@ class RedPackageDetailActivity : CommonActivity(){
                         tv_red_package_detail_who.text = String.format(getString(R.string.who_red_package), obj.hb_data.nickname)
                         tv_red_package_detail_tip.text = String.format(getString(R.string.open_red_package_detail_tip), obj.take, obj.hb_data.hb_number, obj.takeMoney, obj.hb_data.money)
 
-                        mAdapter.data = obj.data
-                        mAdapter.notifyDataSetChanged()
-
-                        if(message.getBooleanAttribute("rob", false)) {
-                            for(temp : RedDetailInfo in obj.data) {
-                                if(temp.mid == BaseApplication.getInstance()?.loginInfo?.userId) {
-                                    tv_red_package_amount.text = temp.money
-                                    break
+                        val ifEnd = "1" == obj.if_end
+                        var maxMoney  = 0.0
+                        var minMoney  = Double.MAX_VALUE
+                        var maxData : RedDetailInfo? = null
+                        var minData : RedDetailInfo? = null
+                        tv_red_package_amount.text = ""
+                        for(temp : RedDetailInfo in obj.data) {
+                            if(!isCl) {
+                                temp.if_do = ""
+                            }
+                            if(ifEnd && "1" != temp.if_do) {
+                                val tempMoney = temp.money.toDouble()
+                                if(tempMoney >= maxMoney) {
+                                    maxMoney = tempMoney
+                                    maxData = temp
+                                }
+                                if(tempMoney <= minMoney) {
+                                    minMoney = tempMoney
+                                    minData = temp
                                 }
                             }
-                        } else {
-                            tv_red_package_amount.text = ""
+                            if(temp.mid == BaseApplication.getInstance()?.loginInfo?.userId && message.getBooleanAttribute("rob", false)) {
+                                tv_red_package_amount.text = temp.money
+                            }
                         }
+
+                        minData?.if_do = "min"
+                        maxData?.if_do = "max"
+                        mAdapter.data = obj.data
+                        mAdapter.notifyDataSetChanged()
                     }
                 }))
     }

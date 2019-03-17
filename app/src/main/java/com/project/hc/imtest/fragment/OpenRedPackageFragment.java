@@ -129,6 +129,7 @@ public class OpenRedPackageFragment extends DialogFragment implements View.OnCli
         dismiss();
         Intent intent = new Intent(getActivity(), RedPackageDetailActivity.class);
         intent.putExtra("message", message);
+        intent.putExtra("isCl", isCl);
         startActivity(intent);
     }
 
