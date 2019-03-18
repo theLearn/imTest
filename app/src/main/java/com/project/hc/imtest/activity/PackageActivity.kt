@@ -55,7 +55,7 @@ class PackageActivity : AppCommonActivity(), View.OnClickListener {
 
                     override fun onBaseNext(pointInfo : PointInfo) {
                         operateLoadingDialog(false)
-                        tv_package_amount.text = pointInfo.points
+                        tv_package_amount.text = "¥ " + pointInfo.points
                     }
                 }))
     }

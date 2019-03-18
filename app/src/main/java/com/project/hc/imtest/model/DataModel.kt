@@ -659,9 +659,11 @@ data class RobRedInfo(
     var sendName: String = "",
     var robRedId: String = "",
     var sendRedId: String = "",
+    var money: String = "",
     var type: String = "RobRedWarn"
 ) : Parcelable {
     constructor(source: Parcel) : this(
+        source.readString(),
         source.readString(),
         source.readString(),
         source.readString(),
@@ -678,6 +680,7 @@ data class RobRedInfo(
         writeString(sendName)
         writeString(robRedId)
         writeString(sendRedId)
+        writeString(money)
         writeString(type)
     }
 

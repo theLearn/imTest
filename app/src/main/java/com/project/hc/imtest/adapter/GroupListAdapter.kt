@@ -19,9 +19,14 @@ class GroupListAdapter : BaseListAdapter<GroupInfo, GroupListViewHolder>() {
         holder.tvName.text = model.name
         ImageLoadUtils.bindImageUrlForRound(holder.ivGroupIcon, model.pic, R.mipmap.icon_photo_default)
         var groupDesc = model.hb_number + "个红包"
-        if(!TextUtils.isEmpty(model.pl)) {
-            groupDesc += " (倍率" + model.pl + ")"
+        if("2" == model.type) {
+            if(!TextUtils.isEmpty(model.pl)) {
+                groupDesc += " (倍率" + model.pl + ")"
+            }
+        } else {
+            groupDesc += " (" + if("1" == model.jl) "最小接龙"  + ")" else "最大接龙" + ")"
         }
+
         holder.tvDes.text = groupDesc
     }
 }

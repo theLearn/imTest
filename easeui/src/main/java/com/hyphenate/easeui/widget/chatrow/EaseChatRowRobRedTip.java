@@ -8,7 +8,7 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.R;
 
 public class EaseChatRowRobRedTip extends EaseChatRow{
-    private TextView robRedTip;
+    private TextView robRedTip, robRedMoney;
 
     public EaseChatRowRobRedTip(Context context, EMMessage message, int position, BaseAdapter adapter) {
 		super(context, message, position, adapter);
@@ -22,10 +22,12 @@ public class EaseChatRowRobRedTip extends EaseChatRow{
 	@Override
 	protected void onFindViewById() {
         robRedTip = findViewById(R.id.tv_rob_red_tip);
+        robRedMoney = findViewById(R.id.tv_rob_red_money);
     }
 
     @Override
     public void onSetUpView() {
+        String money = message.getStringAttribute("money", "");
         String robRedName = message.getStringAttribute("robRedName", "");
         String sendName = message.getStringAttribute("sendName", "");
         String robRedId = message.getStringAttribute("robRedId", "");
@@ -45,9 +47,10 @@ public class EaseChatRowRobRedTip extends EaseChatRow{
         }else {
             sb.append(sendName);
         }
-        sb.append("的");
+        sb.append("的红包");
 
         robRedTip.setText(sb.toString());
+        robRedMoney.setText(money);
     }
 
     @Override

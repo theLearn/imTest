@@ -43,7 +43,6 @@ class BindBankActivity : AppCommonActivity(), View.OnClickListener {
                     .cardInfo, object : BaseSubscriber<BankCardInfo>() {
                     override fun onError(e: ActionException) {
                         operateLoadingDialog(false)
-                        ToastUtils.show(BaseApplication.getInstance(), e.message)
                     }
 
                     override fun onBaseNext(obj : BankCardInfo) {

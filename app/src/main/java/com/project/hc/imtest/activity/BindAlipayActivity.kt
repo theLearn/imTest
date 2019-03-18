@@ -43,7 +43,6 @@ class BindAlipayActivity : AppCommonActivity(), View.OnClickListener {
                     .alipayInfo, object : BaseSubscriber<AliInfo>() {
                     override fun onError(e: ActionException) {
                         operateLoadingDialog(false)
-                        ToastUtils.show(BaseApplication.getInstance(), e.message)
                     }
 
                     override fun onBaseNext(obj : AliInfo) {

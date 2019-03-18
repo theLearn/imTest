@@ -35,7 +35,6 @@ public class CustomChatFragment extends EaseChatFragment implements EaseChatFrag
     protected int[] itemIds = {};
     protected int[] itemStrings = {};
     protected int[] itemdrawables = {};
-    private  boolean isCl;
     private LoadingFragment mLoadingDialog;
     private GroupInfo mGroupInfo;
 
@@ -74,7 +73,6 @@ public class CustomChatFragment extends EaseChatFragment implements EaseChatFrag
                     @Override
                     public void onBaseNext(GroupInfo groupInfo) {
                         mGroupInfo = groupInfo;
-                        isCl = "2".equals(groupInfo.getType()) ;
 
                         EaseUser easeUser = new EaseUser(mGroupInfo.getGid());
                         easeUser.setAvatar(mGroupInfo.getPic());
@@ -143,7 +141,7 @@ public class CustomChatFragment extends EaseChatFragment implements EaseChatFrag
             if(message.getBooleanAttribute("rob", false)) {
                 Intent intent = new Intent(getActivity(), RedPackageDetailActivity.class);
                 intent.putExtra("message", message);
-                intent.putExtra("isCl", isCl);
+                intent.putExtra("groupInfo", mGroupInfo);
                 startActivity(intent);
             } else {
                 getRedDetail(redCode, message);
@@ -215,7 +213,7 @@ public class CustomChatFragment extends EaseChatFragment implements EaseChatFrag
                         operateLoadingDialog(false);
                         OpenRedPackageFragment openRedPackageFragment = new OpenRedPackageFragment();
                         Bundle bundle = new Bundle();
-                        bundle.putBoolean("isCl", isCl);
+                        bundle.putParcelable("groupInfo", mGroupInfo);
                         bundle.putParcelable("message", message);
                         bundle.putParcelable("redDetail", obj);
                         openRedPackageFragment.setArguments(bundle);

@@ -18,6 +18,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+import android.content.Intent;
+import com.example.hongcheng.common.util.FileUtils;
+import com.example.hongcheng.common.util.StringUtils;
+import com.example.hongcheng.common.util.ToastUtils;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
@@ -48,6 +52,7 @@ public class EaseShowBigImageActivity extends EaseBaseActivity {
 	private static final String TAG = "ShowBigImage"; 
 	private ProgressDialog pd;
 	private EasePhotoView image;
+	private View download;
 	private int default_res = R.drawable.ease_default_image;
 	private String localFilePath;
 	private Bitmap bitmap;
@@ -60,11 +65,12 @@ public class EaseShowBigImageActivity extends EaseBaseActivity {
 		super.onCreate(savedInstanceState);
 
 		image = (EasePhotoView) findViewById(R.id.image);
+		download = findViewById(R.id.iv_download);
 		ProgressBar loadLocalPb = (ProgressBar) findViewById(R.id.pb_load_local);
 		default_res = getIntent().getIntExtra("default_image", R.drawable.ease_default_avatar);
-		Uri uri = getIntent().getParcelableExtra("uri");
+		final Uri uri = getIntent().getParcelableExtra("uri");
 		localFilePath = getIntent().getExtras().getString("localUrl");
-		String msgId = getIntent().getExtras().getString("messageId");
+		final String msgId = getIntent().getExtras().getString("messageId");
 		EMLog.d(TAG, "show big msgId:" + msgId );
 
 		//show the image if it exist in local path
@@ -86,6 +92,8 @@ public class EaseShowBigImageActivity extends EaseBaseActivity {
 			} else {
 				image.setImageBitmap(bitmap);
 			}
+
+			download.setVisibility(new File(FileUtils.getPictureFilePath() + File.separator + new File(uri.getPath()).getName()).exists() ? View.GONE : View.VISIBLE);
 		} else if(msgId != null) {
 		    downloadImage(msgId);
 		}else {
@@ -98,12 +106,32 @@ public class EaseShowBigImageActivity extends EaseBaseActivity {
 				finish();
 			}
 		});
+
+		download.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				String path = uri.getPath();
+				if(StringUtils.isEmpty(path)) {
+					path = localFilePath;
+				}
+				if(!StringUtils.isEmpty(path)) {
+					File file = new File(path);
+					if(file.exists() && file.isFile()) {
+						String copyPath = FileUtils.getPictureFilePath() + File.separator + file.getName();
+						boolean isSuccess = FileUtils.copyFile(path, copyPath);
+						if(isSuccess) {
+							download.setVisibility(View.GONE);
+                            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + copyPath)));
+                            ToastUtils.show(EaseShowBigImageActivity.this, "保存成功");
+						}
+					}
+				}
+			}
+		});
 	}
 	
 	/**
 	 * download image
-	 * 
-	 * @param remoteFilePath
 	 */
 	@SuppressLint("NewApi")
 	private void downloadImage(final String msgId) {
@@ -135,6 +163,7 @@ public class EaseShowBigImageActivity extends EaseBaseActivity {
 						} else {
 							image.setImageBitmap(bitmap);
 							EaseImageCache.getInstance().put(localFilePath, bitmap);
+
 							isDownloaded = true;
 						}
 						if (isFinishing() || isDestroyed()) {
@@ -143,6 +172,8 @@ public class EaseShowBigImageActivity extends EaseBaseActivity {
 						if (pd != null) {
 							pd.dismiss();
 						}
+
+						download.setVisibility(View.VISIBLE);
 					}
 				});
 			}

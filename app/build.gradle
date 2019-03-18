@@ -48,4 +48,5 @@ dependencies {
     implementation project(':data')
     implementation project(':PhotoPicker')
     implementation project(':easeui')
+    compile 'com.google.zxing:core:3.3.0'
 }

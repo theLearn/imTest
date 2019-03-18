@@ -25,6 +25,7 @@ import com.project.hc.imtest.R;
 import com.project.hc.imtest.activity.RedPackageDetailActivity;
 import com.project.hc.imtest.api.ApiRetrofit;
 import com.project.hc.imtest.application.BaseApplication;
+import com.project.hc.imtest.model.GroupInfo;
 import com.project.hc.imtest.model.RedDetailInfo;
 import com.project.hc.imtest.model.RedPackageDetailInfo;
 import com.project.hc.imtest.model.RobRedInfo;
@@ -40,6 +41,7 @@ public class OpenRedPackageFragment extends DialogFragment implements View.OnCli
     private boolean isCl;
     private EMMessage message;
     private RedPackageDetailInfo redPackageDetailInfo;
+    private GroupInfo mGroupInfo;
 
     @NonNull
     @Override
@@ -70,7 +72,8 @@ public class OpenRedPackageFragment extends DialogFragment implements View.OnCli
     private void initView() {
         message = getArguments().getParcelable("message");
         redPackageDetailInfo = getArguments().getParcelable("redDetail");
-        isCl = getArguments().getBoolean("isCl", false);
+        mGroupInfo = getArguments().getParcelable("groupInfo");
+        isCl = "2".equals(mGroupInfo.getType());
         ImageView photo = dialogView.findViewById(R.id.iv_red_package_user_photo);
         open = dialogView.findViewById(R.id.iv_red_package_open);
         ImageView cancel = dialogView.findViewById(R.id.iv_red_package_cancel);
@@ -129,7 +132,7 @@ public class OpenRedPackageFragment extends DialogFragment implements View.OnCli
         dismiss();
         Intent intent = new Intent(getActivity(), RedPackageDetailActivity.class);
         intent.putExtra("message", message);
-        intent.putExtra("isCl", isCl);
+        intent.putExtra("groupInfo", mGroupInfo);
         startActivity(intent);
     }
 
@@ -147,7 +150,7 @@ public class OpenRedPackageFragment extends DialogFragment implements View.OnCli
                         .receiveClRed(message.getTo(), message.getStringAttribute("redCode", "")), new BaseSubscriber<RedDetailInfo>() {
                     @Override
                     public void onBaseNext(RedDetailInfo redDetailInfo) {
-                        openSuccess();
+                        openSuccess(redDetailInfo);
                     }
 
                     @Override
@@ -167,7 +170,7 @@ public class OpenRedPackageFragment extends DialogFragment implements View.OnCli
                         .receiveJlRed(message.getTo(), message.getStringAttribute("redCode", "")), new BaseSubscriber<RedDetailInfo>() {
                     @Override
                     public void onBaseNext(RedDetailInfo redDetailInfo) {
-                        openSuccess();
+                        openSuccess(redDetailInfo);
                     }
 
                     @Override
@@ -191,12 +194,13 @@ public class OpenRedPackageFragment extends DialogFragment implements View.OnCli
         }
     }
 
-    private void openSuccess() {
+    private void openSuccess(RedDetailInfo redDetailInfo) {
         message.setAttribute("rob", true);
         EMClient.getInstance().chatManager().updateMessage(message);
 
         EaseUser easeUser = EaseUserUtils.getUserInfo(message.getFrom());
         RobRedInfo sendInfo = new RobRedInfo();
+        sendInfo.setMoney(redDetailInfo.getMoney());
         sendInfo.setRedId(message.getStringAttribute("redCode", ""));
         sendInfo.setRobRedId(BaseApplication.getInstance().getLoginInfo().getUserId());
         sendInfo.setSendRedId(message.getFrom());
@@ -210,6 +214,7 @@ public class OpenRedPackageFragment extends DialogFragment implements View.OnCli
         //发送扩展消息
         EMMessage robRedMessage = EMMessage.createTxtSendMessage(new Gson().toJson(sendInfo), message.getTo());
         //增加自己的属性
+        robRedMessage.setAttribute("money", redDetailInfo.getMoney());
         robRedMessage.setAttribute("redId", message.getStringAttribute("redCode", ""));
         robRedMessage.setAttribute("robRedId", BaseApplication.getInstance().getLoginInfo().getUserId());
         robRedMessage.setAttribute("sendRedId", message.getFrom());

@@ -17,16 +17,19 @@ import com.project.hc.imtest.R
 import com.project.hc.imtest.adapter.RedPackageDetailListAdapter
 import com.project.hc.imtest.api.ApiRetrofit
 import com.project.hc.imtest.application.BaseApplication
+import com.project.hc.imtest.model.GroupInfo
 import com.project.hc.imtest.model.RedDetailInfo
 import com.project.hc.imtest.model.RedPackageDetailInfo
 import kotlinx.android.synthetic.main.body_red_package_detail.*
 import kotlinx.android.synthetic.main.layout_app_common_title.*
+import java.lang.StringBuilder
 
 
 class RedPackageDetailActivity : CommonActivity(){
 
     private lateinit var mAdapter: RedPackageDetailListAdapter
     private lateinit var message: EMMessage
+    private lateinit var mGroupInfo: GroupInfo
     private var isCl = true
 
     override fun isNeedShowBack(): Boolean {
@@ -64,7 +67,8 @@ class RedPackageDetailActivity : CommonActivity(){
 
     override fun initBodyView(view: View) {
         message = intent.getParcelableExtra("message")
-        isCl = intent.getBooleanExtra("isCl", true)
+        mGroupInfo = intent.getParcelableExtra("groupInfo")
+        isCl = "2" == mGroupInfo.type
 
         rv_red_package_open_list.layoutManager = LinearLayoutManager(rv_red_package_open_list.context)
         rv_red_package_open_list.itemAnimator = DefaultItemAnimator()
@@ -90,9 +94,9 @@ class RedPackageDetailActivity : CommonActivity(){
 
                         ImageLoadUtils.bindImageUrlForRound(iv_red_package_detail_user_photo, obj.hb_data.pic, R.mipmap.icon_photo_default)
                         tv_red_package_detail_who.text = String.format(getString(R.string.who_red_package), obj.hb_data.nickname)
-                        tv_red_package_detail_tip.text = String.format(getString(R.string.open_red_package_detail_tip), obj.take, obj.hb_data.hb_number, obj.takeMoney, obj.hb_data.money)
 
                         val ifEnd = "1" == obj.if_end
+                        var count  = 0
                         var maxMoney  = 0.0
                         var minMoney  = Double.MAX_VALUE
                         var maxData : RedDetailInfo? = null
@@ -116,12 +120,24 @@ class RedPackageDetailActivity : CommonActivity(){
                             if(temp.mid == BaseApplication.getInstance()?.loginInfo?.userId && message.getBooleanAttribute("rob", false)) {
                                 tv_red_package_amount.text = temp.money
                             }
+
+                            if("1" == temp.if_do) count++
                         }
 
-                        minData?.if_do = "min"
-                        maxData?.if_do = "max"
+                        minData?.if_do = if(!isCl && "1" == mGroupInfo.jl) "1" else "min"
+                        maxData?.if_do = if(!isCl && "1" != mGroupInfo.jl) "1" else "max"
                         mAdapter.data = obj.data
                         mAdapter.notifyDataSetChanged()
+
+                        if("1" == minData?.if_do) count++
+                        if("1" == maxData?.if_do) count++
+                        val sbTip = StringBuilder()
+                        sbTip.append(String.format(getString(R.string.open_red_package_detail_tip), obj.take, obj.hb_data.hb_number, obj.takeMoney, obj.hb_data.money))
+                        if(ifEnd) {
+                            sbTip.append("，已被抢完")
+                            sbTip.append("  雷点：" + count)
+                        }
+                        tv_red_package_detail_tip.text = sbTip.toString()
                     }
                 }))
     }

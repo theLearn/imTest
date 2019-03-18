@@ -104,7 +104,9 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
         EMConversation conversation = getItem(position);
         // get username or group id
         String username = conversation.conversationId();
-        
+
+        EaseUserUtils.setUserAvatar(getContext(), username, holder.avatar);
+        EaseUserUtils.setUserNick(username, holder.name);
         if (conversation.getType() == EMConversationType.GroupChat) {
             String groupId = conversation.conversationId();
             if(EaseAtMessageHelper.get().hasAtMeMsg(groupId)){
@@ -112,18 +114,9 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
             }else{
                 holder.motioned.setVisibility(View.GONE);
             }
-            // group message, show group avatar
-            EaseUserUtils.setUserAvatar(getContext(), username, holder.avatar);
-            EMGroup group = EMClient.getInstance().groupManager().getGroup(username);
-            holder.name.setText(group != null ? group.getGroupName() : username);
         } else if(conversation.getType() == EMConversationType.ChatRoom){
-            EaseUserUtils.setUserAvatar(getContext(), username, holder.avatar);
-            EMChatRoom room = EMClient.getInstance().chatroomManager().getChatRoom(username);
-            holder.name.setText(room != null && !TextUtils.isEmpty(room.getName()) ? room.getName() : username);
             holder.motioned.setVisibility(View.GONE);
         }else {
-            EaseUserUtils.setUserAvatar(getContext(), username, holder.avatar);
-            EaseUserUtils.setUserNick(username, holder.name);
             holder.motioned.setVisibility(View.GONE);
         }
 
@@ -163,6 +156,7 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
                 if(!TextUtils.isEmpty(lastMessage.getStringAttribute("redCode",""))) {
                     holder.message.setText("[红包]");
                 } else if("RobRedWarn".equals(lastMessage.getStringAttribute("type",""))) {
+                    String money = lastMessage.getStringAttribute("money", "");
                     String robRedName = lastMessage.getStringAttribute("robRedName", "");
                     String sendName = lastMessage.getStringAttribute("sendName", "");
                     String robRedId = lastMessage.getStringAttribute("robRedId", "");
@@ -183,6 +177,7 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
                         sb.append(sendName);
                     }
                     sb.append("的红包");
+                    sb.append(money);
 
                     holder.message.setText(sb.toString());
                 }

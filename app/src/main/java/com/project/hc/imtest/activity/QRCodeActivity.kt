@@ -11,6 +11,10 @@ import com.project.hc.imtest.R
 import com.project.hc.imtest.api.ApiRetrofit
 import com.project.hc.imtest.application.BaseApplication
 import kotlinx.android.synthetic.main.body_qr_code.*
+import com.project.hc.imtest.util.QRCodeUtil
+import android.graphics.Bitmap
+
+
 
 
 class QRCodeActivity : AppCommonActivity(){
@@ -44,7 +48,8 @@ class QRCodeActivity : AppCommonActivity(){
 
                     override fun onBaseNext(obj : String) {
                         operateLoadingDialog(false)
-                        ImageLoadUtils.bindImageUrlForRound(iv_qr_code, obj, R.mipmap.icon_photo_default)
+                        val mBitmap = QRCodeUtil.createQRCodeBitmap(obj, iv_qr_code.width, iv_qr_code.height)
+                        iv_qr_code.setImageBitmap(mBitmap)
                     }
                 }))
     }
