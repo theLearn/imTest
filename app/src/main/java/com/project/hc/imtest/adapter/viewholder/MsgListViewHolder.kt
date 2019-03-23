@@ -7,6 +7,7 @@ import android.widget.TextView
 import com.project.hc.imtest.R
 
 class MsgListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    val ivFlag = itemView.findViewById<ImageView>(R.id.iv_msg_flag)
     val tvTitle = itemView.findViewById<TextView>(R.id.tv_msg_title)
     val tvTime = itemView.findViewById<TextView>(R.id.tv_msg_time)
     val tvContent = itemView.findViewById<TextView>(R.id.tv_msg_content)

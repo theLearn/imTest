@@ -255,10 +255,12 @@ data class GroupMemberInfo(
 
 data class MsgInfo(
     var title: String = "",
+    var id: String = "",
     var add_time: String = "",
     var content: String = ""
 ) : Parcelable {
     constructor(source: Parcel) : this(
+        source.readString(),
         source.readString(),
         source.readString(),
         source.readString()
@@ -268,6 +270,7 @@ data class MsgInfo(
 
     override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
         writeString(title)
+        writeString(id)
         writeString(add_time)
         writeString(content)
     }

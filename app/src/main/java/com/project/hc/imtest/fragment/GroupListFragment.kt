@@ -21,7 +21,7 @@ import com.project.hc.imtest.chat.ChatUtils
 import com.project.hc.imtest.model.BaseListResponse
 import com.project.hc.imtest.model.GroupInfo
 import kotlinx.android.synthetic.main.fragment_group_list.*
-import java.util.ArrayList
+import java.util.*
 
 
 class GroupListFragment : BasicFragment() {
@@ -59,9 +59,7 @@ class GroupListFragment : BasicFragment() {
         EMClient.getInstance().groupManager().asyncJoinGroup(groupId, object : EMCallBack {
             override fun onSuccess() {
                 activity?.runOnUiThread {
-                    operateLoadingDialog(false)
-                    toGroup(groupId)
-                    ToastUtils.show(activity, "加入成功")
+                    join(groupId)
                 }
             }
 
@@ -79,6 +77,23 @@ class GroupListFragment : BasicFragment() {
                 }
             }
         })
+    }
+
+    private fun join(groupId: String) {
+        RetrofitClient.getInstance().map<Any>(
+            RetrofitManager.createRetrofit<ApiRetrofit>(BaseApplication.getInstance(), ApiRetrofit::class.java)
+                .joinGroup(groupId), object : BaseSubscriber<Any>() {
+                override fun onError(e: ActionException) {
+                    operateLoadingDialog(false)
+                    ToastUtils.show(BaseApplication.getInstance(), e.message)
+                }
+
+                override fun onBaseNext(obj: Any) {
+                    operateLoadingDialog(false)
+                    toGroup(groupId)
+                    ToastUtils.show(activity, "加入成功")
+                }
+            })
     }
 
     private fun toGroup(groupId: String) {

@@ -93,4 +93,7 @@ public interface ApiRetrofit {
 
     @GET(ApiConstants.GET_GROUP_MEMBER_URL)
     Observable<BaseResponse<GroupMemberInfoList>> getGroupMemberList( @Query("gid") String gid);
+
+    @GET(ApiConstants.JOIN_GROUP_URL)
+    Observable<BaseResponse<Object>> joinGroup( @Query("gid") String gid);
 }

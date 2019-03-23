@@ -1,20 +1,12 @@
 package com.project.hc.imtest.activity
 
+import android.os.Handler
 import android.view.View
-import com.example.hongcheng.common.util.ImageLoadUtils
-import com.example.hongcheng.common.util.ToastUtils
-import com.example.hongcheng.data.retrofit.ActionException
-import com.example.hongcheng.data.retrofit.BaseSubscriber
-import com.example.hongcheng.data.retrofit.RetrofitClient
-import com.example.hongcheng.data.retrofit.RetrofitManager
 import com.project.hc.imtest.R
-import com.project.hc.imtest.api.ApiRetrofit
+import com.project.hc.imtest.api.ApiConstants
 import com.project.hc.imtest.application.BaseApplication
-import kotlinx.android.synthetic.main.body_qr_code.*
 import com.project.hc.imtest.util.QRCodeUtil
-import android.graphics.Bitmap
-
-
+import kotlinx.android.synthetic.main.body_qr_code.*
 
 
 class QRCodeActivity : AppCommonActivity(){
@@ -36,21 +28,9 @@ class QRCodeActivity : AppCommonActivity(){
     }
 
     override fun initBodyView(view: View) {
-        operateLoadingDialog(true)
-        compositeDisposable.add(
-            RetrofitClient.getInstance().map<String>(
-                RetrofitManager.createRetrofit<ApiRetrofit>(BaseApplication.getInstance(), ApiRetrofit::class.java)
-                    .qrCode, object : BaseSubscriber<String>() {
-                    override fun onError(e: ActionException) {
-                        operateLoadingDialog(false)
-                        ToastUtils.show(BaseApplication.getInstance(), e.message)
-                    }
-
-                    override fun onBaseNext(obj : String) {
-                        operateLoadingDialog(false)
-                        val mBitmap = QRCodeUtil.createQRCodeBitmap(obj, iv_qr_code.width, iv_qr_code.height)
-                        iv_qr_code.setImageBitmap(mBitmap)
-                    }
-                }))
+        Handler().postDelayed({
+            val mBitmap = QRCodeUtil.createQRCodeBitmap(ApiConstants.QR_CODE_HTML_URL + BaseApplication.getInstance()?.loginInfo?.userId, iv_qr_code.width, iv_qr_code.height)
+            iv_qr_code.setImageBitmap(mBitmap)
+        }, 500)
     }
 }

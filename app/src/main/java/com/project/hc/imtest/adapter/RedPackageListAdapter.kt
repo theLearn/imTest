@@ -22,12 +22,9 @@ class RedPackageListAdapter : BaseListAdapter<RedPackageInfo, RedPackageListView
     override fun onBaseBindViewHolder(holder: RedPackageListViewHolder, position: Int) {
         val model = data[position]
         holder.tvTime.text = model.add_time
+        holder.tvType.text = model.remark
 
-
-        val redType : Int = if("1" == model.status) R.string.title_home_right else R.string.title_home_left
-        holder.tvType.setText(redType)
-
-        if("2" == model.type){
+        if("2" == model.type || "8" == model.type){
             holder.tvAmount.setTextColor(BaseApplication.getInstance()?.resources?.getColor(R.color.colorBase)!!)
             holder.tvAmount.text =  "+" + model.money
         } else {

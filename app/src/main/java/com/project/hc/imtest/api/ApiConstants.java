@@ -55,9 +55,15 @@ public class ApiConstants {
     public static final String GET_QR_CODE_URL = "user/getQrCodeUrl";
     //获取群成员
     public static final String GET_GROUP_MEMBER_URL = "user/get_groupUser";
+    //加入群
+    public static final String JOIN_GROUP_URL = "user/in_group";
+
+    //二维码
+    public static final String QR_CODE_HTML_URL = "http://39.108.165.84/file/register.html?mid=";
 
     public static final String MOBILE = "mobile";
     public static final String PASSWORD = "password";
     public static final String AUTOLOGIN = "autoLogin";
     public static final String ALLOWSOUND = "allowSound";
+    public static final String MSG_READ_LIST = "_MsgReadList";
 }
