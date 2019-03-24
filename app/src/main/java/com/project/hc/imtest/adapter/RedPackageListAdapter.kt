@@ -24,7 +24,7 @@ class RedPackageListAdapter : BaseListAdapter<RedPackageInfo, RedPackageListView
         holder.tvTime.text = model.add_time
         holder.tvType.text = model.remark
 
-        if("2" == model.type || "8" == model.type){
+        if("2" == model.type || "4" == model.type || "8" == model.type){
             holder.tvAmount.setTextColor(BaseApplication.getInstance()?.resources?.getColor(R.color.colorBase)!!)
             holder.tvAmount.text =  "+" + model.money
         } else {

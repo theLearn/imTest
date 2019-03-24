@@ -119,7 +119,7 @@ public class CustomChatFragment extends EaseChatFragment implements EaseChatFrag
 
     @Override
     public void onEnterToChatDetails() {
-        Intent intent = new Intent(getActivity(), GroupMemberListActivity.class);
+        Intent intent = new Intent(BaseApplication.getInstance(), GroupMemberListActivity.class);
         intent.putExtra("model", mGroupInfo);
         startActivity(intent);
     }
@@ -139,7 +139,7 @@ public class CustomChatFragment extends EaseChatFragment implements EaseChatFrag
         String redCode = message.getStringAttribute("redCode","");
         if (message.getType() == EMMessage.Type.TXT && !TextUtils.isEmpty(redCode)) {
             if(message.getBooleanAttribute("rob", false)) {
-                Intent intent = new Intent(getActivity(), RedPackageDetailActivity.class);
+                Intent intent = new Intent(BaseApplication.getInstance(), RedPackageDetailActivity.class);
                 intent.putExtra("message", message);
                 intent.putExtra("groupInfo", mGroupInfo);
                 startActivity(intent);
@@ -197,7 +197,7 @@ public class CustomChatFragment extends EaseChatFragment implements EaseChatFrag
     }
 
     private void toSendRed() {
-        Intent intent = new Intent(getActivity(), RedPackageSendActivity.class);
+        Intent intent = new Intent(BaseApplication.getInstance(), RedPackageSendActivity.class);
         intent.putExtra("groupInfo", mGroupInfo);
         startActivityForResult(intent, SEND_RED_REQUEST_CODE);
         inputMenu.hideExtendMenuContainer();

@@ -22,7 +22,6 @@ import com.project.hc.imtest.model.RedDetailInfo
 import com.project.hc.imtest.model.RedPackageDetailInfo
 import kotlinx.android.synthetic.main.body_red_package_detail.*
 import kotlinx.android.synthetic.main.layout_app_common_title.*
-import java.lang.StringBuilder
 
 
 class RedPackageDetailActivity : CommonActivity(){
@@ -96,7 +95,6 @@ class RedPackageDetailActivity : CommonActivity(){
                         tv_red_package_detail_who.text = String.format(getString(R.string.who_red_package), obj.hb_data.nickname)
 
                         val ifEnd = "1" == obj.if_end
-                        var count  = 0
                         var maxMoney  = 0.0
                         var minMoney  = Double.MAX_VALUE
                         var maxData : RedDetailInfo? = null
@@ -120,8 +118,6 @@ class RedPackageDetailActivity : CommonActivity(){
                             if(temp.mid == BaseApplication.getInstance()?.loginInfo?.userId && message.getBooleanAttribute("rob", false)) {
                                 tv_red_package_amount.text = temp.money
                             }
-
-                            if("1" == temp.if_do) count++
                         }
 
                         minData?.if_do = if(!isCl && "1" == mGroupInfo.jl) "1" else "min"
@@ -129,14 +125,13 @@ class RedPackageDetailActivity : CommonActivity(){
                         mAdapter.data = obj.data
                         mAdapter.notifyDataSetChanged()
 
-                        if("1" == minData?.if_do) count++
-                        if("1" == maxData?.if_do) count++
                         val sbTip = StringBuilder()
                         sbTip.append(String.format(getString(R.string.open_red_package_detail_tip), obj.take, obj.hb_data.hb_number, obj.takeMoney, obj.hb_data.money))
                         if(ifEnd) {
                             sbTip.append("，已被抢完")
-                            sbTip.append("  雷点：" + count)
                         }
+                        sbTip.append("  雷点：")
+                        if(isCl) sbTip.append(obj.hb_data.thunder) else sbTip.append(if("1" == mGroupInfo.jl) "最小接龙" else "最大接龙")
                         tv_red_package_detail_tip.text = sbTip.toString()
                     }
                 }))

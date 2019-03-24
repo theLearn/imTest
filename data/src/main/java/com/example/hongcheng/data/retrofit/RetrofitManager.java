@@ -1,9 +1,13 @@
 package com.example.hongcheng.data.retrofit;
 
 import android.content.Context;
-
 import com.example.hongcheng.common.util.NetUtils;
 import com.example.hongcheng.common.util.StringUtils;
+import com.google.gson.Gson;
+import okhttp3.*;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,23 +17,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.Cache;
-import okhttp3.CacheControl;
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
-
 /**
  * Created by hongcheng on 16/3/30.
  */
 public class RetrofitManager {
     public static Map<String, Object> mRetrofitMap = new HashMap<String, Object>();
     private static List<Interceptor> interceptors = new ArrayList<>();
+    private static Gson mGson = new Gson();
 
     public static <T> T createRetrofit(Context context, Class<T> t){
 
@@ -72,7 +66,7 @@ public class RetrofitManager {
 
             Retrofit retrofit = new Retrofit.Builder()
                                     .baseUrl(HttpConstants.BASE_URL)
-                                    .addConverterFactory(GsonConverterFactory.create())
+                                    .addConverterFactory(LenientGsonConverterFactory.create(mGson))
                                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                                     .client(okHttpBuilder.build())
                                     .build();

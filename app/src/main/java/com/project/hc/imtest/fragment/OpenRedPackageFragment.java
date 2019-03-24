@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.hongcheng.common.util.ImageLoadUtils;
 import com.example.hongcheng.common.util.ToastUtils;
 import com.example.hongcheng.common.util.ViewUtils;
+import com.example.hongcheng.common.view.fragment.LoadingFragment;
 import com.example.hongcheng.data.retrofit.ActionException;
 import com.example.hongcheng.data.retrofit.BaseSubscriber;
 import com.example.hongcheng.data.retrofit.RetrofitClient;
@@ -42,6 +43,7 @@ public class OpenRedPackageFragment extends DialogFragment implements View.OnCli
     private EMMessage message;
     private RedPackageDetailInfo redPackageDetailInfo;
     private GroupInfo mGroupInfo;
+    private LoadingFragment mLoadingDialog;
 
     @NonNull
     @Override
@@ -130,13 +132,14 @@ public class OpenRedPackageFragment extends DialogFragment implements View.OnCli
 
     private void goToDetail() {
         dismiss();
-        Intent intent = new Intent(getActivity(), RedPackageDetailActivity.class);
+        Intent intent = new Intent(BaseApplication.getInstance(), RedPackageDetailActivity.class);
         intent.putExtra("message", message);
         intent.putExtra("groupInfo", mGroupInfo);
         startActivity(intent);
     }
 
     private void openRed() {
+        operateLoadingDialog(true);
         if (isCl) {
             openCl();
         } else {
@@ -155,6 +158,7 @@ public class OpenRedPackageFragment extends DialogFragment implements View.OnCli
 
                     @Override
                     public void onError(ActionException e) {
+                        operateLoadingDialog(false);
                         if ("红包已过期".equals(e.getErrorMessage())) {
                             overdue();
                         } else {
@@ -175,6 +179,7 @@ public class OpenRedPackageFragment extends DialogFragment implements View.OnCli
 
                     @Override
                     public void onError(ActionException e) {
+                        operateLoadingDialog(false);
                         if ("红包已过期".equals(e.getErrorMessage())) {
                             overdue();
                         } else {
@@ -195,6 +200,7 @@ public class OpenRedPackageFragment extends DialogFragment implements View.OnCli
     }
 
     private void openSuccess(RedDetailInfo redDetailInfo) {
+        operateLoadingDialog(false);
         message.setAttribute("rob", true);
         EMClient.getInstance().chatManager().updateMessage(message);
 
@@ -233,6 +239,21 @@ public class OpenRedPackageFragment extends DialogFragment implements View.OnCli
         EMClient.getInstance().chatManager().sendMessage(robRedMessage);
 
         goToDetail();
+    }
+
+    private void operateLoadingDialog(Boolean isOpen) {
+        if (isOpen && mLoadingDialog == null) {
+            mLoadingDialog = new LoadingFragment();
+        }
+
+        boolean isShow = mLoadingDialog.getDialog() !=null && mLoadingDialog.getDialog() .isShowing();
+        if(!isOpen) {
+            if(isShow) {
+                mLoadingDialog.dismiss();
+            }
+        } else if(!mLoadingDialog.isAdded() && !isShow) {
+            mLoadingDialog.show(getActivity().getSupportFragmentManager(), "LoadingFragment");
+        }
     }
 
     private OnOverdueListener listener;
