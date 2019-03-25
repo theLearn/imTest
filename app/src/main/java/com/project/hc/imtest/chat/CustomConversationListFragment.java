@@ -3,6 +3,7 @@ package com.project.hc.imtest.chat;
 import android.view.View;
 import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.EaseUI;
 import com.hyphenate.easeui.domain.EaseUser;
@@ -46,7 +47,19 @@ public class CustomConversationListFragment extends EaseConversationListFragment
             users.add(easeUser);
             BaseApplication.getInstance().insertUser(users);
 
-            EaseUI.getInstance().getNotifier().vibrateAndPlayTone(message);
+            if("RobRedWarn".equals(message.getStringAttribute("type",""))) {
+                String robRedId = message.getStringAttribute("robRedId", "");
+                String sendRedId = message.getStringAttribute("sendRedId", "");
+                String mId = BaseApplication.getInstance().getLoginInfo().getUserId();
+                if(mId.equals(sendRedId) || mId.equals(robRedId)) {
+                    EaseUI.getInstance().getNotifier().vibrateAndPlayTone(message);
+                } else {
+                    EMConversation conversation = EMClient.getInstance().chatManager().getConversation(message.getTo());
+                    conversation.removeMessage(message.getMsgId());
+                }
+            } else {
+                EaseUI.getInstance().getNotifier().vibrateAndPlayTone(message);
+            }
         }
         refresh();
     }

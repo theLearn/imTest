@@ -162,24 +162,28 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
                     String robRedId = lastMessage.getStringAttribute("robRedId", "");
                     String sendRedId = lastMessage.getStringAttribute("sendRedId", "");
                     String userId = SPUtils.getStringFromSP(getContext(), "userId");
-                    StringBuilder sb = new StringBuilder();
-                    if(userId.equals(robRedId)) {
-                        sb.append("你");
-                    } else {
-                        sb.append(robRedName);
-                    }
-                    sb.append("领取了");
-                    if(sendRedId.equals(robRedId)) {
-                        sb.append("自己");
-                    } else if(userId.equals(sendRedId)) {
-                        sb.append("你");
-                    }else {
-                        sb.append(sendName);
-                    }
-                    sb.append("的红包");
-                    sb.append(money);
+                    if(userId.equals(robRedId) || userId.equals(sendRedId)) {
+                        StringBuilder sb = new StringBuilder();
+                        if(userId.equals(robRedId)) {
+                            sb.append("你");
+                        } else {
+                            sb.append(robRedName);
+                        }
+                        sb.append("领取了");
+                        if(sendRedId.equals(robRedId)) {
+                            sb.append("自己");
+                        } else if(userId.equals(sendRedId)) {
+                            sb.append("你");
+                        }else {
+                            sb.append(sendName);
+                        }
+                        sb.append("的红包");
+                        sb.append(money);
 
-                    holder.message.setText(sb.toString());
+                        holder.message.setText(sb.toString());
+                    } else {
+                        holder.message.setText("");
+                    }
                 }
             }
             holder.time.setText(DateUtils.getTimestampString(new Date(lastMessage.getMsgTime())));
