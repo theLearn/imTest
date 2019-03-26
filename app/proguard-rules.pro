@@ -168,3 +168,7 @@
 #环信
 -keep class com.hyphenate.** {*;}
 -dontwarn  com.hyphenate.**
+
+#zxing
+-keep class com.google.zxing.** {*;}  
+-dontwarn com.google.zxing.**  
