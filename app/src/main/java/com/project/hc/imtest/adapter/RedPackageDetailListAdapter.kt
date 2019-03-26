@@ -26,7 +26,7 @@ class RedPackageDetailListAdapter : BaseListAdapter<RedDetailInfo, RedPackageDet
             }
             "min" -> {
                 holder.tvDesc.text = "手气最差"
-                holder.tvDesc.setTextColor(holder.tvDesc.context.resources.getColor(R.color.wheat))
+                holder.tvDesc.setTextColor(holder.tvDesc.context.resources.getColor(R.color.bg_red_package))
             }
             "1" -> {
                 holder.tvDesc.text = "不幸中雷"
