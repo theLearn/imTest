@@ -135,7 +135,14 @@ class BaseApplication : MultiDexApplication() {
     fun insertUser(users: List<EaseUser>) {
         val temp: MutableList<EaseUserInfoEntity> = arrayListOf()
         for(user : EaseUser in users) {
-            if(contactList[user.username] != null && TextUtils.isEmpty(user.avatar)) continue
+            val oldUser : EaseUser? = contactList[user.username]
+            if(oldUser != null) {
+                if(TextUtils.isEmpty(user.nickname) && TextUtils.isEmpty(user.avatar)) {
+                    continue
+                } else if(user.avatar == oldUser?.avatar && user.nickname == oldUser?.nickname) {
+                    continue
+                }
+            }
             temp.add(EaseUserInfoEntity(user.username, user.avatar, user.nickname))
             contactList[user.username] = user
         }
