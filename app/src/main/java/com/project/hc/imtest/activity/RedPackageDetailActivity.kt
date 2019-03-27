@@ -104,7 +104,7 @@ class RedPackageDetailActivity : CommonActivity(){
                             if(!isCl) {
                                 temp.if_do = ""
                             }
-                            if(ifEnd && "1" != temp.if_do) {
+                            if(ifEnd) {
                                 val tempMoney = temp.money.toDouble()
                                 if(tempMoney >= maxMoney) {
                                     maxMoney = tempMoney
@@ -120,8 +120,8 @@ class RedPackageDetailActivity : CommonActivity(){
                             }
                         }
 
-                        minData?.if_do = if(!isCl && "1" == mGroupInfo.jl) "1" else "min"
-                        maxData?.if_do = if(!isCl && "1" != mGroupInfo.jl) "1" else "max"
+                        minData?.let { if("1" != it.if_do) it.if_do = if(!isCl && "1" == mGroupInfo.jl) "1" else "min" }
+                        maxData?.let { if("1" != it.if_do) it.if_do = if(!isCl && "1" != mGroupInfo.jl) "1" else "max" }
                         mAdapter.data = obj.data
                         mAdapter.notifyDataSetChanged()
 
