@@ -87,7 +87,7 @@ class PackageActivity : AppCommonActivity(), View.OnClickListener {
 
                 override fun onBaseNext(obj: KFInfo) {
                     operateLoadingDialog(false)
-                    ChatUtils.goToChat(this@PackageActivity, obj.mid, getString(id), EMConversation.EMConversationType.Chat)
+                    ChatUtils.goToChat(this@PackageActivity, obj.mid, obj.nickname, EMConversation.EMConversationType.Chat)
                 }
             })
     }

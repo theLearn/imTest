@@ -139,7 +139,7 @@ class BaseApplication : MultiDexApplication() {
             if(oldUser != null) {
                 if(TextUtils.isEmpty(user.nickname) && TextUtils.isEmpty(user.avatar)) {
                     continue
-                } else if(user.avatar == oldUser?.avatar && user.nickname == oldUser?.nickname) {
+                } else if(user.avatar == oldUser.avatar && user.nickname == oldUser.nickname) {
                     continue
                 }
             }

@@ -22,11 +22,11 @@ class RedPackageDetailListAdapter : BaseListAdapter<RedDetailInfo, RedPackageDet
         when(model.if_do) {
             "max" -> {
                 holder.tvDesc.text = "手气最佳"
-                holder.tvDesc.setTextColor(holder.tvDesc.context.resources.getColor(R.color.wheat))
+                holder.tvDesc.setTextColor(holder.tvDesc.context.resources.getColor(R.color.colorBase))
             }
             "min" -> {
                 holder.tvDesc.text = "手气最差"
-                holder.tvDesc.setTextColor(holder.tvDesc.context.resources.getColor(R.color.bg_red_package))
+                holder.tvDesc.setTextColor(holder.tvDesc.context.resources.getColor(R.color.wheat))
             }
             "1" -> {
                 holder.tvDesc.text = "不幸中雷"

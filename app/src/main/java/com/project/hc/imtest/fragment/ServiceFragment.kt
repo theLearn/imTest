@@ -77,7 +77,7 @@ class ServiceFragment : BasicFragment(), View.OnClickListener {
 
                 override fun onBaseNext(obj: KFInfo) {
                     operateLoadingDialog(false)
-                    ChatUtils.goToChat(activity, obj.mid, getString(id), EMConversation.EMConversationType.Chat)
+                    ChatUtils.goToChat(activity, obj.mid, obj.nickname, EMConversation.EMConversationType.Chat)
                 }
             })
     }
