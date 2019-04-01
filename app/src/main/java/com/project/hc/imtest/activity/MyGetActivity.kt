@@ -29,11 +29,11 @@ import kotlinx.android.synthetic.main.body_my_get.*
 class MyGetActivity : AppCommonActivity(), SwipeRefreshLayout.OnRefreshListener {
 
     companion object {
-        private const val PAGE_SIZE : Int = 10
+        private const val PAGE_SIZE : Int = 20
     }
 
     private lateinit var mAdapter: RedPackageListAdapter
-    private var page: Int = 0
+    private var page: Int = 1
     private var dataList: MutableList<RedPackageInfo> = arrayListOf()
 
     override fun isNeedShowBack(): Boolean {
@@ -75,14 +75,14 @@ class MyGetActivity : AppCommonActivity(), SwipeRefreshLayout.OnRefreshListener 
         srl_my_get.setOnRefreshListener(this)
         srl_my_get.post {
             srl_my_get.isRefreshing = true
-            page = 0
+            page = 1
             dataList.clear()
             getData()
         }
     }
 
     override fun onRefresh() {
-        page = 0
+        page = 1
         dataList.clear()
         getData()
     }

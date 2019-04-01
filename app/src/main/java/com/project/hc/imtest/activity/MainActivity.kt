@@ -1,5 +1,6 @@
 package com.project.hc.imtest.activity
 
+import android.content.Intent
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
 import android.support.v7.app.ActionBar
@@ -10,6 +11,9 @@ import android.widget.TextView
 import com.example.hongcheng.common.base.BasicActivity
 import com.example.hongcheng.common.base.FragmentAdapter
 import com.example.hongcheng.common.util.ScreenUtils
+import com.hyphenate.EMConnectionListener
+import com.hyphenate.EMError
+import com.hyphenate.chat.EMClient
 import com.project.hc.imtest.R
 import com.project.hc.imtest.application.BaseApplication
 import com.project.hc.imtest.chat.ChatUtils
@@ -56,6 +60,19 @@ class MainActivity : BasicActivity() {
                 }
             }
         }
+
+        EMClient.getInstance().addConnectionListener(object : EMConnectionListener{
+            override fun onConnected() {
+            }
+
+            override fun onDisconnected(error: Int) {
+                if (error == EMError.USER_LOGIN_ANOTHER_DEVICE) {
+                    val intent = Intent(this@MainActivity, LoginConflictActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    startActivity(intent)
+                }
+            }
+        })
 
         operateLoadingDialog(true)
         ChatUtils.loginChat(this, BaseApplication.getInstance()?.loginInfo?.userId, BaseApplication.getInstance()?.loginInfo?.hx_pwd, object : CommonCallback {

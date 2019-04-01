@@ -207,7 +207,7 @@ public class CustomChatFragment extends EaseChatFragment implements EaseChatFrag
         operateLoadingDialog(true);
         RetrofitClient.getInstance().map(
                 RetrofitManager.createRetrofit(BaseApplication.getInstance(), ApiRetrofit.class)
-                        .getRedDetail(redCode, 0, 100), new BaseSubscriber<RedPackageDetailInfo> () {
+                        .getRedDetail(redCode, 1, 100), new BaseSubscriber<RedPackageDetailInfo> () {
                     @Override
                     public void onBaseNext(RedPackageDetailInfo obj) {
                         operateLoadingDialog(false);

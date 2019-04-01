@@ -123,7 +123,7 @@ class GroupListFragment : BasicFragment() {
         operateLoadingDialog(true)
         RetrofitClient.getInstance().map<BaseListResponse<GroupInfo>>(
             RetrofitManager.createRetrofit<ApiRetrofit>(BaseApplication.getInstance(), ApiRetrofit::class.java)
-                .getAllGroup(type, 0, 100), object : BaseSubscriber<BaseListResponse<GroupInfo>>() {
+                .getAllGroup(type, 1, 100), object : BaseSubscriber<BaseListResponse<GroupInfo>>() {
                 override fun onError(e: ActionException) {
                     operateLoadingDialog(false)
                     ToastUtils.show(BaseApplication.getInstance(), e.message)

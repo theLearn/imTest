@@ -159,6 +159,11 @@
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
 
+        <activity
+                android:name="com.project.hc.imtest.activity.LoginConflictActivity"
+                android:launchMode="singleTop"
+                android:theme="@style/ActivityTranslucent" />
+
         <!-- 设置环信应用的AppKey -->
         <meta-data android:name="EASEMOB_APPKEY"  android:value="1113190219030993#zhongleyou" />
         <!-- 声明SDK所需的service SDK核心功能-->

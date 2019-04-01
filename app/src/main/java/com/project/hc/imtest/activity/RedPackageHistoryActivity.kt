@@ -25,11 +25,11 @@ import kotlinx.android.synthetic.main.body_red_package_history.*
 class RedPackageHistoryActivity : AppCommonActivity(),  SwipeRefreshLayout.OnRefreshListener {
 
     companion object {
-        private const val PAGE_SIZE : Int = 10
+        private const val PAGE_SIZE : Int = 20
     }
 
     private lateinit var mAdapter : RedPackageListAdapter
-    private var page : Int = 0
+    private var page : Int = 1
     private var dataList : MutableList<RedPackageInfo> = arrayListOf()
 
     override fun isNeedShowBack(): Boolean {
@@ -71,14 +71,14 @@ class RedPackageHistoryActivity : AppCommonActivity(),  SwipeRefreshLayout.OnRef
         srl_red_package.setOnRefreshListener(this)
         srl_red_package.post{
             srl_red_package.isRefreshing = true
-            page = 0
+            page = 1
             dataList.clear()
             getData()
         }
     }
 
     override fun onRefresh() {
-        page = 0
+        page = 1
         dataList.clear()
         getData()
     }

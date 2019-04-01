@@ -33,11 +33,11 @@ class MsgListActivity : AppCommonActivity(),  SwipeRefreshLayout.OnRefreshListen
     companion object {
         const val SYSTEM_NOTIFY : Int = 0
         const val PLATFORM_NOTIFY : Int = 1
-        private const val PAGE_SIZE : Int = 10
+        private const val PAGE_SIZE : Int = 20
     }
 
     private lateinit var mAdapter : MsgListAdapter
-    private var page : Int = 0
+    private var page : Int = 1
     private var dataList : MutableList<BaseExtentModel<MsgInfo>> = arrayListOf()
     private var readList : MutableList<String> = arrayListOf()
 
@@ -83,7 +83,7 @@ class MsgListActivity : AppCommonActivity(),  SwipeRefreshLayout.OnRefreshListen
         srl_msg.setOnRefreshListener(this)
         srl_msg.post{
             srl_msg.isRefreshing = true
-            page = 0
+            page = 1
             dataList.clear()
             getData()
         }
@@ -95,7 +95,7 @@ class MsgListActivity : AppCommonActivity(),  SwipeRefreshLayout.OnRefreshListen
     }
 
     override fun onRefresh() {
-        page = 0
+        page = 1
         dataList.clear()
         getData()
     }

@@ -82,7 +82,7 @@ class RedPackageDetailActivity : CommonActivity(){
         compositeDisposable.add(
             RetrofitClient.getInstance().map<RedPackageDetailInfo>(
                 RetrofitManager.createRetrofit<ApiRetrofit>(BaseApplication.getInstance(), ApiRetrofit::class.java)
-                    .getRedDetail(message.getStringAttribute("redCode", ""), 0, 100), object : BaseSubscriber<RedPackageDetailInfo>() {
+                    .getRedDetail(message.getStringAttribute("redCode", ""), 1, 100), object : BaseSubscriber<RedPackageDetailInfo>() {
                     override fun onError(e: ActionException) {
                         operateLoadingDialog(false)
                         ToastUtils.show(BaseApplication.getInstance(), e.message)

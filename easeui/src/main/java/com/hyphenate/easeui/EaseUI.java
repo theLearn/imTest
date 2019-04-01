@@ -309,7 +309,7 @@ public final class EaseUI {
 
         @Override
         public boolean isMsgVibrateAllowed(EMMessage message) {
-            return true;
+            return false;
         }
 
         @Override
