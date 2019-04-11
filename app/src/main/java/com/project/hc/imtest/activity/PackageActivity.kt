@@ -8,6 +8,7 @@ import com.example.hongcheng.data.retrofit.BaseSubscriber
 import com.example.hongcheng.data.retrofit.RetrofitClient
 import com.example.hongcheng.data.retrofit.RetrofitManager
 import com.hyphenate.chat.EMConversation
+import com.hyphenate.easeui.domain.EaseUser
 import com.project.hc.imtest.R
 import com.project.hc.imtest.api.ApiRetrofit
 import com.project.hc.imtest.application.BaseApplication
@@ -15,6 +16,7 @@ import com.project.hc.imtest.chat.ChatUtils
 import com.project.hc.imtest.model.KFInfo
 import com.project.hc.imtest.model.PointInfo
 import kotlinx.android.synthetic.main.body_package.*
+import java.util.*
 
 
 class PackageActivity : AppCommonActivity(), View.OnClickListener {
@@ -87,6 +89,12 @@ class PackageActivity : AppCommonActivity(), View.OnClickListener {
 
                 override fun onBaseNext(obj: KFInfo) {
                     operateLoadingDialog(false)
+                    val easeUser = EaseUser(obj.mid)
+                    easeUser.avatar = obj.litpic
+                    easeUser.nickname = obj.nickname
+                    val users = ArrayList<EaseUser>()
+                    users.add(easeUser)
+                    BaseApplication.getInstance()!!.insertUser(users)
                     ChatUtils.goToChat(this@PackageActivity, obj.mid, obj.nickname, EMConversation.EMConversationType.Chat)
                 }
             })
