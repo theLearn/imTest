@@ -82,11 +82,12 @@ public class CustomChatFragment extends EaseChatFragment implements EaseChatFrag
                         users.add(easeUser);
                         BaseApplication.getInstance().insertUser(users);
 
-                        if(false) {
+                        if("2".equals(groupInfo.getStatus())) {
                             itemIds = new int[]{ ITEM_RED_PACKAGE};
                             itemStrings = new int[] {  R.string.red_package};
                             itemdrawables = new int[] {R.mipmap.icon_send_red};
                             inputMenu.forbiddenWords();
+                            inputMenu.enableToggleMore(true);
                         } else {
                             itemIds = new int[]{ ITEM_PICTURE,ITEM_RED_PACKAGE};
                             itemStrings = new int[]{  R.string.attach_picture, R.string.red_package};
