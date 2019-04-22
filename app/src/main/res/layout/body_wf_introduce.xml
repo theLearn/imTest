@@ -38,6 +38,8 @@
                 android:textColor="@color/text_default"/>
 
         <TextView
+                android:id="@+id/tv_wf_platform_tip"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/public_space_value_20"

@@ -33,6 +33,7 @@ class WfIntroduceActivity : AppCommonActivity(){
         if(WF_TYPE_CL == type) {
             tv_app_common_title.setText(R.string.title_cl_introduce)
             tv_wf_introduce.setText(R.string.cl_introduce_tip)
+            tv_wf_platform_tip.visibility = View.VISIBLE
         }
     }
 }
