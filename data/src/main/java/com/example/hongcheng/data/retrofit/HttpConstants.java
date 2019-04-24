@@ -24,5 +24,5 @@ public class HttpConstants {
     public static final int COMMON_SUCCESS_CODE = 0;
 
     //基础路径
-    public static final String BASE_URL = "http://39.108.165.84/api/v1/";
+    public static final String BASE_URL = "http://47.106.159.229/api/v1/";
 }
