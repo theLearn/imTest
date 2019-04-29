@@ -105,7 +105,7 @@ class RedPackageDetailActivity : CommonActivity(){
                                 temp.if_do = ""
                             }
                             if(ifEnd) {
-                                val tempMoney = temp.money.toDouble()
+                                val tempMoney = temp.money!!.toDouble()
                                 if(tempMoney >= maxMoney) {
                                     maxMoney = tempMoney
                                     maxData = temp

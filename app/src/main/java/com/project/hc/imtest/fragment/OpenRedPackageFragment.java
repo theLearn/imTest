@@ -161,6 +161,8 @@ public class OpenRedPackageFragment extends DialogFragment implements View.OnCli
                         operateLoadingDialog(false);
                         if ("红包已过期".equals(e.getErrorMessage())) {
                             overdue();
+                        } else if(1001 == e.getErrorCode()) {
+                            ToastUtils.show(BaseApplication.getInstance(), "红包已抢完");
                         } else {
                             ToastUtils.show(BaseApplication.getInstance(), e.getErrorMessage());
                         }

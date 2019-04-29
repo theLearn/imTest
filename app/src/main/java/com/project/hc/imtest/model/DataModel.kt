@@ -456,13 +456,13 @@ data class RedPackageInfo(
 
 data class RedDetailInfo(
     var hb_id: String = "",
-    var id: String = "",
-    var mid: String = "",
-    var money: String = "",
-    var add_time: String = "",
-    var litpic: String = "",
-    var nickname: String = "",
-    var if_do: String = ""
+    var id: String? = "",
+    var mid: String? = "",
+    var money: String? = "",
+    var add_time: String? = "",
+    var litpic: String? = "",
+    var nickname: String? = "",
+    var if_do: String? = ""
 ) : Parcelable {
     constructor(source: Parcel) : this(
         source.readString(),
