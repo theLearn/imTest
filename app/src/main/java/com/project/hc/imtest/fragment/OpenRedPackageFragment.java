@@ -206,39 +206,39 @@ public class OpenRedPackageFragment extends DialogFragment implements View.OnCli
         message.setAttribute("rob", true);
         EMClient.getInstance().chatManager().updateMessage(message);
 
-        EaseUser easeUser = EaseUserUtils.getUserInfo(message.getFrom());
-        RobRedInfo sendInfo = new RobRedInfo();
-        sendInfo.setMoney(redDetailInfo.getMoney());
-        sendInfo.setRedId(message.getStringAttribute("redCode", ""));
-        sendInfo.setRobRedId(BaseApplication.getInstance().getLoginInfo().getUserId());
-        sendInfo.setSendRedId(message.getFrom());
-        sendInfo.setRobRedName(BaseApplication.getInstance().getLoginInfo().getNickname());
-        if(easeUser != null && easeUser.getNickname() != null){
-            sendInfo.setSendName(easeUser.getNickname());
-        }else{
-            sendInfo.setSendName(message.getFrom());
-        }
-
-        //发送扩展消息
-        EMMessage robRedMessage = EMMessage.createTxtSendMessage(new Gson().toJson(sendInfo), message.getTo());
-        //增加自己的属性
-        robRedMessage.setAttribute("money", redDetailInfo.getMoney());
-        robRedMessage.setAttribute("redId", message.getStringAttribute("redCode", ""));
-        robRedMessage.setAttribute("robRedId", BaseApplication.getInstance().getLoginInfo().getUserId());
-        robRedMessage.setAttribute("sendRedId", message.getFrom());
-        robRedMessage.setAttribute("robRedName", BaseApplication.getInstance().getLoginInfo().getNickname());
-        if(easeUser != null && easeUser.getNickname() != null){
-            robRedMessage.setAttribute("sendName", easeUser.getNickname());
-        }else{
-            robRedMessage.setAttribute("sendName", message.getFrom());
-        }
-
-        robRedMessage.setAttribute("type", "RobRedWarn");
-
-        //设置群聊和聊天室发送消息
-        robRedMessage.setChatType(EMMessage.ChatType.GroupChat);
-        //发送扩展消息
-        EMClient.getInstance().chatManager().sendMessage(robRedMessage);
+//        EaseUser easeUser = EaseUserUtils.getUserInfo(message.getFrom());
+//        RobRedInfo sendInfo = new RobRedInfo();
+//        sendInfo.setMoney(redDetailInfo.getMoney());
+//        sendInfo.setRedId(message.getStringAttribute("redCode", ""));
+//        sendInfo.setRobRedId(BaseApplication.getInstance().getLoginInfo().getUserId());
+//        sendInfo.setSendRedId(message.getFrom());
+//        sendInfo.setRobRedName(BaseApplication.getInstance().getLoginInfo().getNickname());
+//        if(easeUser != null && easeUser.getNickname() != null){
+//            sendInfo.setSendName(easeUser.getNickname());
+//        }else{
+//            sendInfo.setSendName(message.getFrom());
+//        }
+//
+//        //发送扩展消息
+//        EMMessage robRedMessage = EMMessage.createTxtSendMessage(new Gson().toJson(sendInfo), message.getTo());
+//        //增加自己的属性
+//        robRedMessage.setAttribute("money", redDetailInfo.getMoney());
+//        robRedMessage.setAttribute("redId", message.getStringAttribute("redCode", ""));
+//        robRedMessage.setAttribute("robRedId", BaseApplication.getInstance().getLoginInfo().getUserId());
+//        robRedMessage.setAttribute("sendRedId", message.getFrom());
+//        robRedMessage.setAttribute("robRedName", BaseApplication.getInstance().getLoginInfo().getNickname());
+//        if(easeUser != null && easeUser.getNickname() != null){
+//            robRedMessage.setAttribute("sendName", easeUser.getNickname());
+//        }else{
+//            robRedMessage.setAttribute("sendName", message.getFrom());
+//        }
+//
+//        robRedMessage.setAttribute("type", "RobRedWarn");
+//
+//        //设置群聊和聊天室发送消息
+//        robRedMessage.setChatType(EMMessage.ChatType.GroupChat);
+//        //发送扩展消息
+//        EMClient.getInstance().chatManager().sendMessage(robRedMessage);
 
         goToDetail();
     }

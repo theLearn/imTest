@@ -135,41 +135,41 @@ class RedPackageSendActivity : AppCommonActivity(), View.OnClickListener, TextWa
     }
 
     private fun sendRedPackage(hb_id : String) {
-        val sendInfo = SendRedInfo()
-        sendInfo.mobile = BaseApplication.getInstance()?.loginInfo?.mobile!!
-        sendInfo.nickname = BaseApplication.getInstance()?.loginInfo?.nickname!!
-        sendInfo.photo = BaseApplication.getInstance()?.loginInfo?.photo!!
-        sendInfo.type = "red"
-        sendInfo.redCode = hb_id
-        sendInfo.money = et_red_package_setting_amount.text.toString().trim()
-        if(isCl) {
-            sendInfo.redType = "cailei"
-            sendInfo.thunder = et_red_package_setting_ws.text.toString().trim()
-        } else {
-            sendInfo.redType = "jielong"
-            sendInfo.jlDes = if("1" == mGroupInfo.jl) "最小接龙" else "最大接龙"
-        }
-
-        //发送扩展消息
-        val message = EMMessage.createTxtSendMessage(Gson().toJson(sendInfo).toString(), toChatUsername)
-        //增加自己的属性
-        message.setAttribute("mobile", sendInfo.mobile)
-        message.setAttribute("nickname", sendInfo.nickname)
-        message.setAttribute("photo", sendInfo.photo)
-        message.setAttribute("type", "red")
-        message.setAttribute("redCode", hb_id)
-        message.setAttribute("money", et_red_package_setting_amount.text.toString().trim())
-        if(isCl) {
-            message.setAttribute("redType", "cailei")
-            message.setAttribute("thunder", et_red_package_setting_ws.text.toString().trim())
-        } else {
-            message.setAttribute("redType", "jielong")
-            message.setAttribute("jlDes", if("1" == mGroupInfo.jl) "最小接龙" else "最大接龙")
-        }
-
-        //设置群聊和聊天室发送消息
-        message.chatType = ChatType.GroupChat
-        //发送扩展消息
-        EMClient.getInstance().chatManager().sendMessage(message)
+//        val sendInfo = SendRedInfo()
+//        sendInfo.mobile = BaseApplication.getInstance()?.loginInfo?.mobile!!
+//        sendInfo.nickname = BaseApplication.getInstance()?.loginInfo?.nickname!!
+//        sendInfo.photo = BaseApplication.getInstance()?.loginInfo?.photo!!
+//        sendInfo.type = "red"
+//        sendInfo.redCode = hb_id
+//        sendInfo.money = et_red_package_setting_amount.text.toString().trim()
+//        if(isCl) {
+//            sendInfo.redType = "cailei"
+//            sendInfo.thunder = et_red_package_setting_ws.text.toString().trim()
+//        } else {
+//            sendInfo.redType = "jielong"
+//            sendInfo.jlDes = if("1" == mGroupInfo.jl) "最小接龙" else "最大接龙"
+//        }
+//
+//        //发送扩展消息
+//        val message = EMMessage.createTxtSendMessage(Gson().toJson(sendInfo).toString(), toChatUsername)
+//        //增加自己的属性
+//        message.setAttribute("mobile", sendInfo.mobile)
+//        message.setAttribute("nickname", sendInfo.nickname)
+//        message.setAttribute("photo", sendInfo.photo)
+//        message.setAttribute("type", "red")
+//        message.setAttribute("redCode", hb_id)
+//        message.setAttribute("money", et_red_package_setting_amount.text.toString().trim())
+//        if(isCl) {
+//            message.setAttribute("redType", "cailei")
+//            message.setAttribute("thunder", et_red_package_setting_ws.text.toString().trim())
+//        } else {
+//            message.setAttribute("redType", "jielong")
+//            message.setAttribute("jlDes", if("1" == mGroupInfo.jl) "最小接龙" else "最大接龙")
+//        }
+//
+//        //设置群聊和聊天室发送消息
+//        message.chatType = ChatType.GroupChat
+//        //发送扩展消息
+//        EMClient.getInstance().chatManager().sendMessage(message)
     }
 }
