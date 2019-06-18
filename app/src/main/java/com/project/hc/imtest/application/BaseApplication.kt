@@ -16,7 +16,9 @@ import com.hyphenate.chat.EMOptions
 import com.hyphenate.easeui.EaseUI
 import com.hyphenate.easeui.domain.EaseUser
 import com.hyphenate.easeui.utils.EaseCommonUtils
+import com.project.hc.imtest.BuildConfig
 import com.project.hc.imtest.model.LoginInfo
+import com.tencent.bugly.crashreport.CrashReport
 import io.reactivex.FlowableOnSubscribe
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -61,6 +63,8 @@ class BaseApplication : MultiDexApplication() {
         interceptors.add(AddTokenInterceptors())
         RetrofitManager.setInterceptors(interceptors)
         initContactList()
+
+        CrashReport.initCrashReport(getApplicationContext(), "a6ca3aa0fb", BuildConfig.DEBUG)
     }
 
     private class AddTokenInterceptors : Interceptor {

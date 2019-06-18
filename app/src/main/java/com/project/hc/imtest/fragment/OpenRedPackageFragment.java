@@ -17,11 +17,8 @@ import com.example.hongcheng.data.retrofit.ActionException;
 import com.example.hongcheng.data.retrofit.BaseSubscriber;
 import com.example.hongcheng.data.retrofit.RetrofitClient;
 import com.example.hongcheng.data.retrofit.RetrofitManager;
-import com.google.gson.Gson;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
-import com.hyphenate.easeui.domain.EaseUser;
-import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.project.hc.imtest.R;
 import com.project.hc.imtest.activity.RedPackageDetailActivity;
 import com.project.hc.imtest.api.ApiRetrofit;
@@ -29,7 +26,6 @@ import com.project.hc.imtest.application.BaseApplication;
 import com.project.hc.imtest.model.GroupInfo;
 import com.project.hc.imtest.model.RedDetailInfo;
 import com.project.hc.imtest.model.RedPackageDetailInfo;
-import com.project.hc.imtest.model.RobRedInfo;
 
 /**
  * Created by hongcheng on 17/8/21.
@@ -245,16 +241,14 @@ public class OpenRedPackageFragment extends DialogFragment implements View.OnCli
 
     private void operateLoadingDialog(Boolean isOpen) {
         if (isOpen && mLoadingDialog == null) {
-            mLoadingDialog = new LoadingFragment();
+            mLoadingDialog = new LoadingFragment(getActivity());
         }
 
-        boolean isShow = mLoadingDialog.getDialog() !=null && mLoadingDialog.getDialog() .isShowing();
-        if(!isOpen) {
-            if(isShow) {
-                mLoadingDialog.dismiss();
-            }
-        } else if(!mLoadingDialog.isAdded() && !isShow) {
-            mLoadingDialog.show(getActivity().getSupportFragmentManager(), "LoadingFragment");
+        boolean isShow = mLoadingDialog.isShowing();
+        if(isOpen && !isShow) {
+            mLoadingDialog.show();
+        } else if(!isOpen && isShow) {
+            mLoadingDialog.dismiss();
         }
     }
 

@@ -240,16 +240,14 @@ public class CustomChatFragment extends EaseChatFragment implements EaseChatFrag
 
     private void operateLoadingDialog(Boolean isOpen) {
         if (isOpen && mLoadingDialog == null) {
-            mLoadingDialog = new LoadingFragment();
+            mLoadingDialog = new LoadingFragment(getActivity());
         }
 
-        boolean isShow = mLoadingDialog.getDialog() !=null && mLoadingDialog.getDialog() .isShowing();
-        if(!isOpen) {
-            if(isShow) {
-                mLoadingDialog.dismiss();
-            }
-        } else if(!mLoadingDialog.isAdded() && !isShow) {
-            mLoadingDialog.show(getActivity().getSupportFragmentManager(), "LoadingFragment");
+        boolean isShow = mLoadingDialog.isShowing();
+        if(isOpen && !isShow) {
+            mLoadingDialog.show();
+        } else if(!isOpen && isShow) {
+            mLoadingDialog.dismiss();
         }
     }
 }

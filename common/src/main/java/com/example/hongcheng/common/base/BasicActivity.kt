@@ -48,16 +48,16 @@ abstract class BasicActivity : AppCompatActivity(), CommonUI {
 
     override fun operateLoadingDialog(isOpen: Boolean) {
         if (isOpen && mLoadingDialog == null) {
-            mLoadingDialog = LoadingFragment()
+            mLoadingDialog = LoadingFragment(this)
         }
 
         mLoadingDialog?.let {
-            val isShow = it.dialog !=null && it.dialog.isShowing
+            val isShow = it.isShowing
             try {
-                if(!isOpen) {
+                if(isOpen) {
+                    if(!isShow) it.show()
+                } else {
                     if(isShow) it.dismiss()
-                } else if(!it.isAdded && !isShow) {
-                    it.show(supportFragmentManager, "LoadingFragment")
                 }
             } catch (e : Exception) {
                 it.dismiss()

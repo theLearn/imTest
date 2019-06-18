@@ -171,4 +171,8 @@
 
 #zxing
 -keep class com.google.zxing.** {*;}  
--dontwarn com.google.zxing.**  
+-dontwarn com.google.zxing.**
+
+#bugly
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}
