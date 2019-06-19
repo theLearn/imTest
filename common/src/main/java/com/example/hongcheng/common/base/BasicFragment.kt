@@ -43,7 +43,7 @@ abstract class BasicFragment : Fragment(), CommonUI {
     }
 
     override fun operateLoadingDialog(isOpen: Boolean) {
-        if (mContext is CommonUI) (mContext as CommonUI).operateLoadingDialog(isOpen)
+        if (::mContext.isInitialized && mContext is CommonUI) (mContext as CommonUI).operateLoadingDialog(isOpen)
     }
 
     abstract fun getLayoutResId(): Int
